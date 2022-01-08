@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, jsonify
 from database.orm import generate_db_session
 from database.models.users import User
 
@@ -10,12 +10,10 @@ def hello():
 
 @app.route('/addUser')
 def add_user():
-    db_session = generate_db_session()
     user = User()
-    db_session.add(user)
-    db_session.commit()
-    db_session.refresh(user)
-    return f'added user {user.id}'
+    with generate_db_session() as db_session:
+        db_session.add(user)
+    return jsonify(user.id)
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)
