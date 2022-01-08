@@ -14,6 +14,7 @@ def add_user():
     user = User()
     db_session.add(user)
     db_session.commit()
+    db_session.refresh(user)
     return f'added user {user.id}'
 
 if __name__ == '__main__':
