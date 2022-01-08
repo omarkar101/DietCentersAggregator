@@ -6,15 +6,11 @@ app = Flask(__name__)
 
 @app.route('/')
 def hello():
-    return 'Hello, World!'
+    return '/'
 
-@app.route('/addUser')
-def add_user():
-    db_session = generate_db_session()
-    user = User()
-    db_session.add(user)
-    db_session.commit()
-    return f'added user {user.id}'
+@app.route('/home')
+def home():
+    return 'home'
 
 if __name__ == '__main__':
     app.run()
