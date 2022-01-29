@@ -4,6 +4,8 @@ from sqlalchemy import engine_from_config
 from sqlalchemy import pool
 from alembic import context
 
+from database.models.credentials import Credentials
+from database.models.addresses import Address
 from database.models.users import User
 
 # this is the Alembic Config object, which provides
