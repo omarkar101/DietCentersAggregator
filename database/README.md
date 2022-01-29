@@ -1,6 +1,7 @@
 # How to add a model and make alembic recognize it?
 1. Add model file to database/models folder
 2. import the model class in database/env.py
+3. import the model class in app.py
 
 # How to generate a migration?
 1. Go to database directory
