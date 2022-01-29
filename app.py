@@ -1,19 +1,8 @@
-from flask import Flask, jsonify
-from database.orm import generate_db_session
-from database.models.users import User
+from flask import Flask
+from auth.api.login import login_api
 
 app = Flask(__name__)
-
-@app.route('/')
-def hello():
-    return 'Hello, World!'
-
-@app.route('/addUser')
-def add_user():
-    user = User()
-    with generate_db_session() as db_session:
-        db_session.add(user)
-    return jsonify(user.id)
+app.register_blueprint(login_api, url_prefix='/login')
 
 if __name__ == '__main__':
     app.run(debug=True)
