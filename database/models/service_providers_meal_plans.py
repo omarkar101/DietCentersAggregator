@@ -1,7 +1,8 @@
 from sqlalchemy import Column, BigInteger, Text, ForeignKey
-from sqlalchemy.orm import relationship
+from sqlalchemy.orm import relationship, validates
 from sqlalchemy.ext.hybrid import hybrid_property
 from database.orm import Base
+from user import UserType
 
 metadata = Base.metadata
 
@@ -24,6 +25,12 @@ class ServiceProviderMealPlan(Base):
         primaryjoin='MealPlanPrice.meal_plan_id == ServiceProviderMealPlan.id',
         uselist=True,
         back_populates='service_provider_meal_plan')
+
+    @validates('user')
+    def validate_user(self,key, user):
+        if user.compare_user_type(UserType.SERVICE_PROVIDER) == False:
+            raise Exception('Invalid user type')
+        return user
 
     @hybrid_property
     def name(self):
