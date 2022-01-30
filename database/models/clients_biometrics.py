@@ -14,11 +14,11 @@ class ClientBiometrics(Base):
     _height = Column('height', REAL)
     _weight = Column('weight', REAL)
 
-    client_id = Column(ForeignKey('clients.id', ondelete='CASCADE'), unique=True, nullable=False)
+    client_id = Column(ForeignKey('clients.user_id', ondelete='CASCADE'), unique=True, nullable=False)
 
     client = relationship(
         'Client',
-        primaryjoin='Client.id == ClientBiometrics.client_id',
+        primaryjoin='Client.user_id == ClientBiometrics.client_id',
         uselist=False,
         back_populates='biometrics')
 
