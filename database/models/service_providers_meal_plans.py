@@ -19,13 +19,18 @@ class ServiceProviderMealPlan(Base):
         primaryjoin='User.id == ServiceProviderMealPlan.user_id',
         uselist=False,
         back_populates='service_provider_meal_plans')
-    
+    meal_plans_prices = relationship(
+        'MealPlanPrice',
+        primaryjoin='MealPlanPrice.meal_plan_id == ServiceProviderMealPlan.id',
+        uselist=True,
+        back_populates='service_provider_meal_plan')
+
     @hybrid_property
     def name(self):
         return self._name
     @name.setter
     def name(self, name):
-        self._phone_number = name
+        self._name = name
 
     @hybrid_property
     def description(self):
