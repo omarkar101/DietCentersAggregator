@@ -2,7 +2,7 @@ import React from "react";
 
 const Footer = () => {
     return <div>
-        This is footer
+        Ali Srour is King
     </div>;
 }
 
