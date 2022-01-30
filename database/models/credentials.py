@@ -1,7 +1,9 @@
 from sqlalchemy import Column, BigInteger, Text
-from sqlalchemy.orm import relationship
+from sqlalchemy.orm import relationship, validates
 from sqlalchemy.ext.hybrid import hybrid_property
+from auth.hash import generate_password_hash, generate_password_salt
 from database.orm import Base
+from validators import validate_email
 
 metadata = Base.metadata
 
@@ -21,23 +23,25 @@ class Credentials(Base):
     @hybrid_property
     def email(self):
         return self._email    
-
-    @hybrid_property
-    def password_hash(self):
-        return self._password_hash
-
-    @hybrid_property
-    def password_salt(self):
-        return self._password_salt
-
     @email.setter
     def email(self, email):
         self._email = email
+    @validates('email')
+    def validate_email(self, key, email):
+        validate_email(email)
+        return email
 
-    @password_hash.setter
-    def password_hash(self, password_hash):
-        self._password_hash = password_hash
+    @hybrid_property
+    def password(self):
+        raise Exception('You can\'t access this field')
+    @password.setter
+    def password(self, password):
+        self._password_salt = generate_password_salt()
+        self._password_hash = generate_password_hash(password, self._password_salt)
+    def compare_password(self, password):
+        password_hash = generate_password_hash(password, self._password_salt)
+        return password_hash == self._password_hash
 
-    @password_salt.setter
-    def password_salt(self, password_salt):
-        self._password_salt = password_salt
+    @hybrid_property
+    def password_salt(self):
+        raise Exception('You can\'t access this field')
