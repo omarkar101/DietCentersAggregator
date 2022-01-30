@@ -10,8 +10,6 @@ class User(Base):
     __tablename__ = 'users'
 
     id = Column(BigInteger, primary_key=True, autoincrement=True)
-    _first_name = Column(Text, nullable=False)
-    _last_name = Column(Text, nullable=False)
     _phone_number = Column(Text, nullable=False)
     _user_type = Column('user_type', Text, nullable=False)
 
@@ -26,6 +24,23 @@ class User(Base):
         'Address',
         uselist=True,
         back_populates='user')
+    client = relationship(
+        'Client',
+        primaryjoin='User.id == Client.user_id',
+        uselist=False,
+        back_populates='user')
+    service_provider = relationship(
+        'Client',
+        primaryjoin='User.id == ServiceProvider.user_id',
+        uselist=False,
+        back_populates='user')
+
+    @hybrid_property
+    def phone_number(self):
+        return self._phone_number
+    @phone_number.setter
+    def phone_number(self, phone_number):
+        self._phone_number = phone_number
 
     @hybrid_property
     def user_type(self):
