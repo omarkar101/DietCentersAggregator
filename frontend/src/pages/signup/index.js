@@ -1,12 +1,13 @@
 import React from "react";
-import LeftSide from "../login/leftSide";
-import RightSide from "../login/rightSide";
+import {Row, Col} from 'react-bootstrap';
+import LeftSide from "./leftSide";
+import RightSide from "./rightSide";
 
 const SignUp = () => {
     return (
         <div className="App">
             <div>
-                Login
+                Sign Up
             </div>
             <Row className="landing">
                 <Col ><LeftSide /></Col>
