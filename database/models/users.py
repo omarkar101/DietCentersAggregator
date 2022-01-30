@@ -1,3 +1,4 @@
+from tkinter import CASCADE
 from sqlalchemy import Column, BigInteger, Text, ForeignKey
 from sqlalchemy.orm import relationship
 from sqlalchemy.ext.hybrid import hybrid_property
@@ -33,6 +34,11 @@ class User(Base):
         'Client',
         primaryjoin='User.id == ServiceProvider.user_id',
         uselist=False,
+        back_populates='user')
+    service_provider_meal_plans = relationship(
+        'ServiceProviderMealPlan',
+        primaryjoin='User.id == ServiceProviderMealPlan.user_id',
+        uselist=True,
         back_populates='user')
 
     @hybrid_property

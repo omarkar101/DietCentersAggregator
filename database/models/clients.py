@@ -8,11 +8,10 @@ metadata = Base.metadata
 class Client(Base):
     __tablename__ = 'clients'
 
-    id = Column(BigInteger, primary_key=True, autoincrement=True)
     _first_name = Column('first_name', Text, nullable=False)
     _last_name = Column('last_name', Text, nullable=False)
 
-    user_id = Column(ForeignKey('users.id', ondelete='CASCADE'), nullable=False, unique=True)
+    user_id = Column(ForeignKey('users.id', ondelete='CASCADE'), primary_key=True, nullable=False, unique=True)
 
     user = relationship(
         'User',
@@ -21,7 +20,7 @@ class Client(Base):
         back_populates='client')
     biometrics = relationship(
         'ClientBiometrics',
-        primaryjoin='Client.id == ClientBiometrics.client_id',
+        primaryjoin='Client.user_id == ClientBiometrics.client_id',
         uselist=False,
         back_populates='client')
 

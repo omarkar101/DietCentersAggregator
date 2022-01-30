@@ -8,10 +8,9 @@ metadata = Base.metadata
 class ServiceProvider(Base):
     __tablename__ = 'service_providers'
 
-    id = Column(BigInteger, primary_key=True, autoincrement=True)
     _name = Column('name', Text, nullable=False)
 
-    user_id = Column(ForeignKey('users.id', ondelete='CASCADE'), unique=True, nullable=False)
+    user_id = Column(ForeignKey('users.id', ondelete='CASCADE'), primary_key=True, nullable=False)
 
     user = relationship(
         'User',
