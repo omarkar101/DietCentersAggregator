@@ -1,8 +1,8 @@
 import React from "react";
 
 const Footer = () => {
-    return <div>
-        This is footer
+    return <div className="absolute-center">
+        Ali Srour is King
     </div>;
 }
 
