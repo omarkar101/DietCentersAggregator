@@ -10,7 +10,7 @@ class User(Base):
     __tablename__ = 'users'
 
     id = Column(BigInteger, primary_key=True, autoincrement=True)
-    _phone_number = Column(Text, nullable=False)
+    _phone_number = Column('phone_number', Text, nullable=False)
     _user_type = Column('user_type', Text, nullable=False)
 
     credentials_id = Column(ForeignKey('credentials.id'), nullable=False)
