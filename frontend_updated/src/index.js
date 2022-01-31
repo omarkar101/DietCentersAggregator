@@ -18,3 +18,5 @@ ReactDOM.render(
   </Provider>,
   document.getElementById("root")
 );
+
+// inside package.json --> react-scripts --openssl-legacy-provider start
