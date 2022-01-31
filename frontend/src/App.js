@@ -14,12 +14,12 @@ const App = () => {
     <>
       <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
         <Container>
-          <Navbar.Brand as={Link} to="/">React-Bootstrap</Navbar.Brand>
+          <Navbar.Brand as={Link} to="/home">JARO</Navbar.Brand>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="me-auto">
-              <Nav.Link as={Link} to="/">Features</Nav.Link>
-              <Nav.Link as={Link} to="/">Pricing</Nav.Link>
+              <Nav.Link as={Link} to="/delivery">Delivery</Nav.Link>
+              <Nav.Link as={Link} to="/">Dining out</Nav.Link>
               <NavDropdown title="Dropdown" id="collasible-nav-dropdown">
                 <NavDropdown.Item as={Link} to="/">Action</NavDropdown.Item>
                 <NavDropdown.Item as={Link} to="/">Another action</NavDropdown.Item>
@@ -29,7 +29,7 @@ const App = () => {
               </NavDropdown>
             </Nav>
             <Nav>
-              <Nav.Link as={Link} to="/">More deets</Nav.Link>
+              <Nav.Link as={Link} to="/">Profile</Nav.Link>
               <Nav.Link eventKey={2} as={Link} to="/signup">
                 Signup
               </Nav.Link>
@@ -40,6 +40,7 @@ const App = () => {
       <div>
         <Routes>
           <Route path="/signup" element={<SignUp />} />
+          <Route path="/home" element={<HomePage />} />
         </Routes>
       </div>
     </>
