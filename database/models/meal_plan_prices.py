@@ -12,14 +12,14 @@ class MealPlanPrice(Base):
     _price = Column('price', REAL, nullable=False)
     _currency = Column('currency', Text, nullable=False)
 
-    meal_plan_id = Column(ForeignKey('service_provdiders_meal_plans.id'), nullable=False)
+    meal_plan_id = Column(ForeignKey('service_providers_meal_plans.id', ondelete='CASCADE'), nullable=False)
 
     service_provider_meal_plan = relationship(
         'ServiceProviderMealPlan',
         primaryjoin='ServiceProviderMealPlan.id == MealPlanPrice.meal_plan_id',
         uselist=False,
         back_populates='meal_plans_prices')
-    
+
     @hybrid_property
     def price(self):
         return self._price
@@ -33,4 +33,3 @@ class MealPlanPrice(Base):
     @currency.setter
     def currency(self,currency):
         self._currency = currency
-    
