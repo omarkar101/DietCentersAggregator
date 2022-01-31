@@ -7,8 +7,8 @@ from user import UserType
 metadata = Base.metadata
 
 class ServiceProviderMealPlan(Base):
-    __tablename__ = 'service_provdiders_meal_plans'
-    
+    __tablename__ = 'service_providers_meal_plans'
+
     id = Column(BigInteger, primary_key=True, autoincrement=True)
     _name = Column('name', Text, nullable=False)
     _description = Column('description', Text, nullable=False)
@@ -45,4 +45,3 @@ class ServiceProviderMealPlan(Base):
     @description.setter
     def description(self,description):
         self._description = description
-    
