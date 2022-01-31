@@ -1,9 +1,9 @@
 import React from "react";
-import {Button, Col, Container, Form, Row} from "react-bootstrap";
-
+import {Button, Col, Container, Form, Row, Modal} from "react-bootstrap";
+// do a modal instead of a container
 const SignUp = () => {
     return (
-        <>
+        <> 
             <Container>
                 <h1 className="shadow-sm text-success mt-5 p-3 text-center rounded">Admin Sign-Up</h1>
                 <Row className="mt-5">
