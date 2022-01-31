@@ -9,16 +9,15 @@ metadata = Base.metadata
 class ClientBiometrics(Base):
     __tablename__ = 'clients_biometrics'
 
-    id = Column(BigInteger, primary_key=True, autoincrement=True)
     _age = Column('age', Integer)
     _height = Column('height', REAL)
     _weight = Column('weight', REAL)
 
-    client_id = Column(ForeignKey('clients.user_id', ondelete='CASCADE'), unique=True, nullable=False)
+    user_id = Column(ForeignKey('clients.user_id', ondelete='CASCADE'), primary_key=True, unique=True, nullable=False)
 
     client = relationship(
         'Client',
-        primaryjoin='Client.user_id == ClientBiometrics.client_id',
+        primaryjoin='Client.user_id == ClientBiometrics.user_id',
         uselist=False,
         back_populates='biometrics')
 

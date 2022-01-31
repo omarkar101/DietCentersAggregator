@@ -20,7 +20,7 @@ class Client(Base):
         back_populates='client')
     biometrics = relationship(
         'ClientBiometrics',
-        primaryjoin='Client.user_id == ClientBiometrics.client_id',
+        primaryjoin='Client.user_id == ClientBiometrics.user_id',
         uselist=False,
         back_populates='client')
 
