@@ -48,3 +48,5 @@ class User(Base):
     @user_type.setter
     def user_type(self, user_type: UserType):
         self._user_type = user_type.value
+    def compare_user_type(self, user_type: UserType):
+        return self.user_type == user_type

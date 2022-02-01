@@ -8,15 +8,19 @@ metadata = Base.metadata
 class ServiceProvider(Base):
     __tablename__ = 'service_providers'
 
-    id = Column(BigInteger, primary_key=True, autoincrement=True)
     _name = Column('name', Text, nullable=False)
 
-    user_id = Column(ForeignKey('users.id', ondelete='CASCADE'), unique=True, nullable=False)
+    user_id = Column(ForeignKey('users.id', ondelete='CASCADE'), primary_key=True, nullable=False)
 
     user = relationship(
         'User',
         primaryjoin='User.id == ServiceProvider.user_id',
         uselist=False,
+        back_populates='service_provider')
+    meal_plans = relationship(
+        'ServiceProviderMealPlan',
+        primaryjoin='ServiceProvider.user_id == ServiceProviderMealPlan.user_id',
+        uselist=True,
         back_populates='service_provider')
 
     @hybrid_property
