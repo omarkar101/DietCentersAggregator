@@ -10,6 +10,8 @@ from database.models.users import User
 from database.models.clients import Client
 from database.models.service_providers import ServiceProvider
 from database.models.clients_biometrics import ClientBiometrics
+from database.models.service_providers_meal_plans import ServiceProviderMealPlan
+from database.models.meal_plans_prices import MealPlanPrice
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
