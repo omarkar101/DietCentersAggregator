@@ -26,7 +26,7 @@ class Credentials(Base):
     @email.setter
     def email(self, email):
         self._email = email
-    @validates('email')
+    @validates('_email')
     def validate_email(self, key, email):
         validate_email(email)
         return email

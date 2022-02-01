@@ -17,7 +17,6 @@ class User(Base):
 
     credentials = relationship(
         'Credentials',
-        primaryjoin='Credentials.id == User.credentials_id',
         uselist=False,
         back_populates='user')
     addresses = relationship(
@@ -26,12 +25,10 @@ class User(Base):
         back_populates='user')
     client = relationship(
         'Client',
-        primaryjoin='User.id == Client.user_id',
         uselist=False,
         back_populates='user')
     service_provider = relationship(
-        'Client',
-        primaryjoin='User.id == ServiceProvider.user_id',
+        'ServiceProvider',
         uselist=False,
         back_populates='user')
 
