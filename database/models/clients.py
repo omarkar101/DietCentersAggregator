@@ -15,12 +15,10 @@ class Client(Base):
 
     user = relationship(
         'User',
-        primaryjoin='User.id == ServiceProvider.user_id',
         uselist=False,
         back_populates='client')
     biometrics = relationship(
         'ClientBiometrics',
-        primaryjoin='Client.user_id == ClientBiometrics.user_id',
         uselist=False,
         back_populates='client')
 

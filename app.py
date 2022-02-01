@@ -1,5 +1,5 @@
 from flask import Flask
-from auth.api.login import login_api
+from auth.api import auth_api
 
 from database.models.credentials import Credentials
 from database.models.addresses import Address
@@ -11,7 +11,7 @@ from database.models.service_providers_meal_plans import ServiceProviderMealPlan
 from database.models.meal_plans_prices import MealPlanPrice
 
 app = Flask(__name__)
-app.register_blueprint(login_api, url_prefix='/login')
+app.register_blueprint(auth_api)
 
 if __name__ == '__main__':
     app.run(debug=True)
