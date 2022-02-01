@@ -40,8 +40,8 @@ class ServiceProviderMealPlan(Base):
     def description(self, description):
         self._description = description
 
-    @validates('user')
-    def validate_user(self, key, user):
-        if not user.compare_user_type(UserType.SERVICE_PROVIDER):
-            raise Exception('Invalid user type')
-        return user
+    @validates('service_provider')
+    def validate_user(self, key, service_provider):
+        if not self.service_provider:
+            raise Exception('Invalid user type for owning a meal plan')
+        return service_provider
