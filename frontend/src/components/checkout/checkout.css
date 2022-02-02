@@ -1,0 +1,164 @@
+.checkout-all {
+    position: relative;
+    max-width: 90rem;
+    max-height: initial;
+    margin-left: 50px;
+    padding-bottom: 3.5rem;
+    box-sizing: inherit;
+    -webkit-tap-highlight-color: transparent;
+    display: block;
+    font-family: Okra,Helvetica,sans-serif;
+}
+
+.checkout-title {
+    font-size: 2.5rem;
+    line-height: 1.2;
+    margin: 2rem 0px 2.5rem;
+    font-weight: 300;
+    color: rgb(54, 54, 54);
+    display: block;
+}
+
+.checkout-details {
+    width: 100%;
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.checkout-details-left {
+    position: relative;
+    width: 100%;
+    -webkit-box-flex: 0;
+    flex-grow: 0;
+    flex-shrink: 0;
+    max-width: 66.6667%;
+    padding: 0px 10px 20px 0px;
+}
+
+.checkout-details-left-name-and-email {
+    box-shadow: none;
+    padding: 1.2rem 2.4rem;
+    width: 100%;
+    border: 0.1rem solid rgb(232, 232, 232);
+    border-radius: 0.8rem;
+    margin-bottom: 1.5rem;
+}
+
+.checkout-details-left-name{
+    line-height: 1.5;
+    margin: 0px 0px 0.5rem;
+    color: rgb(54, 54, 54);
+    font-size: 2.4rem;
+    font-weight: 500;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: start;
+    justify-content: flex-start;
+}
+
+.checkout-details-left-email {
+    font-size: 1.8rem;
+    padding-left: 0.5rem;
+    font-weight: 400;
+    overflow-wrap: break-word;
+}
+
+.checkout-details-left-secure {
+    line-height: 1.5;
+    margin: 0px 0px 1rem;
+    font-size: 1.4rem;
+    color: rgb(156, 156, 156);
+}
+
+.checkout-details-left-delivery-address{
+    box-shadow: rgb(0 0 0 / 10%) 0px 4px 16px;
+    width: 100%;
+    border: 0.1rem solid rgb(232, 232, 232);
+    border-radius: 0.8rem;
+    margin-bottom: 1.5rem;
+    overflow: hidden;
+}
+
+.checkout-details-left-delivery-address-title{
+    padding: 1.2rem 2rem 1.5rem;
+    position: relative;
+    z-index: 1;
+    box-shadow: none;
+    display: flex;
+    align-items: normal;
+}
+
+.checkout-details-left-delivery-address-title-p{
+    line-height: 1.5;
+    margin: 0px;
+    font-size: 2.4rem;
+    font-weight: 500;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    cursor: default;
+    -webkit-box-pack: start;
+    justify-content: flex-start;
+    color: rgb(28, 28, 28);
+}
+
+.checkout-details-left-delivery-address-add-new-text{
+    padding: 0rem 2rem 2rem;
+    display: flex;
+    -webkit-box-pack: start;
+    justify-content: flex-start;
+    border: none;
+    outline: none;
+    width: 60%;
+    font-size: 14px;
+}
+
+.checkout-details-left-payment-method{
+    box-shadow: rgb(0 0 0 / 10%) 0px 4px 16px;
+    width: 100%;
+    border: 0.1rem solid rgb(232, 232, 232);
+    border-radius: 0.8rem;
+    margin-bottom: 1.5rem;
+    overflow: hidden;
+    height: inherit;
+}
+
+.checkout-details-left-payment-method-title {
+    line-height: 1.5;
+    margin: 0px;
+    padding: 1.2rem 2rem;
+    box-shadow: rgb(0 0 0 / 10%) 0px 1px 10px;
+    font-size: 2.4rem;
+    font-weight: 500;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: start;
+    justify-content: flex-start;
+    color: rgb(28, 28, 28);
+    position: relative;
+    z-index: 1;
+    border-bottom: 0px;
+}
+
+.checkout-details-left-payment-method-cash{
+    background: rgb(255, 255, 255);
+    opacity: 1;
+}
+
+.checkout-details-left-payment-method-cash-title {
+    color: rgb(105, 105, 105);
+    padding: 1rem 2.4rem 2rem;
+    max-height: 1000rem;
+    opacity: 1;
+    transition: max-height 0.25s ease-in-out 0s, opacity 0.5s linear 0.25s;
+}
+.checkout-details-left-payment-method-cash-note{
+    color: rgb(105, 105, 105);
+    padding: 1rem 2.4rem 2rem;
+    max-height: 1000rem;
+    opacity: 1;
+}
+
