@@ -9,11 +9,6 @@ const SignUp = () => {
                 <Row className="mt-5">
                     <Col lg={5} md={6} sm={12} className="p-5 m-auto shadow-sm rounded-lg">
                         <Form>
-                            <Form.Group controlId="formBasicUsername">
-                                <Form.Label>Username</Form.Label>
-                                <Form.Control type="text" placeholder="Username" />
-                            </Form.Group>
-                            
                             <Form.Group controlId="formBasicFirstName">
                                 <Form.Label>First Name</Form.Label>
                                 <Form.Control type="text" placeholder="First Name" />
