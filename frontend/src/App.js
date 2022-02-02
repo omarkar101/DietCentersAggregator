@@ -7,6 +7,7 @@ import TrackOrder from './pages/ordersPage/trackOrder';
 import Collection from './components/common/collection';
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import { Navbar, Nav, NavDropdown, Container } from 'react-bootstrap';
+import Checkout from './components/checkout/checkout';
 
 const App = () => {
   return (
@@ -41,7 +42,7 @@ const App = () => {
         <Routes>
           <Route path="/signup" element={<SignUp />} />
           <Route path="/home" element={<HomePage />} />
-          <Route path="/trackorder" element={<TrackOrder />} />
+          <Route path="/trackorder" element={<Checkout />} />
         </Routes>
       </div>
 
