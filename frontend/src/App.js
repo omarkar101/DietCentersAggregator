@@ -1,12 +1,10 @@
 import React from 'react'
 import HomePage from './pages/home';
-import Login from './pages/login';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import SignUp from './pages/signup';
-import TrackOrder from './pages/ordersPage/trackOrder';
-import Collection from './components/common/collection';
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import { Navbar, Nav, NavDropdown, Container } from 'react-bootstrap';
+import ServiceProviderPage from './components/serviceProvider/serviceProvider';
 
 const App = () => {
   return (
@@ -41,6 +39,7 @@ const App = () => {
         <Routes>
           <Route path="/signup" element={<SignUp />} />
           <Route path="/home" element={<HomePage />} />
+          <Route path="/serviceProvider" element={<ServiceProviderPage />} />
         </Routes>
       </div>
     </>

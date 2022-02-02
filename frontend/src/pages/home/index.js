@@ -7,7 +7,6 @@ import DiningOut from "../../components/diningOut";
 import Nightlife from "../../components/nightlife";
 
 const HomePage = () => {
-
     const [activeTab, setActiveTab] = useState("Delivery")
 
     return (
@@ -30,7 +29,7 @@ const getCorrectScreen = (tab) => {
             return <Nightlife />
         default:
             return <Delivery />
-
     }
 }
+
 export default HomePage;
