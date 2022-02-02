@@ -3,6 +3,7 @@ from flask import abort, request, jsonify
 from database.models.users import User
 from flask import current_app
 import jwt
+
 def require_user(f):
     @wraps(f)
     def wrap(*args, **kwargs):
@@ -11,10 +12,11 @@ def require_user(f):
         else:
             abort(401)
     return wrap
-    """
-    This piece of code is taken from:
-    https://www.geeksforgeeks.org/using-jwt-for-user-authentication-in-flask/
-    """
+    
+"""
+This piece of code is taken from:
+https://www.geeksforgeeks.org/using-jwt-for-user-authentication-in-flask/
+"""
 # decorator for verifying the JWT
 def token_required(f):
     @wraps(f)
