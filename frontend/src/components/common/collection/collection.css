@@ -2,6 +2,12 @@
     background-color: var(--inactive-color);
 }
 
+.collection-wrapper:hover{
+    background-color: var(--primary-bg);
+    border: 1px solid var(--border-white);
+    cursor: pointer;
+}
+
 .collection {
     padding: 15px 0px 40px;
 }

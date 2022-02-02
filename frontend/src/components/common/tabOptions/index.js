@@ -41,7 +41,7 @@ const TabOptions = ({ activeTab, setActiveTab }) => {
                             }`,
                         }}
                         >
-                            <img className="tab-image" alt={tab.name} src={ activeTab === tab.name ? tab.active_img:tab.inactive_img} />
+                            <img className="tab-image" src={ activeTab === tab.name ? tab.active_img:tab.inactive_img} />
                         </div>
                         <div className="tab-name">{tab.name}</div>
                     </div> 

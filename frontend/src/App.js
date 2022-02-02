@@ -19,7 +19,7 @@ const App = () => {
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="me-auto">
               <Nav.Link as={Link} to="/delivery">Delivery</Nav.Link>
-              <Nav.Link as={Link} to="/">Dining out</Nav.Link>
+              <Nav.Link as={Link} to="/trackorder">Track order</Nav.Link>
               <NavDropdown title="Dropdown" id="collasible-nav-dropdown">
                 <NavDropdown.Item as={Link} to="/">Action</NavDropdown.Item>
                 <NavDropdown.Item as={Link} to="/">Another action</NavDropdown.Item>
@@ -30,7 +30,7 @@ const App = () => {
             </Nav>
             <Nav>
               <Nav.Link as={Link} to="/">Profile</Nav.Link>
-              <Nav.Link eventKey={2} as={Link} to="/signup">
+              <Nav.Link as={Link} to="/signup">
                 Signup
               </Nav.Link>
             </Nav>
@@ -41,8 +41,10 @@ const App = () => {
         <Routes>
           <Route path="/signup" element={<SignUp />} />
           <Route path="/home" element={<HomePage />} />
+          <Route path="/trackorder" element={<TrackOrder />} />
         </Routes>
       </div>
+
     </>
     </BrowserRouter>
   );
