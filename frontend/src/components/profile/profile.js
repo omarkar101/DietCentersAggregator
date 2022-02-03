@@ -66,6 +66,10 @@ const Profile = () => {
               <Form.Label>Height</Form.Label>
               <Form.Control placeholder="Height in cm" />
             </Form.Group>
+            <Form.Group as={Col} md="3" controlId="formGridWeight">
+              <Form.Label>Age</Form.Label>
+              <Form.Control placeholder="Age" />
+            </Form.Group>
           </Row>
 
           <Button variant="primary" type="submit">
