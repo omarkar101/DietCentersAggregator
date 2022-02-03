@@ -8,6 +8,7 @@ import Collection from './components/common/collection';
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import { Navbar, Nav, NavDropdown, Container } from 'react-bootstrap';
 import Checkout from './components/checkout/checkout';
+import OrdersHistory from './components/ordersHistory/ordersHistory';
 
 const App = () => {
   return (
@@ -19,7 +20,7 @@ const App = () => {
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="me-auto">
-              <Nav.Link as={Link} to="/delivery">Delivery</Nav.Link>
+              <Nav.Link as={Link} to="/ordershistory">Orders history</Nav.Link>
               <Nav.Link as={Link} to="/checkout">Checkout</Nav.Link>
               <NavDropdown title="Dropdown" id="collasible-nav-dropdown">
                 <NavDropdown.Item as={Link} to="/">Action</NavDropdown.Item>
@@ -43,6 +44,8 @@ const App = () => {
           <Route path="/signup" element={<SignUp />} />
           <Route path="/home" element={<HomePage />} />
           <Route path="/checkout" element={<Checkout />} />
+          <Route path="/ordershistory" element={<OrdersHistory />} />
+
         </Routes>
       </div>
 
