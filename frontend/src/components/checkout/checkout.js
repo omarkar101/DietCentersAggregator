@@ -86,7 +86,7 @@ const Checkout = () => {
         <Row className="mb-3">
           <Form.Group as={Col} md="2" controlId="validationCustom03">
             <Form.Label>Month</Form.Label>
-            <Form.Select size="sm">
+            <Form.Select size="sm" defaultValue="">
               <option>00</option>
               <option>01</option>
               <option>02</option>
@@ -107,7 +107,7 @@ const Checkout = () => {
           </Form.Group>
           <Form.Group as={Col} md="2" controlId="validationCustom04">
             <Form.Label>Year</Form.Label>
-            <Form.Select size="sm">
+            <Form.Select size="sm" defaultValue="">
               <option>2000</option>
               <option>2001</option>
               <option>2002</option>
