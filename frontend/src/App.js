@@ -20,7 +20,7 @@ const App = () => {
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="me-auto">
               <Nav.Link as={Link} to="/delivery">Delivery</Nav.Link>
-              <Nav.Link as={Link} to="/trackorder">Track order</Nav.Link>
+              <Nav.Link as={Link} to="/checkout">Checkout</Nav.Link>
               <NavDropdown title="Dropdown" id="collasible-nav-dropdown">
                 <NavDropdown.Item as={Link} to="/">Action</NavDropdown.Item>
                 <NavDropdown.Item as={Link} to="/">Another action</NavDropdown.Item>
@@ -42,7 +42,7 @@ const App = () => {
         <Routes>
           <Route path="/signup" element={<SignUp />} />
           <Route path="/home" element={<HomePage />} />
-          <Route path="/trackorder" element={<Checkout />} />
+          <Route path="/checkout" element={<Checkout />} />
         </Routes>
       </div>
 

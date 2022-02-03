@@ -1,139 +1,174 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { Form, Button, Col, Row, InputGroup, Card } from "react-bootstrap";
 import "./checkout.css";
 
 const Checkout = () => {
+  const [validated, setValidated] = useState(false);
+
+  const handleSubmit = (event) => {
+    const form = event.currentTarget;
+    if (form.checkValidity() === false) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+
+    setValidated(true);
+  };
+
   return (
-    <div className="checkout-all">
-      <h3 className="checkout-title">Checkout</h3>
-      <div className="checkout-details">
-        <div className="checkout-details-left">
-          <div className="checkout-details-left-name-and-email">
-            <p className="checkout-details-left-name">
-              Ali Srour
-              <span className="checkout-details-left-email">
-                (srourali07@gmail.com)
-              </span>
-            </p>
-            <p className="checkout-details-left-secure">
-              You are securely logged in
-            </p>
-          </div>
-          <div className="checkout-details-left-delivery-address">
-            <div className="checkout-details-left-delivery-address-title">
-              <p className="checkout-details-left-delivery-address-title-p">
-                Delivery Address
-              </p>
-            </div>
-            <input
-              placeholder="Add address"
-              className="checkout-details-left-delivery-address-add-new-text"
+    <div className="checkout-form">
+      <Form
+        noValidate
+        validated={validated}
+        onSubmit={handleSubmit}
+      >
+        <h1>Customer Info</h1>
+        <Row className="mb-3">
+          <Form.Group as={Col} md="3" controlId="validationCustom01">
+            <Form.Label>First name</Form.Label>
+            <Form.Control
+              required
+              type="text"
+              placeholder="First name"
+              defaultValue="Mark"
             />
-          </div>
-          <div className="checkout-details-left-payment-method">
-            <p className="checkout-details-left-payment-method-title">
-              Select Payment Method
-            </p>
-            <div className="checkout-details-left-payment-method-cash">
-              <p className="checkout-details-left-payment-method-cash-title">
-                Cash
-              </p>
-              <p className="checkout-details-left-payment-method-cash-note">
-                Please keep exact change handy to help us serve you better
-              </p>
-            </div>
-          </div>
-        </div>
-        <div>
-          <div class="sc-fPbjcq dtbjvd">
-            <h5 class="sc-1uh2q3e-0 sc-BOulX jdsOAb">Summary</h5>
-            <div class="sc-hdNmWC cTkaPI">
-              <div class="sc-fPEBxH nkFMw">
-                <p class="sc-1hez2tp-0 sc-hAcydR bDsJTz">ORDER FROM</p>
-                <p class="sc-1hez2tp-0 sc-eomEcv dZYLPU">SushiArt</p>
-                <p class="sc-1hez2tp-0 sc-gcJTYu hhgbmz">
-                  The Beach, Jumeirah Beach Residence, Dubai
-                </p>
-              </div>
-              <div class="sc-fPEBxH sc-hBcjXN eaiRPV">
-                <div class="sc-klSiHT sc-hkHFWD iyghkD">
-                  <div
-                    type="non-veg"
-                    class="sc-1tx3445-0 kcsImg sc-feWbDf dCUqkh"
-                  ></div>
-                  <div class="sc-cBOTKl cHUCzi">
-                    <div class="sc-klSiHT sc-iUVpnZ cXhFKO">
-                      <div class="sc-bWFPNQ iKOZzr">
-                        <p class="sc-1hez2tp-0 sc-emjYpo ciKGzg">
-                          The Signature Box
-                        </p>
-                        <div class="sc-17hyc2s-3 jOoliK">
-                          <span class="sc-17hyc2s-1 cCiQWA">AED145</span>
-                        </div>
-                        <p class="sc-1hez2tp-0 sc-goFBvh hWNuPP">
-                          First Side : Cabbage Salad
-                        </p>
-                        <p class="sc-1hez2tp-0 sc-goFBvh hWNuPP">
-                          Second Side : Cabbage Salad
-                        </p>
-                      </div>
-                      <div>
-                        <div class="sc-15orjsw-1 iuWdTE">
-                          <div class="sc-15orjsw-10 HnpkZ">
-                            <div class="sc-bke1zw-0 fIuLDK sc-15orjsw-3 bGDlrz">
-                              <div class="sc-bke1zw-1 sc-15orjsw-4 fJLDSa"></div>
-                              <div class="sc-bke1zw-1 sc-15orjsw-4 sc-15orjsw-9 hRUeFn">
-                                <span class="sc-15orjsw-8 bXpcpY">1</span>
-                              </div>
-                              <div class="sc-bke1zw-1 sc-15orjsw-4 fJLDSa"></div>
-                            </div>
-                          </div>
-                          <span class="sc-15orjsw-2 dXvFyH">customizable</span>
-                        </div>
-                        <p class="sc-1hez2tp-0 sc-iKiVwC cYlGXn">AED145.00</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="sc-gIjDWZ cGAkA">
-                  <div class="sc-fjNYmT hsgwiw">
-                    <span role="button" tabindex="0" class="sc-hzOKmB dSiESF">
-                      Add special cooking instructions
-                    </span>
-                  </div>
-                </div>
-              </div>
-              <div class="sc-fPEBxH sc-hBcjXN eaiRPV">
-                <div class="sc-eqGige sc-bCQtTp dNUxGT">
-                  <div class="sc-eqGige RHgSf">
-                    <div class="sc-fxMfqs jMnWZf">Apply Coupon</div>
-                  </div>
-                </div>
-                <p color="#EF4F5F" class="sc-1hez2tp-0 sc-csuNZv bvYxTs">
-                  Promo codes are not supported on Cash on Delivery
-                </p>
-              </div>
-              <div class="sc-fPEBxH sc-fPCuyW vMTdh">
-                <div class="sc-fdJbru iyhgDB">
-                  <p class="sc-1hez2tp-0 sc-jTNJqp eNStwq">Subtotal</p>
-                  <div class="sc-17hyc2s-3 jOoliK">
-                    <span class="sc-17hyc2s-1 cCiQWA">AED145.00</span>
-                  </div>
-                </div>
-                <div class="sc-dYcyhn gyRMfX">
-                  <div class="sc-fAfrNB sc-MKjYC fwoqay">Delivery Charge</div>
-                  <p class="sc-1hez2tp-0 sc-bQduHL iORCKP">AED6.00</p>
-                </div>
-                <div class="sc-hmyDHa kpTofA">
-                  <p class="sc-1hez2tp-0 sc-gwZsXD kzqbAB">Grand Total</p>
-                  <div class="sc-17hyc2s-3 jOoliK">
-                    <span class="sc-17hyc2s-1 cCiQWA">AED151.00</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+            <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+          </Form.Group>
+          <Form.Group as={Col} md="3" controlId="validationCustom02">
+            <Form.Label>Last name</Form.Label>
+            <Form.Control
+              required
+              type="text"
+              placeholder="Last name"
+              defaultValue="Otto"
+            />
+            <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+          </Form.Group>
+          <Form.Group as={Col} md="3" controlId="validationCustomUsername">
+            <Form.Label>Username</Form.Label>
+            <InputGroup hasValidation>
+              <InputGroup.Text id="inputGroupPrepend">@</InputGroup.Text>
+              <Form.Control
+                type="text"
+                placeholder="Username"
+                aria-describedby="inputGroupPrepend"
+                required
+              />
+              <Form.Control.Feedback type="invalid">
+                Please choose a username.
+              </Form.Control.Feedback>
+            </InputGroup>
+          </Form.Group>
+        </Row>
+        <Row className="mb-3">
+          <Form.Group as={Col} md="6" controlId="validationCustom03">
+            <Form.Label>Address</Form.Label>
+            <Form.Control type="text" placeholder="Address" required />
+            <Form.Control.Feedback type="invalid">
+              Please provide a valid Address.
+            </Form.Control.Feedback>
+          </Form.Group>
+        </Row>
+        <h1>Payment Info</h1>
+        <Row className="mb-3">
+          <Form.Group as={Col} md="3" controlId="validationCustom03">
+            <Form.Label>Credit Card Number</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Credit Card Number"
+              required
+            />
+            <Form.Control.Feedback type="invalid">
+              Please provide a valid Credit Card Number.
+            </Form.Control.Feedback>
+          </Form.Group>
+        </Row>
+        <Row className="mb-3">
+          <Form.Group as={Col} md="2" controlId="validationCustom03">
+            <Form.Label>Month</Form.Label>
+            <Form.Select size="sm">
+              <option>00</option>
+              <option>01</option>
+              <option>02</option>
+              <option>03</option>
+              <option>04</option>
+              <option>05</option>
+              <option>06</option>
+              <option>07</option>
+              <option>08</option>
+              <option>09</option>
+              <option>10</option>
+              <option>11</option>
+              <option>12</option>
+            </Form.Select>
+            <Form.Control.Feedback type="invalid">
+              Please provide a valid Month.
+            </Form.Control.Feedback>
+          </Form.Group>
+          <Form.Group as={Col} md="2" controlId="validationCustom04">
+            <Form.Label>Year</Form.Label>
+            <Form.Select size="sm">
+              <option>2000</option>
+              <option>2001</option>
+              <option>2002</option>
+              <option>2003</option>
+              <option>2004</option>
+              <option>2005</option>
+              <option>2006</option>
+              <option>2007</option>
+              <option>2008</option>
+              <option>2009</option>
+              <option>2010</option>
+              <option>2011</option>
+              <option>2012</option>
+              <option>2013</option>
+              <option>2014</option>
+              <option>2015</option>
+              <option>2016</option>
+              <option>2017</option>
+              <option>2018</option>
+              <option>2019</option>
+              <option>2020</option>
+              <option>2021</option>
+              <option>2012</option>
+            </Form.Select>
+            <Form.Control.Feedback type="invalid">
+              Please provide a valid Year.
+            </Form.Control.Feedback>
+          </Form.Group>
+          <Form.Group as={Col} md="2" controlId="validationCustom05">
+            <Form.Label>CVC</Form.Label>
+            <Form.Control type="text" placeholder="CVC" required />
+            <Form.Control.Feedback type="invalid">
+              Please provide a valid CVC.
+            </Form.Control.Feedback>
+          </Form.Group>
+        </Row>
+        <Form.Group className="mb-3">
+          <Form.Check
+            required
+            label="Agree to terms and conditions"
+            feedback="You must agree before submitting."
+            feedbackType="invalid"
+          />
+        </Form.Group>
+        <Button type="submit">Submit form</Button>
+      </Form>
+
+      <Card className="text-center">
+        <Card.Header>Summary</Card.Header>
+        <Card.Body>
+          <Card.Title>esem el plan li bado yeha el user</Card.Title>
+          <Card.Text>
+              suret el plan li mahtuta
+          </Card.Text>
+        </Card.Body>
+        <Card.Footer className="text-muted">Total
+        <Card.Text>
+            300$
+        </Card.Text>
+        </Card.Footer>
+      </Card>
     </div>
   );
 };
