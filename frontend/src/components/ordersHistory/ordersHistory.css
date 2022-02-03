@@ -1,0 +1,10 @@
+.orders{
+    width: 80%;
+    margin: 0 auto;
+    margin-top: 20px;
+}
+
+.orders-card{
+    padding: 20px 0px;
+    display: flex;
+}
