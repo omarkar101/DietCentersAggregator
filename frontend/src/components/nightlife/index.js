@@ -78,7 +78,7 @@ const Nightlife = () => {
     return (
         <div>
             <Collection list={collectionList} />
-            <div className="max-width">
+            <div style={{'max-width': '1100px', margin: '0px auto'}}>
                 <Filters filterList={nightFilters} />
             </div>
             <ExploreSection list={nightlifeList} />

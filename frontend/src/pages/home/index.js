@@ -1,36 +1,34 @@
 import React, { useState } from "react";
-import Header from "../../components/common/header";
+import "../../components/common/header/header.css";
 import Footer from "../../components/common/footer";
 import TabOptions from "../../components/common/tabOptions";
-import Delivery from "../../components/delivery";
+import Explore from "../../components/explore";
 import DiningOut from "../../components/diningOut";
 import Nightlife from "../../components/nightlife";
 
 const HomePage = () => {
+  const [activeTab, setActiveTab] = useState("Explore");
 
-    const [activeTab, setActiveTab] = useState("Delivery")
-
-    return (
-        <div>
-            <Header />
-            <TabOptions activeTab={activeTab} setActiveTab={setActiveTab} /> 
-            {getCorrectScreen(activeTab)}
-            <Footer />
-        </div>
-    );
-}
+  return (
+    <div>
+      <TabOptions activeTab={activeTab} setActiveTab={setActiveTab} />
+      {getCorrectScreen(activeTab)}
+      <Footer />
+    </div>
+  );
+};
 
 const getCorrectScreen = (tab) => {
-    switch(tab) {
-        case "Delivery":
-            return <Delivery />
-        case "Dining Out":
-            return <DiningOut />
-        case "Nightlife":
-            return <Nightlife />
-        default:
-            return <Delivery />
+  switch (tab) {
+    case "Explore":
+      return <Explore />;
+    case "Dining Out":
+      return <DiningOut />;
+    case "Nightlife":
+      return <Nightlife />;
+    default:
+      return <Explore />;
+  }
+};
 
-    }
-}
 export default HomePage;
