@@ -1,11 +1,10 @@
 import React from "react";
 import { Card } from "react-bootstrap";
 
-
 const OrderCard = () => {
   return (
       <Card>
-        <Card.Img variant="top" src="holder.js/100px160" />
+        <Card.Img variant="top" src="" alt="image" width='100%' height={100} />
         <Card.Body>
           <Card.Title>Card title</Card.Title>
           <Card.Text>

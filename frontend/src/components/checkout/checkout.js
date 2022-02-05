@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Form, Button, Col, Row, InputGroup, Card } from "react-bootstrap";
 import "./checkout.css";
 
@@ -87,19 +87,18 @@ const Checkout = () => {
           <Form.Group as={Col} md="2" controlId="validationCustom03">
             <Form.Label>Month</Form.Label>
             <Form.Select size="sm" defaultValue="">
-              <option>00</option>
-              <option>01</option>
-              <option>02</option>
-              <option>03</option>
-              <option>04</option>
-              <option>05</option>
-              <option>06</option>
-              <option>07</option>
-              <option>08</option>
-              <option>09</option>
-              <option>10</option>
-              <option>11</option>
-              <option>12</option>
+              <option>January</option>
+              <option>February</option>
+              <option>March</option>
+              <option>April</option>
+              <option>May</option>
+              <option>June</option>
+              <option>July</option>
+              <option>August</option>
+              <option>September</option>
+              <option>October</option>
+              <option>November</option>
+              <option>December</option>
             </Form.Select>
             <Form.Control.Feedback type="invalid">
               Please provide a valid Month.
