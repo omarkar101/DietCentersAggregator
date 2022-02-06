@@ -41,5 +41,5 @@ def user():
     except IntegrityError:
         return jsonify(success=False, message=f'Email already registered as {user_type.value}')
     except ValueError as e:
-        return jsonify(success=False, message=e.args[0])
+        return jsonify(success=False, message=e)
     return jsonify(success=True)
