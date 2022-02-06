@@ -7,6 +7,7 @@ import Checkout from "./components/checkout/checkout";
 import OrdersHistory from "./components/ordersHistory/ordersHistory";
 import Profile from "./components/profile/profile";
 import AppNavbar from "./components/common/header/appNavbar";
+import Login from "./pages/login";
 
 const App = () => {
   return (
@@ -20,6 +21,7 @@ const App = () => {
             <Route path='/checkout' element={<Checkout />} />
             <Route path='/ordershistory' element={<OrdersHistory />} />
             <Route path='/profile' element={<Profile />} />
+            <Route path='/login' element={<Login />} />
           </Routes>
         </div>
       </>

@@ -11,12 +11,12 @@ signup_api = Blueprint('signup_api', __name__, url_prefix='/signup')
 
 @signup_api.route('/user', methods=['POST'])
 def user():
-    email = request.get_json().get('email')
-    password = request.get_json().get('password')
-    phone_number = request.get_json().get('phone_number')
+    email = request.form.get('email')
+    password = request.form.get('password')
+    phone_number = request.form.get('phone_number')
 
     try:
-        user_type = UserType(request.get_json().get('user_type'))
+        user_type = UserType(request.form.get('user_type'))
         # this must be done in ONE TRANSACTION
         with generate_db_session() as db_session:
             # First, we need to create credentials for the user
@@ -30,16 +30,16 @@ def user():
 
             # Finally, we need to create the type that the user belongs to
             if user_type == UserType.CLIENT:
-                first_name = request.get_json().get('first_name')
-                last_name = request.get_json().get('last_name')
+                first_name = request.form.get('first_name')
+                last_name = request.form.get('last_name')
                 credentials.user.client = Client(first_name=first_name, last_name=last_name)
             elif user_type == UserType.SERVICE_PROVIDER:
-                name = request.get_json().get('name')
+                name = request.form.get('name')
                 credentials.user.service_provider = ServiceProvider(name=name)
             else:
                 raise ValueError('Invalid user type')
     except IntegrityError:
         return jsonify(success=False, message=f'Email already registered as {user_type.value}')
     except ValueError as e:
-        return jsonify(success=False, message=e)
+        return jsonify(success=False, message=e.args[0])
     return jsonify(success=True)
