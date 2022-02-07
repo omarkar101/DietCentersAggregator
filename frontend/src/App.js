@@ -1,50 +1,32 @@
-import React from 'react'
-import HomePage from './pages/home';
-import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
-import SignUp from './pages/signup';
-import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
-import { Navbar, Nav, NavDropdown, Container } from 'react-bootstrap';
-import ServiceProviderPage from './components/serviceProvider/serviceProvider';
+import React from "react";
+import HomePage from "./pages/home";
+import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
+import SignUp from "./pages/signup";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Checkout from "./components/checkout/checkout";
+import OrdersHistory from "./components/ordersHistory/ordersHistory";
+import Profile from "./components/profile/profile";
+import AppNavbar from "./components/common/header/appNavbar";
+import Login from "./pages/login";
 
 const App = () => {
   return (
     <BrowserRouter>
-    <>
-      <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
-        <Container>
-          <Navbar.Brand as={Link} to="/home">JARO</Navbar.Brand>
-          <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-          <Navbar.Collapse id="responsive-navbar-nav">
-            <Nav className="me-auto">
-              <Nav.Link as={Link} to="/delivery">Delivery</Nav.Link>
-              <Nav.Link as={Link} to="/">Dining out</Nav.Link>
-              <NavDropdown title="Dropdown" id="collasible-nav-dropdown">
-                <NavDropdown.Item as={Link} to="/">Action</NavDropdown.Item>
-                <NavDropdown.Item as={Link} to="/">Another action</NavDropdown.Item>
-                <NavDropdown.Item as={Link} to="/">Something</NavDropdown.Item>
-                <NavDropdown.Divider />
-                <NavDropdown.Item as={Link} to="/">Separated link</NavDropdown.Item>
-              </NavDropdown>
-            </Nav>
-            <Nav>
-              <Nav.Link as={Link} to="/">Profile</Nav.Link>
-              <Nav.Link eventKey={2} as={Link} to="/signup">
-                Signup
-              </Nav.Link>
-            </Nav>
-          </Navbar.Collapse>
-        </Container>
-      </Navbar>
-      <div>
-        <Routes>
-          <Route path="/signup" element={<SignUp />} />
-          <Route path="/home" element={<HomePage />} />
-          <Route path="/serviceProvider" element={<ServiceProviderPage />} />
-        </Routes>
-      </div>
-    </>
+      <>
+        <AppNavbar />
+        <div>
+          <Routes>
+            <Route path='/signup' element={<SignUp />} />
+            <Route path='/' element={<HomePage />} />
+            <Route path='/checkout' element={<Checkout />} />
+            <Route path='/ordershistory' element={<OrdersHistory />} />
+            <Route path='/profile' element={<Profile />} />
+            <Route path='/login' element={<Login />} />
+          </Routes>
+        </div>
+      </>
     </BrowserRouter>
   );
-}
+};
 
 export default App;

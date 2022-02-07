@@ -20,6 +20,12 @@ class ServiceProvider(Base):
         'ServiceProviderMealPlan',
         uselist=True,
         back_populates='service_provider')
+    items = relationship(
+        'Item',
+        primaryjoin='ServiceProvider.user_id == Item.user_id',
+        uselist=True,
+        back_populates='service_provider')
+    
 
     @hybrid_property
     def name(self):
