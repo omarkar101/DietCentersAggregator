@@ -8,6 +8,7 @@ import OrdersHistory from "./components/ordersHistory/ordersHistory";
 import Profile from "./components/profile/profile";
 import AppNavbar from "./components/common/header/appNavbar";
 import Login from "./pages/login";
+import ServiceProviderPage from "./components/serviceProvider/serviceProvider";
 
 const App = () => {
   return (
@@ -22,6 +23,7 @@ const App = () => {
             <Route path='/ordershistory' element={<OrdersHistory />} />
             <Route path='/profile' element={<Profile />} />
             <Route path='/login' element={<Login />} />
+            <Route path='/serviceProvider/:id' element={<ServiceProviderPage />} />
           </Routes>
         </div>
       </>

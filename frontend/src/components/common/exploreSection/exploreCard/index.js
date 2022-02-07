@@ -16,8 +16,8 @@ const ExploreCard = ({restaurant}) => {
     const discount = offers.length > 1 ? offers[1].text : offers.length === 1 ? offers[0].text : null;
 
     return (
+        <Link to={`/serviceProvider/${1}`} style={{ color: 'inherit', textDecoration: 'inherit'}}>
         <div className="explore-card cur-po">
-            <Link to="/serviceProvider">
                 <div className="explore-card-cover">
                     <img src={coverImg} alt={name} className="explore-card-image" />
                     <div className="delivery-time">{deliveryTime}</div>
@@ -61,8 +61,9 @@ const ExploreCard = ({restaurant}) => {
                         </div>
                     </div>
                 )}
-            </Link>
         </div>
+        </Link>
+
     );
 }
 

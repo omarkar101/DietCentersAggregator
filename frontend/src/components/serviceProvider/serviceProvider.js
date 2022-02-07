@@ -3,9 +3,14 @@ import styled from "styled-components";
 import serviceProviderBigImg from "./serviceProviderBigImg.jpg";
 // import StarImg from './star.svg';
 import MenuCards from './MenuCards';
+import { useParams } from 'react-router-dom';
 
 const ServiceProviderPage = () => {
   const serviceProviderName = "Mr. Brown";
+
+  const { id } = useParams();
+  console.log(id);
+  
   return (
     <PageBase>
       {/* images section */}
