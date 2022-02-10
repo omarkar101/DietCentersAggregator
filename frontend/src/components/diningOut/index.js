@@ -2,47 +2,46 @@ import React from "react";
 import Collection from "../common/collection";
 import "./diningOut.css";
 import { diningOut } from "../../data/diningOut";
-import Filters from "../common/filters";
-import ExploreSection from "../common/exploreSection";
 
 const collectionList = [
   {
     id: 1,
-    title: "Newly Opened",
+    title: "Service Provider",
     cover: "https://b.zmtcdn.com/data/pictures/chains/8/204588/932c4885738c856990b0aab132993ca4_o2_featured_v2.jpg",
-    places: "12 places",
+    places: "Super Package ($100)",
   },
   {
-    id: 2,
-    title: "Veggie Friendly",
+    id: 1,
+    title: "Service Provider",
     cover: "https://b.zmtcdn.com/data/pictures/chains/8/204588/932c4885738c856990b0aab132993ca4_o2_featured_v2.jpg",
-    places: "5 places",
+    places: "Super Package ($100)",
   },
   {
-    id: 3,
-    title: "Trending This Week",
+    id: 1,
+    title: "Service Provider",
     cover: "https://b.zmtcdn.com/data/pictures/chains/8/204588/932c4885738c856990b0aab132993ca4_o2_featured_v2.jpg",
-    places: "10 places",
+    places: "Super Package ($100)",
   },
   {
-    id: 4,
-    title: "Best of Beirut",
+    id: 1,
+    title: "Service Provider",
     cover: "https://b.zmtcdn.com/data/pictures/chains/8/204588/932c4885738c856990b0aab132993ca4_o2_featured_v2.jpg",
-    places: "50 places",
+    places: "Super Package ($100)",
   },
   {
-    id: 5,
-    title: "Great Breakfasts",
+    id: 1,
+    title: "Service Provider",
     cover: "https://b.zmtcdn.com/data/pictures/chains/8/204588/932c4885738c856990b0aab132993ca4_o2_featured_v2.jpg",
-    places: "7 places",
+    places: "Super Package ($100)",
   },
   {
-    id: 6,
-    title: "Must Try Brunches",
+    id: 1,
+    title: "Service Provider",
     cover: "https://b.zmtcdn.com/data/pictures/chains/8/204588/932c4885738c856990b0aab132993ca4_o2_featured_v2.jpg",
-    places: "17 places",
+    places: "Super Package ($100)",
   },
 ];
+
 const diningFilters = [
   {
     id: 1,
@@ -78,10 +77,10 @@ const DiningOut = () => {
   return (
     <div>
       <Collection list={collectionList} />
-      <div style={{ "max-width": "1100px", margin: "0px auto" }}>
+      {/* <div style={{ "max-width": "1100px", margin: "0px auto" }}>
         <Filters filterList={diningFilters} />
       </div>
-      <ExploreSection list={diningList} collectionName='Dine-out Restaurants in Beirut' />
+      <ExploreSection list={diningList} collectionName='Dine-out Restaurants in Beirut' /> */}
     </div>
   );
 };

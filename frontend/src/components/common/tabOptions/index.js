@@ -13,7 +13,7 @@ const tabs = [
   },
   {
     id: 2,
-    name: "Dining Out",
+    name: "Service Providers Meal Plans",
     inactive_img:
       "https://www.flaticon.com/svg/vstatic/svg/5074/5074275.svg?token=exp=1643479758~hmac=c94a1d3f86edaf7e5b2634177cde6c25",
     backdrop: "E5F3F3",
@@ -21,7 +21,7 @@ const tabs = [
   },
   {
     id: 3,
-    name: "Nightlife",
+    name: "Our Meal Plans",
     inactive_img:
       "https://www.flaticon.com/svg/vstatic/svg/5074/5074275.svg?token=exp=1643479758~hmac=c94a1d3f86edaf7e5b2634177cde6c25",
     backdrop: "EDF4FF",

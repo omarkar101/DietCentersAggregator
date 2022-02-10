@@ -77,11 +77,11 @@ const nightlifeList = nightlife;
 const Nightlife = () => {
     return (
         <div>
-            <Collection list={collectionList} />
+            {/* <Collection list={collectionList} />
             <div style={{'max-width': '1100px', margin: '0px auto'}}>
                 <Filters filterList={nightFilters} />
             </div>
-            <ExploreSection list={nightlifeList} />
+            <ExploreSection list={nightlifeList} /> */}
         </div>
     );
 }

@@ -16,11 +16,11 @@ const Collection = ({ list }) => {
   return (
     <div className='collection-wrapper'>
       <div className='max-width collection'>
-        <div className='collection-title'>Collections</div>
+        <div className='collection-title'>Packages</div>
         <div className='collection-subtitle-row'>
-          <div className='collection-subtitle-text'>Explore list of top restaurants in Beirut, based on trends</div>
+          <div className='collection-subtitle-text'>Explore list of top packages in Beirut, based on trends</div>
           <div className='collection-location'>
-            <div>All Collections in Beirut</div>
+            <div>All Packages in Beirut</div>
             <i className='fi fi-rr-caret-right absolute-center'></i>
           </div>
         </div>
