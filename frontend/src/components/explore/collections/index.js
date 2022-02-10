@@ -33,7 +33,7 @@ const deliveryItems = [
   },
   {
     id: 6,
-    title: "Dick",
+    title: "Zyede toom",
     cover: "https://b.zmtcdn.com/data/pictures/chains/8/204588/932c4885738c856990b0aab132993ca4_o2_featured_v2.jpg",
   },
   {
@@ -43,17 +43,17 @@ const deliveryItems = [
   },
   {
     id: 8,
-    title: "Sexy cock",
+    title: "Akel",
     cover: "https://b.zmtcdn.com/data/pictures/chains/8/204588/932c4885738c856990b0aab132993ca4_o2_featured_v2.jpg",
   },
   {
     id: 9,
-    title: "Juicy V",
+    title: "Akel",
     cover: "https://b.zmtcdn.com/data/pictures/chains/8/204588/932c4885738c856990b0aab132993ca4_o2_featured_v2.jpg",
   },
   {
     id: 10,
-    title: "Omar's dick",
+    title: "Akel",
     cover: "https://b.zmtcdn.com/data/pictures/chains/8/204588/932c4885738c856990b0aab132993ca4_o2_featured_v2.jpg",
   },
 ];
