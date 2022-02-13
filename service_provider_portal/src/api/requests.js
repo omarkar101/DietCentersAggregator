@@ -1,4 +1,4 @@
-import { Get, Post } from "./setup";
+import { Post } from "./setup";
 
 export const signUpClient = (email, password, firstName, lastName, phoneNumber) => {
   const data = new FormData();

@@ -8,7 +8,7 @@ export const Post = (endpoint, data, headers) => {
     method: 'post',
     url: endpoint,
     data: data,
-    // headers: postHeaders
+    headers: postHeaders
   })
 }
 
