@@ -6,7 +6,7 @@ from database.orm import Base
 metadata = Base.metadata
 
 class Item(Base):
-    __tablename__ = 'Item'
+    __tablename__ = 'items'
 
     id = Column(BigInteger, primary_key=True, autoincrement=True)
     _category = Column('category', Text, nullable=False, unique=True)
@@ -20,7 +20,7 @@ class Item(Base):
         primaryjoin='ServiceProvider.user_id == Item.user_id',
         uselist=False,
         back_populates='items')
-    
+
     @hybrid_property
     def category(self):
         return self._category
