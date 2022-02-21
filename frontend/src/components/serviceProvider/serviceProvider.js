@@ -2,10 +2,34 @@ import React from "react";
 import styled from "styled-components";
 import ItemCards from "./ItemCards";
 import ImagesSection from "./ImagesSection";
+import PackageCards from "./packageCards";
 import { useParams } from "react-router-dom";
 
 const ServiceProviderPage = (props) => {
   const { name, description, stars, reviews, images } = props;
+
+  const packagesinfo = [
+    {
+      name: "Package 1",
+      price: "100 $",
+      description: "Cashews, green peas and tomato masala gravy."
+    },
+    {
+      name: "Package 2",
+      price: "150 $",
+      description: "Cashews, green peas and tomato masala gravy."
+    },
+    {
+      name: "Package 3",
+      price: "100 $",
+      description: "Cashews, green peas and tomato masala gravy."
+    },
+    {
+      name: "Package 4",
+      price: "200 $",
+      description: "Cashews, green peas and tomato masala gravy."
+    },
+  ];
 
   const itemsinfo = [
     {
@@ -65,21 +89,34 @@ const ServiceProviderPage = (props) => {
         </AddReviewSubSection>
       </AddReviewSection>
 
-      <OrderOnlineInnerWrapper>
-        <OrderOnlineHeader>Order Online</OrderOnlineHeader>
-        <hr style={{ alignSelf: "flex-start", width: "100%" }} />
-      </OrderOnlineInnerWrapper>
+      {/* <OrderOnlineInnerWrapper>
+        <OrderOnlineHeader>Order Online</OrderOnlineHeader> */}
+        <hr style={{ alignSelf: "flex-start", width: "100%", marginBottom: "3rem" }} />
+      {/* </OrderOnlineInnerWrapper> */}
 
       <MenuItemsContainer>
-        <section style={{ position: "relative", marginBottom: "2rem" }}>
-          <MenuSectionTitle>MenuItems</MenuSectionTitle>
-        </section>
+
+        <StyledSection>
+          <MenuSectionTitle>Menu Items</MenuSectionTitle>
+        </StyledSection>
         <ItemCards itemsinfo={itemsinfo} />
+
+        <StyledSection>
+          <MenuSectionTitle>Our Package Deals</MenuSectionTitle>
+        </StyledSection>
+        <PackageCards itemsinfo={packagesinfo} />
+
       </MenuItemsContainer>
       
     </PageBase>
   );
 };
+
+const StyledSection = styled.section`
+  position: relative;
+  margin-bottom: 2rem;
+  width: 100%;
+`
 
 const OrderOnlineInnerWrapper = styled.div`
   width: 100%;
@@ -110,7 +147,7 @@ const OrderOnlineHeader = styled.h2`
   margin-left: 1rem;
   font-size: 1.8rem;
   font-weight: 500;
-  color: rgb(239, 79, 95);
+  color: black;
 `;
 
 const MenuItemsContainer = styled.section`
@@ -123,21 +160,22 @@ const MenuItemsContainer = styled.section`
 const MenuSectionTitle = styled.h4`
   font-size: 2.4rem;
   line-height: 1.2;
-  color: rgb(28, 28, 28);
   margin: 0px;
   margin-block-end: 0px;
   position: sticky;
   top: 149px;
   padding: 1.4rem 0px;
-  background: rgb(255, 255, 255);
   font-weight: 500;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   z-index: 1;
   display: flex;
   -webkit-box-pack: justify;
   justify-content: space-between;
   -webkit-box-align: center;
   align-items: center;
+  padding: 1rem;
+  color: rgb(239, 79, 95);
+  border-left: 3px solid rgb(239, 79, 95);
+  background: linear-gradient(to left, rgb(255, 255, 255), rgb(255, 237, 239));
 `;
 
 const AddReviewText = styled.span`
