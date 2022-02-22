@@ -2,8 +2,22 @@ import React from "react";
 import styled from "styled-components";
 import ItemCards from "./ItemCards";
 import ImagesSection from "./ImagesSection";
-import PackageCards from "./packageCards";
 import { useParams } from "react-router-dom";
+import PackageModal from "./packageModal";
+import PackageCard from "./packageCard";
+import { useCallback, useReducer, useState } from "react";
+
+const reducer = (state, action) => {
+  switch (action.type) {
+    case 'open-package-modal':
+      return {modalOpen: true, selectedPackageItems: action.packageItems };
+    case 'close-package-modal':
+      return {modalOpen: false };
+    default:
+      throw new Error();
+  }
+}
+
 
 const ServiceProviderPage = (props) => {
   const { name, description, stars, reviews, images } = props;
@@ -47,6 +61,26 @@ const ServiceProviderPage = (props) => {
         "https://b.zmtcdn.com/data/dish_photos/14d/fc2cd40b2b5a93852f4e1fde9612c14d.jpg?output-format=webp&fit=around|130:130&crop=130:130;*,*",
     },
   ];
+
+  const [state, dispatch] = useReducer(reducer, {
+    modalOpen: false,
+    selectedPackageItems: []
+  });
+
+  const items = [
+    {'name': 'Burger', 'description': 'Hello World', 'categories': 'Fast Food'},
+    {'name': 'Burger', 'description': 'Hello World', 'categories': 'Fast Food'},
+    {'name': 'Burger', 'description': 'Hello World', 'categories': 'Fast Food'}
+  ]
+
+  const toggleOpenModal = useCallback((e) => {
+    dispatch({type: 'open-package-modal', packageItems: items});
+  }, []);
+
+  const toggleModalOnClose = useCallback(() => {
+    dispatch({type: 'close-package-modal'});
+  }, []);
+  
 
   const { id } = useParams();
 
@@ -104,7 +138,10 @@ const ServiceProviderPage = (props) => {
         <StyledSection>
           <MenuSectionTitle>Our Package Deals</MenuSectionTitle>
         </StyledSection>
-        <PackageCards itemsinfo={packagesinfo} />
+        <PackageModal isOpen={state.modalOpen} onClose={toggleModalOnClose} packageItems={state.selectedPackageItems} />
+        {packagesinfo.map((plan) => (
+          <PackageCard plan={plan} openModal={toggleOpenModal} />
+        ))}
 
       </MenuItemsContainer>
       
