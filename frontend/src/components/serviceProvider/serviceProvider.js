@@ -12,7 +12,7 @@ const reducer = (state, action) => {
     case 'open-package-modal':
       return {modalOpen: true, selectedPackageItems: action.packageItems };
     case 'close-package-modal':
-      return {modalOpen: false };
+      return { modalOpen: false };
     default:
       throw new Error();
   }

@@ -3,13 +3,14 @@ import { Button, Modal, Card } from "react-bootstrap";
 
 const PackageModal = (props) => {
   const { isOpen, onClose, packageItems } = props;
+
   return (
     <Modal show={isOpen} onHide={onClose}>
       <Modal.Header closeButton>
         <Modal.Title>Modal heading</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        {packageItems.map((item) => (
+        {packageItems?.map((item) => (
           <Card>
             <Card.Img
               variant="top"
