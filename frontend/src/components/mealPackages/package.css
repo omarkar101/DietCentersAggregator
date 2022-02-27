@@ -1,0 +1,10 @@
+.packages{
+    width: 80%;
+    margin: 0 auto;
+    margin-top: 20px;
+}
+
+.packages-card{
+    padding: 20px 0px;
+    display: flex;
+}
