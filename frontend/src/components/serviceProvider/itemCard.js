@@ -1,11 +1,9 @@
-import styled from "styled-components";
 import React from "react";
+import styled from "styled-components";
 
-const ItemCards = (props) => {
-  const dataArr = props;
-  return (
-    <>
-      {dataArr.itemsinfo.map((item) => (
+const ItemCard = (props) => {
+    const { item } = props;
+    return (
         <ItemWrapper>
           <ImageWrapper>
             <ImageStyle src={item.imagelink} />
@@ -26,12 +24,9 @@ const ItemCards = (props) => {
             </ButtonContainer>
           </ItemTextAndButtonWrapper>
         </ItemWrapper>
-      ))}
-    </>
-  );
-};
+    );
 
-export default ItemCards;
+}
 
 const ItemWrapper = styled.div`
   font-size: 1.6rem;
@@ -126,3 +121,6 @@ const ItemTextWrapper = styled.div`
   flex-direction: column;
   max-width: 95%;
 `;
+
+
+export default ItemCard;

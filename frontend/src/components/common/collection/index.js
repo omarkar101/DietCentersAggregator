@@ -28,7 +28,7 @@ const Collection = ({ list }) => {
         <Slider {...settings}>
           {list.map((item) => (
             <div>
-              <Link to={`/serviceProvider/${1}`} style={{ color: 'inherit', textDecoration: 'inherit'}}>
+              <Link to={`/package/${1}`} style={{ color: 'inherit', textDecoration: 'inherit'}}>
               <div className='collection-cover'>
                 <img src={item.cover} className='collection-image' alt={item.title} />
                 <div className='gradient-bg'></div>

@@ -1,11 +1,11 @@
 import React from "react";
 import styled from "styled-components";
-import ItemCards from "./ItemCards";
 import ImagesSection from "./ImagesSection";
 import { useParams } from "react-router-dom";
 import PackageModal from "./packageModal";
 import PackageCard from "./packageCard";
 import { useCallback, useReducer, useState } from "react";
+import ItemCard from "./itemCard";
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -133,7 +133,9 @@ const ServiceProviderPage = (props) => {
         <StyledSection>
           <MenuSectionTitle>Menu Items</MenuSectionTitle>
         </StyledSection>
-        <ItemCards itemsinfo={itemsinfo} />
+        {itemsinfo.map((item) => (
+          <ItemCard item={item} />
+        ))}
 
         <StyledSection>
           <MenuSectionTitle>Our Package Deals</MenuSectionTitle>
