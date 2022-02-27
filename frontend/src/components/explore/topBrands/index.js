@@ -2,6 +2,7 @@ import React from "react";
 import Slider from "react-slick";
 import NextArrow from "../../common/carousel/nextArrow";
 import PrevArrow from "../../common/carousel/prevArrow";
+import { Link } from "react-router-dom";
 import "./topBrands.css";
 
 const topBrandsList = [
@@ -53,9 +54,11 @@ const TopBrands = () => {
         {topBrandsList.map((brand) => {
           return (
             <div>
-              <div className='top-brands-cover'>
-                <img src={brand.cover} className='top-brands-image' alt={brand.time} />
-              </div>
+              <Link to={`/serviceProvider/${1}`} style={{ color: 'inherit', textDecoration: 'inherit'}}>
+                <div className='top-brands-cover'>
+                  <img src={brand.cover} className='top-brands-image' alt={brand.time} />
+                </div>
+              </Link>
             </div>
           );
         })}

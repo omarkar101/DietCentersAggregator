@@ -3,6 +3,7 @@ import "./collection.css";
 import NextArrow from "../carousel/nextArrow";
 import PrevArrow from "../carousel/prevArrow";
 import Slider from "react-slick";
+import { Link } from "react-router-dom";
 
 const settings = {
   infinite: false,
@@ -27,6 +28,7 @@ const Collection = ({ list }) => {
         <Slider {...settings}>
           {list.map((item) => (
             <div>
+              <Link to={`/serviceProvider/${1}`} style={{ color: 'inherit', textDecoration: 'inherit'}}>
               <div className='collection-cover'>
                 <img src={item.cover} className='collection-image' alt={item.title} />
                 <div className='gradient-bg'></div>
@@ -36,6 +38,7 @@ const Collection = ({ list }) => {
                   <i className='fi fi-rr-caret-right absolute-center'></i>
                 </div>
               </div>
+              </Link>
             </div>
           ))}
         </Slider>
