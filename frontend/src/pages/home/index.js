@@ -10,14 +10,12 @@ import { UserContext } from "../../context/UserContext";
 
 const HomePage = () => {
   const [activeTab, setActiveTab] = useState("Explore");
-  const {value, setValue} = useContext(UserContext);
 
   return (
     <div>
       <TabOptions activeTab={activeTab} setActiveTab={setActiveTab} />
       {getCorrectScreen(activeTab)}
       <Footer />
-      <div>{value}</div>
     </div>
   );
 };
