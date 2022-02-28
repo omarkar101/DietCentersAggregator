@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo, useState } from "react";
 import HomePage from "./pages/home";
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import SignUp from "./pages/signup";
@@ -10,9 +10,16 @@ import AppNavbar from "./components/common/header/appNavbar";
 import Login from "./pages/login";
 import ServiceProviderPage from "./components/serviceProvider/serviceProvider";
 import Package from "./components/mealPackages/package";
+import { UserContext } from "./context/UserContext";
 
 const App = () => {
+
+  const [value, setValue] = useState("Trying out context ");
+
+  const providerValue = useMemo(() => ({ value, setValue}), [value, setValue]);
+  
   return (
+    <UserContext.Provider value={providerValue}>
     <BrowserRouter>
       <>
         <AppNavbar />
@@ -30,6 +37,7 @@ const App = () => {
         </div>
       </>
     </BrowserRouter>
+    </UserContext.Provider>
   );
 };
 
