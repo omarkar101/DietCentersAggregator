@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo, useState } from "react";
 import HomePage from "./pages/home";
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import SignUp from "./pages/signup";
@@ -10,14 +10,23 @@ import AppNavbar from "./components/common/header/appNavbar";
 import Login from "./pages/login";
 import ServiceProviderPage from "./components/serviceProvider/serviceProvider";
 import Package from "./components/mealPackages/package";
+import { UserContext } from "./context/UserContext";
+import Trial from "./context/trial";
 
 const App = () => {
+
+  const [user, setUser] = useState(null);
+
+  const value = useMemo(() => ({ user, setUser}), [user, setUser]);
+  
   return (
+    <UserContext.Provider value={value}>
     <BrowserRouter>
       <>
         <AppNavbar />
         <div>
           <Routes>
+            <Route path='/trial' element={<Trial />} />
             <Route path='/signup' element={<SignUp />} />
             <Route path='/' element={<HomePage />} />
             <Route path='/checkout' element={<Checkout />} />
@@ -30,6 +39,7 @@ const App = () => {
         </div>
       </>
     </BrowserRouter>
+    </UserContext.Provider>
   );
 };
 
