@@ -1,12 +1,10 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import "../../components/common/header/header.css";
 import Footer from "../../components/common/footer";
 import TabOptions from "../../components/common/tabOptions";
 import Explore from "../../components/explore";
 import DiningOut from "../../components/diningOut";
 import Nightlife from "../../components/nightlife";
-import { UserContext } from "../../context/UserContext";
-
 
 const HomePage = () => {
   const [activeTab, setActiveTab] = useState("Explore");
