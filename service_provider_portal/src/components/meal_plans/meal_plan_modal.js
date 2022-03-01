@@ -85,7 +85,8 @@ const MealPlanModal = (props) => {
           <Container>
           <AddNewItemModal isOpen={state.modalOpen} onClose={toggleModalOnClose} onSubmit={toggleModalOnSubmit}
           mealPlanName={state.selectedMealPlanName} mealPlanDescription={state.selectedMealPlanDescription} />
-            <Button variant="success" onClick={toggleOpenModal}>Add new item</Button>
+            <h2>These are the items in this meal plan <Button variant="success" onClick={toggleOpenModal}>Add new item</Button></h2>
+            
             <Table striped bordered hover>
               <tr>
                 <th>Name</th>
