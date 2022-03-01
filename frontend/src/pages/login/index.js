@@ -11,7 +11,7 @@ const Login = () => {
                         <Form>
                             <Form.Group controlId="formBasicEmail">
                                 <Form.Label>Email address</Form.Label>
-                                <Form.Control type="email" placeholder="Email Address" pattern="/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/" />
+                                <Form.Control type="email" placeholder="Email Address" pattern="^\S+@\S+\.\S+$/" />
                             </Form.Group>
 
                             <Form.Group controlId="formBasicPassword">

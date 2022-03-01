@@ -56,12 +56,12 @@ const SignUp = (props) => {
 
                 <Form.Group controlId='formBasicEmail'>
                   <Form.Label>Email address</Form.Label>
-                  <Form.Control required type='email' placeholder='Enter email' pattern="[a-z@.]+" onChange={e => setEmail(e.target.value)} />
+                  <Form.Control required type='email' placeholder='Enter email' pattern="^\S+@\S+\.\S+$" onChange={e => setEmail(e.target.value)} />
                 </Form.Group>
 
                 <Form.Group controlId='formBasicPassword'>
                   <Form.Label>Password</Form.Label>
-                  <Form.Control required type='password' placeholder='Password' pattern="[a-z]+" onChange={e => setPassword(e.target.value)} />
+                  <Form.Control required type='password' placeholder='Password' pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$" onChange={e => setPassword(e.target.value)} />
                   <Form.Text className="text-muted">
                     Minimum eight characters, at least one uppercase letter, one lowercase letter and one number.
                   </Form.Text>
