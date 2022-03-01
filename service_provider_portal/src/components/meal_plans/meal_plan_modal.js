@@ -2,7 +2,7 @@ import React from "react";
 import { useCallback, useReducer, useState } from "react";
 import { Button, Form, Modal, Table } from "react-bootstrap";
 import styled from "styled-components";
-import ItemModal from "../items/item_modal";
+import AddNewItemModal from "./add_new_item_modal";
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -83,7 +83,7 @@ const MealPlanModal = (props) => {
             />
           </Form.Group>
           <Container>
-          <ItemModal isOpen={state.modalOpen} onClose={toggleModalOnClose} onSubmit={toggleModalOnSubmit}
+          <AddNewItemModal isOpen={state.modalOpen} onClose={toggleModalOnClose} onSubmit={toggleModalOnSubmit}
           mealPlanName={state.selectedMealPlanName} mealPlanDescription={state.selectedMealPlanDescription} />
             <Button variant="success" onClick={toggleOpenModal}>Add new item</Button>
             <Table striped bordered hover>
