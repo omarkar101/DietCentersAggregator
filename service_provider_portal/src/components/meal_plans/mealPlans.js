@@ -78,7 +78,7 @@ const MealPlans = (props) => {
               <td>{mealPlan.description}</td>
               <td>This is food</td>
               <td>
-                <div className="mb-2">
+                <div className="mb-4">
                   <Button id={index} data-mealPlanName={mealPlan.name} data-mealPlanDescription={mealPlan.description} variant="primary"
                       size="sm" onClick={toggleOpenModal}>
                     Edit

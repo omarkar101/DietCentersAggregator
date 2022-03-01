@@ -2,6 +2,7 @@ import React from "react";
 import { useCallback, useReducer, useState } from "react";
 import { Button, Form, Modal, Table } from "react-bootstrap";
 import styled from "styled-components";
+import UploadAndDisplayImage from "../uploadImage/UploadAndDisplayImage";
 import AddNewItemModal from "./add_new_item_modal";
 
 const reducer = (state, action) => {
@@ -81,6 +82,10 @@ const MealPlanModal = (props) => {
               rows={3}
               value={mealPlanDescription}
             />
+          </Form.Group>
+          <Form.Group className="mb-3" >
+            <Form.Label>Meal Plan Image</Form.Label>
+            <UploadAndDisplayImage />
           </Form.Group>
           <Container>
           <AddNewItemModal isOpen={state.modalOpen} onClose={toggleModalOnClose} onSubmit={toggleModalOnSubmit}
