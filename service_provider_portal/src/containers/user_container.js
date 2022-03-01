@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import { createContainer } from 'unstated-next'
 
 const KEY = 'user'
@@ -12,6 +11,7 @@ const useUser = () => {
   const setUserName = (name) => {
     const user = _getUser();
     user.name = name;
+    localStorage.setItem(KEY, JSON.stringify(user));
   }
 
   const getUserName = () => {
