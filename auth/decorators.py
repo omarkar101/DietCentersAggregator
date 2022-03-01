@@ -1,41 +1,37 @@
 from functools import wraps
 from flask import abort, request, jsonify
+from sqlalchemy.orm import joinedload
+from database.models.credentials import Credentials
 from database.models.users import User
 from flask import current_app
 import jwt
+from database.orm import generate_db_session
+from user import UserType, get_user_email_from_token
 
-def require_user(f):
-    @wraps(f)
-    def wrap(*args, **kwargs):
-        if 'Condition' == 'Condition':
-            return f(*args, **kwargs)
-        else:
-            abort(401)
-    return wrap
-    
 """
 This piece of code is taken from:
 https://www.geeksforgeeks.org/using-jwt-for-user-authentication-in-flask/
 """
 # decorator for verifying the JWT
-def token_required(f):
-    @wraps(f)
-    def decorated(*args, **kwargs):
-        token = None
-        # jwt is passed in the request header
-        if 'x-access-token' in request.headers:
-            token = request.headers['x-access-token']
-        # return 401 if token is not passed
-        if not token:
-            return jsonify({'message' : 'Token is missing !!'}), 401
-        try:
-            # decoding the payload to fetch the stored details
-            a = jwt.decode(token,current_app.config['SECRET_KEY'],algorithms=['HS256'])
-        except:
-            return jsonify({
-                'message' : 'Token is invalid !!'
-            }), 401
-        # returns the current logged in users contex to the routes
-        return  f(*args, **kwargs)
-  
-    return decorated
+def require_user(user_type: UserType):
+    def wrap_require_user(f):
+        @wraps(f)
+        def decorated(*args, **kwargs):
+            try:
+                # decoding the payload to fetch the stored details
+                email = get_user_email_from_token()
+                with generate_db_session() as db_session:
+                    credentials = db_session.query(Credentials) \
+                        .options(joinedload(Credentials.user)) \
+                        .filter(Credentials.email == email) \
+                        .first()
+                if credentials is None:
+                    return jsonify(success=False, message='Invalid Authentication!', response_status=401)
+                if credentials.user.user_type != user_type:
+                    return jsonify(success=False, message='Invalid Authentication', response_status=401)
+            except:
+                return jsonify(success=False, message='Invalid Authentication')
+            # returns the current logged in users contex to the routes
+            return  f(*args, **kwargs)
+        return decorated
+    return wrap_require_user
