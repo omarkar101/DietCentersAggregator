@@ -5,7 +5,7 @@ const AppNavbar = () => {
   return (
     <Navbar collapseOnSelect expand='lg' bg='dark' variant='dark'>
       <Container>
-        <Navbar.Brand as={Link} to='/'>
+        <Navbar.Brand as={Link} to='/meal_plans'>
           JARO
         </Navbar.Brand>
         <Navbar.Toggle aria-controls='responsive-navbar-nav' />

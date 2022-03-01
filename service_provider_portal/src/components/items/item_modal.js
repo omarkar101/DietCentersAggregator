@@ -1,5 +1,6 @@
 import React from "react";
 import { Button, Form, Modal } from "react-bootstrap";
+import UploadAndDisplayImage from "../uploadImage/UploadAndDisplayImage";
 
 const ItemModal = (props) => {
   const { isOpen, onClose, onSubmit, itemName, itemDescription } = props;
@@ -17,6 +18,10 @@ const ItemModal = (props) => {
           <Form.Group className="mb-3" controlId="formBasicDescription">
             <Form.Label>Description</Form.Label>
             <Form.Control as="textarea" placeholder="Description" rows={3} value={itemDescription} />
+          </Form.Group>
+          <Form.Group className="mb-3" >
+            <Form.Label>Item Image</Form.Label>
+            <UploadAndDisplayImage />
           </Form.Group>
         </Form>
       </Modal.Body>
