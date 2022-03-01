@@ -9,6 +9,8 @@ const reducer = (state, action) => {
       return {modalOpen: true, selectedItemId: null, selectedItemDescription: null, selectedItemName: null};
     case 'submit-add-item-modal':
       return {modalOpen: false, selectedItemDescription: action.itemDescription, selectedItemName: action.itemName};
+    case 'delete-item':
+      return {};
     case 'open-edit-item-modal':
       return {modalOpen: true, selectedItemDescription: action.itemDescription, selectedItemName: action.itemName};
     case 'submit-edit-item-modal':
@@ -36,6 +38,10 @@ const Items = (props) => {
     {'name': 'Burger', 'description': 'Hello World', 'categories': 'Fast Food'}
   ]
 
+  const toggleDeleteItem = useCallback((e) => {
+    console.log('delete');
+    dispatch({type: 'delete-item'});
+  }, []);
   const toggleOpenModal = useCallback((e) => {
     const itemId = e.target.id;
     const itemName = e.target.dataset.itemname;
@@ -75,6 +81,9 @@ const Items = (props) => {
                   <Button id={index} data-itemName={item.name} data-itemDescription={item.description} variant="primary"
                       size="sm" onClick={toggleOpenModal}>
                     Edit
+                  </Button>
+                  <Button id={index} variant="danger" size="sm" onClick={toggleDeleteItem}>
+                    Delete
                   </Button>
                 </div>
               </td>
