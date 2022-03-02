@@ -45,8 +45,8 @@ const MealPlans = (props) => {
 
   const toggleOpenModal = useCallback((e) => {
     const mealPlanId = e.target.id;
-    const mealPlanName = e.target.dataset.mealPlanName;
-    const mealPlanDescription = e.target.dataset.mealPlanDescription;
+    const mealPlanName = e.target.dataset.mealplanname;
+    const mealPlanDescription = e.target.dataset.mealplandescription;
     console.log(mealPlanDescription, mealPlanName);
     dispatch({type: 'open-edit-meal-plan-modal', mealPlanDescription: mealPlanDescription, mealPlanName: mealPlanName});
   }, []);

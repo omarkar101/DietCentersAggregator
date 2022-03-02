@@ -1,4 +1,4 @@
-import React , { useState, useReducer }from "react";
+import React , { useState, useReducer, useEffect } from "react";
 import { Button, Form, Modal } from "react-bootstrap";
 import UploadAndDisplayImage from "../uploadImage/UploadAndDisplayImage";
 import { addOneItem } from '../../api/requests';
@@ -17,31 +17,39 @@ const reducer = (state, action) => {
 const ItemModal = (props) => {
   const { isOpen, onClose, onSubmit, itemName, itemDescription, itemCategory } = props;
 
-  const [name, setName] = useState(itemName);
-  const [description, setDescription] = useState(itemDescription);
-  const [category, setCategory] = useState(itemCategory);
+  const [name, setName] = useState(null);
+  const [description, setDescription] = useState(null);
+  const [category, setCategory] = useState(null);
 
-  const [state, dispatch] = useReducer(reducer, {
-    items: []
-  });
 
-  const { items } = state;
+  // const [state, dispatch] = useReducer(reducer, {
+  //   items: []
+  // });
+
+  // const { items } = state;
+
 
   const handleSubmit = (e) => {
-    e.preventDefault();
-    addOneItem(name, description, category)
-      .then(response => {
-        if(response.data.success) {
-          items = response.data.items;
-          dispatch({type: 'submit-add-item-modal', items: items });
-        } else {
-          alert(response.data.message);
-        }
-      })
-      .catch(e => {
-        alert(e);
-      }) 
+    // e.preventDefault();
+    // addOneItem(name, description, category)
+    //   .then(response => {
+    //     if(response.data.success) {
+    //       items = response.data.items;
+    //       dispatch({type: 'submit-add-item-modal', items: items });
+    //     } else {
+    //       alert(response.data.message);
+    //     }
+    //   })
+    //   .catch(e => {
+    //     alert(e);
+    //   }) 
   }
+
+  useEffect(() => {
+    setName(itemName);
+    setDescription(itemDescription);
+    setCategory(itemCategory)
+  }, [itemName, itemDescription, itemCategory]);
 
   return (
     <Modal show={isOpen} onHide={onClose}>

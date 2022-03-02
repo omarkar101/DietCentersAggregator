@@ -1,5 +1,5 @@
-import React from "react";
-import { useCallback, useReducer, useState } from "react";
+import React , { useState, useReducer, useEffect, useCallback } from "react";
+
 import { Button, Form, Modal, Table } from "react-bootstrap";
 import styled from "styled-components";
 import UploadAndDisplayImage from "../uploadImage/UploadAndDisplayImage";
@@ -28,6 +28,10 @@ const reducer = (state, action) => {
 const MealPlanModal = (props) => {
   const { isOpen, onClose, onSubmit, mealPlanName, mealPlanDescription } = props;
 
+  console.log(mealPlanName);
+  const [planName, setPlanName] = useState(null);
+  const [planDescription, setPlanDescription] = useState(null);
+
   const [state, dispatch] = useReducer(reducer, {
     modalOpen: false,
     selectedItemId: null,
@@ -41,6 +45,10 @@ const MealPlanModal = (props) => {
     { name: "Burger", description: "Hello World", categories: "Fast Food" },
   ];
 
+  useEffect(() => {
+    setPlanName(mealPlanName);
+    setPlanDescription(mealPlanDescription);
+  }, [mealPlanName, mealPlanDescription]);
 
   const toggleDeleteItem = useCallback((e) => {
     console.log('delete');
@@ -59,6 +67,7 @@ const MealPlanModal = (props) => {
     dispatch({type: 'close-item-modal'});
   }, []);
 
+
   return (
     <Modal size="lg" show={isOpen} onHide={onClose}>
       <Modal.Header closeButton>
@@ -71,7 +80,8 @@ const MealPlanModal = (props) => {
             <Form.Control
               type="text"
               placeholder="Enter Name"
-              value={mealPlanName}
+              value={planName}
+              onChange={e => setPlanName(e.target.value)}
             />
           </Form.Group>
           <Form.Group className="mb-3" controlId="formBasicDescription">
@@ -80,7 +90,8 @@ const MealPlanModal = (props) => {
               as="textarea"
               placeholder="Description"
               rows={3}
-              value={mealPlanDescription}
+              value={planDescription}
+              onChange={e => setPlanDescription(e.target.value)}
             />
           </Form.Group>
           <Form.Group className="mb-3" >

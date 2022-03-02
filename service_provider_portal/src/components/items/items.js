@@ -11,7 +11,7 @@ const reducer = (state, action) => {
     case "open-add-item-modal":
       return {
         modalOpen: true,
-        selectedItemId: null,
+        // selectedItemId: null,
         selectedItemDescription: action.itemDescription,
         selectedItemName: action.itemName,
         selectedItemCategory: action.itemCategory,
@@ -53,7 +53,6 @@ const reducer = (state, action) => {
 const Items = (props) => {
   const [state, dispatch] = useReducer(reducer, {
     modalOpen: false,
-    items: [],
     selectedItemId: null,
     selectedItemDescription: null,
     selectedItemCategory: null,
@@ -66,19 +65,19 @@ const Items = (props) => {
     { name: "Burger", description: "Hello World", categories: "Fast Food" },
   ];
 
-  useEffect(() => {
-    getAllItems()
-      .then((response) => {
-        if (response.data.success) {
-          dispatch({ type: "get-all-items", items: response.data.items }); // remove constant items array and add items to state
-        } else {
-          alert(response.data.message);
-        }
-      })
-      .catch((e) => {
-        alert(e);
-      });
-  }, []);
+  // useEffect(() => {
+  //   getAllItems()
+  //     .then((response) => {
+  //       if (response.data.success) {
+  //         dispatch({ type: "get-all-items", items: response.data.items }); // remove constant items array and add items to state
+  //       } else {
+  //         alert(response.data.message);
+  //       }
+  //     })
+  //     .catch((e) => {
+  //       alert(e);
+  //     });
+  // }, []);
 
   const toggleDeleteItem = useCallback((e) => {
     console.log("delete");
@@ -136,7 +135,7 @@ const Items = (props) => {
           {items?.map((item, index) => (
             <tr>
               <td>{item.name}</td>
-              <td>{item.category}</td>
+              <td>{item.categories}</td>
               <td>{item.description}</td>
               <td>
                 <div className="mb-2">
@@ -144,7 +143,7 @@ const Items = (props) => {
                     id={index}
                     data-itemName={item.name}
                     data-itemDescription={item.description}
-                    data-itemCategory={item.category}
+                    data-itemCategory={item.categories}
                     variant="primary"
                     size="sm"
                     onClick={toggleOpenModal}
