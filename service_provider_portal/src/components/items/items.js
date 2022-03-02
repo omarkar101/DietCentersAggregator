@@ -48,7 +48,7 @@ const Items = (props) => {
     // const itemId = e.target.id;
     const itemName = e.target.dataset.itemname;
     const itemDescription = e.target.dataset.itemdescription;
-    itemCategory = e.target.dataset.itemCategory;
+    itemCategory = e.target.dataset.itemcategory;
     dispatch({type: 'open-add-item-modal', itemDescription: itemDescription, itemName: itemName, itemCategory: itemCategory});
 
   }, []);
@@ -66,7 +66,7 @@ const Items = (props) => {
       <Container>
         <ItemModal isOpen={state.modalOpen} onClose={toggleModalOnClose} onSubmit={toggleModalOnSubmit}
           itemName={state.selectedItemName} itemDescription={state.selectedItemDescription} itemCategory={state.selectedItemCategory} />
-        <Button variant="success" id={index} data-itemName='' data-itemDescription='' data-itemCategory=''
+        <Button variant="success" data-itemName='' data-itemDescription='' data-itemCategory=''
           onClick={toggleOpenModal}>
           Add Item
         </Button>
