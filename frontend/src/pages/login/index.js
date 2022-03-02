@@ -11,12 +11,15 @@ const Login = () => {
                         <Form>
                             <Form.Group controlId="formBasicEmail">
                                 <Form.Label>Email address</Form.Label>
-                                <Form.Control type="email" placeholder="Email Address" />
+                                <Form.Control type="email" placeholder="Email Address" pattern="^\S+@\S+\.\S+$/" />
                             </Form.Group>
 
                             <Form.Group controlId="formBasicPassword">
                                 <Form.Label>Password</Form.Label>
-                                <Form.Control type="password" placeholder="Password" />
+                                <Form.Control type="password" placeholder="Password" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$" />
+                                <Form.Text className="text-muted">
+                                    Minimum eight characters, at least one uppercase letter, one lowercase letter and one number.
+                                </Form.Text>
                             </Form.Group>
 
                             <Button variant="success btn-block" type="submit">

@@ -10,9 +10,11 @@ import AppNavbar from "./components/common/header/appNavbar";
 import Login from "./pages/login";
 import ServiceProviderPage from "./components/serviceProvider/serviceProvider";
 import Package from "./components/mealPackages/package";
+import Authentication from "./containers/user_authentication";
 
 const App = () => {
   return (
+    <Authentication.Provider>
     <BrowserRouter>
       <>
         <AppNavbar />
@@ -30,6 +32,7 @@ const App = () => {
         </div>
       </>
     </BrowserRouter>
+    </Authentication.Provider>
   );
 };
 
