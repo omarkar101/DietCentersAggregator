@@ -70,7 +70,7 @@ const Items = (props) => {
     getAllItems()
       .then((response) => {
         if (response.data.success) {
-          dispatch({ type: "get-all-items", items: response.data.items });
+          dispatch({ type: "get-all-items", items: response.data.items }); // remove constant items array and add items to state
         } else {
           alert(response.data.message);
         }
