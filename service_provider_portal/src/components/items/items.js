@@ -48,7 +48,7 @@ const Items = (props) => {
     // const itemId = e.target.id;
     const itemName = e.target.dataset.itemname;
     const itemDescription = e.target.dataset.itemdescription;
-    itemCategory = e.target.dataset.itemcategory;
+    const itemCategory = e.target.dataset.itemcategory;
     dispatch({type: 'open-add-item-modal', itemDescription: itemDescription, itemName: itemName, itemCategory: itemCategory});
 
   }, []);
