@@ -60,9 +60,9 @@ const Items = (props) => {
   });
 
   const items = [
-    { name: "Burger", description: "Hello World", categories: "Fast Food" },
-    { name: "Burger", description: "Hello World", categories: "Fast Food" },
-    { name: "Burger", description: "Hello World", categories: "Fast Food" },
+    { name: "Item 1", description: "This is item 1", categories: "This is category 1" },
+    { name: "Item 2", description: "This is item 2", categories: "This is category 2" },
+    { name: "Item 3", description: "This is item 3", categories: "This is category 3" },
   ];
 
   // useEffect(() => {

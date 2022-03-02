@@ -33,9 +33,9 @@ const MealPlans = (props) => {
   });
 
   const mealPlans = [
-    {'name': 'Burger', 'description': 'Hello World', 'categories': 'Fast Food'},
-    {'name': 'Burger', 'description': 'Hello World', 'categories': 'Fast Food'},
-    {'name': 'Burger', 'description': 'Hello World', 'categories': 'Fast Food'}
+    {'name': 'Package 1', 'description': 'This is package 1', 'categories': 'Fast Food'},
+    {'name': 'Package 2', 'description': 'This is package 2', 'categories': 'Fast Food'},
+    {'name': 'Package 3', 'description': 'This is package 3', 'categories': 'Fast Food'}
   ]
 
   const toggleDeleteMealPlan = useCallback((e) => {
@@ -68,7 +68,6 @@ const MealPlans = (props) => {
         <Table striped bordered hover>
           <tr>
             <th>Name</th>
-            <th>Category</th>
             <th>Description</th>
             <th>Actions</th>
           </tr>
@@ -76,7 +75,6 @@ const MealPlans = (props) => {
             <tr>
               <td>{mealPlan.name}</td>
               <td>{mealPlan.description}</td>
-              <td>This is food</td>
               <td>
                 <div className="mb-4">
                   <Button id={index} data-mealPlanName={mealPlan.name} data-mealPlanDescription={mealPlan.description} variant="primary"
