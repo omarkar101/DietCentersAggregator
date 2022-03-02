@@ -38,8 +38,6 @@ def user():
                 credentials.user.service_provider = ServiceProvider(name=name)
             else:
                 raise ValueError('Invalid user type')
-    except IntegrityError:
-        return jsonify(success=False, message=f'Email already registered as {user_type.value}')
-    except ValueError as e:
+    except Exception as e:
         return jsonify(success=False, message=e.args[0])
     return jsonify(success=True)
