@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
-import { signUpClient } from '../../api/requests';
-// import Login from "../login";
+import { signUpServiceProvider } from '../../api/requests';
+import Authentication from "../../containers/auth_container";
+import Login from "../login/login";
 
 // do a modal instead of a container
 
@@ -11,13 +12,16 @@ const SignUp = (props) => {
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
   const [redirectToLogin, setRedirectToLogin] = useState(false);
+  const auth = Authentication.useContainer()
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    signUpClient(email, password, name, phoneNumber)
+    signUpServiceProvider(email, password, name, phoneNumber)
       .then(response => {
+        console.log(response);
         if(response.data.success) {
           setRedirectToLogin(true);
+          auth.setToken(response.data.token);
         } else {
           alert(response.data.message);
         }
@@ -29,7 +33,7 @@ const SignUp = (props) => {
 
   return (
     <>
-      {/* {redirectToLogin && <Login />} */}
+      {redirectToLogin && <Login />}
       {!redirectToLogin &&
         <Container>
           <h1 className='shadow-sm text-success mt-5 p-3 text-center rounded'>Sign-Up</h1>

@@ -1,4 +1,7 @@
-from flask import Blueprint, jsonify, request
+import datetime
+from flask import Blueprint, current_app, jsonify, request
+from flask_cors import cross_origin
+import jwt
 from sqlalchemy.exc import IntegrityError
 from user import UserType
 from database.orm import generate_db_session
@@ -10,6 +13,7 @@ from database.models.users import User
 signup_api = Blueprint('signup_api', __name__, url_prefix='/signup')
 
 @signup_api.route('/user', methods=['POST'])
+@cross_origin(origins='*', supports_credentials=True)
 def user():
     email = request.form.get('email')
     password = request.form.get('password')
@@ -38,8 +42,7 @@ def user():
                 credentials.user.service_provider = ServiceProvider(name=name)
             else:
                 raise ValueError('Invalid user type')
-    except IntegrityError:
-        return jsonify(success=False, message=f'Email already registered as {user_type.value}')
-    except ValueError as e:
+    except Exception as e:
         return jsonify(success=False, message=e.args[0])
-    return jsonify(success=True)
+    return jsonify(success=True, token=jwt.encode({'email' : email, 'exp': datetime.datetime.utcnow() 
+        + datetime.timedelta(minutes=2000) },current_app.config['SECRET_KEY']))
