@@ -17,9 +17,8 @@ const ItemModal = (props) => {
     e.preventDefault();
     addOneItem(name, description, category)
       .then(response => {
-        console.log(response);
         if(response.data.success) {
-          items = data.items;
+          items = response.data.items;
         } else {
           alert(response.data.message);
         }
