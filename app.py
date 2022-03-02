@@ -1,4 +1,5 @@
 from flask import Flask
+from flask_cors import CORS, cross_origin
 from auth.api import auth_api
 from items.api import items_api
 from auth.decorators import require_user
@@ -15,6 +16,7 @@ from database.models.categories import Category
 from user import UserType
 
 app = Flask(__name__)
+CORS(app, support_credentials=True)
 app.config['SECRET_KEY'] = 'this_key_here'
 app.register_blueprint(auth_api)
 app.register_blueprint(items_api)
@@ -23,5 +25,6 @@ app.register_blueprint(items_api)
 @require_user(UserType.CLIENT)
 def hello():
     return 'hello'
+
 if __name__ == '__main__':
     app.run(debug=True)

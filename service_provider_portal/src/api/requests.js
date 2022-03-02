@@ -7,5 +7,6 @@ export const signUpServiceProvider = (email, password, name, phoneNumber) => {
   data.append('email', email);
   data.append('password', password);
   data.append('user_type', 'service_provider');
+  console.log(data);
   return Post('/auth/signup/user', data);
 }

@@ -4,14 +4,13 @@ const KEY = "token";
 
 const useToken = () => {
   const setToken = (token) => {
-    localStorage.setItem(KEY, JSON.stringify({ 'token': token }));
+    localStorage.setItem(KEY, JSON.stringify(token));
   };
 
-  const attachToken = (request) => {
-    const token = JSON.parse(localStorage.getItem(KEY));
-    request.setRequestHeader('x-access-token', token);
+  const getToken = () => {
+    return JSON.parse(localStorage.getItem(KEY));
   };
-  return { setToken, attachToken };
+  return { setToken, getToken };
 };
 
 const Authentication = createContainer(useToken);

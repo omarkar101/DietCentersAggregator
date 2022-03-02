@@ -1,4 +1,5 @@
 from flask import Blueprint, jsonify, request
+from flask_cors import CORS, cross_origin
 from auth.decorators import require_user
 from sqlalchemy.orm import joinedload
 from database.models.credentials import Credentials
@@ -10,7 +11,8 @@ from user import UserType, get_user
 add_api = Blueprint('add_api', __name__, url_prefix='/add')
 
 @add_api.route('/one', methods=['POST'])
-# @require_user(UserType.SERVICE_PROVIDER)
+# @require_user(UserType.SERVICE_PROVIDER)s
+@cross_origin(origins='*', supports_credentials=True)
 def add_item():
   # we need to know which user is logged in
   # user = get_user()
