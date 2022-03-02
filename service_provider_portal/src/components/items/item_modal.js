@@ -15,12 +15,11 @@ const reducer = (state, action) => {
 }
 
 const ItemModal = (props) => {
-
-  const [name, setName] = useState(null);
-  const [description, setDescription] = useState(null);
-  const [category, setCategory] = useState(null);
-
   const { isOpen, onClose, onSubmit, itemName, itemDescription, itemCategory } = props;
+
+  const [name, setName] = useState(itemName);
+  const [description, setDescription] = useState(itemDescription);
+  const [category, setCategory] = useState(itemCategory);
 
   const [state, dispatch] = useReducer(reducer, {
     items: []
@@ -53,15 +52,15 @@ const ItemModal = (props) => {
         <Form onSubmit={handleSubmit}>
           <Form.Group className="mb-3" controlId="formBasicName">
             <Form.Label>Name</Form.Label>
-            <Form.Control type="text" placeholder="Enter Name" value={itemName} onChange={e => setName(e.target.value)} />
+            <Form.Control type="text" placeholder="Enter Name" value={name} onChange={e => setName(e.target.value)} />
           </Form.Group>
-          <Form.Group className="mb-3" controlId="formBasicCategort">
+          <Form.Group className="mb-3" controlId="formBasicCategory">
             <Form.Label>Categroy</Form.Label>
-            <Form.Control as="textarea" placeholder="Category" value={itemCategory} onChange={e => setCategory(e.target.value)} />
+            <Form.Control type="text" placeholder="Category" value={category} onChange={e => setCategory(e.target.value)} />
           </Form.Group>
           <Form.Group className="mb-3" controlId="formBasicDescription">
             <Form.Label>Description</Form.Label>
-            <Form.Control as="textarea" placeholder="Description" rows={3} value={itemDescription} onChange={e => setDescription(e.target.value)} />
+            <Form.Control as="textarea" placeholder="Description" rows={3} value={description} onChange={e => setDescription(e.target.value)} />
           </Form.Group>
           <Form.Group className="mb-3" >
             <Form.Label>Item Image</Form.Label>

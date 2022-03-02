@@ -2,9 +2,12 @@ import { useCallback, useReducer, useState } from "react";
 import { Button, Table } from "react-bootstrap";
 import styled from "styled-components";
 import ItemModal from "./item_modal";
+import { getAllItems } from "../../api/requests";
 
 const reducer = (state, action) => {
   switch (action.type) {
+    case 'get-all-items':
+      return { modalOpen: false, items: action.items }
     case 'open-add-item-modal':
       return {modalOpen: true, selectedItemId: null, selectedItemDescription: action.itemDescription, selectedItemName: action.itemName, selectedItemCategory: action.itemCategory };
     case 'submit-add-item-modal':
@@ -27,6 +30,7 @@ const Items = (props) => {
 
   const [state, dispatch] = useReducer(reducer, {
     modalOpen: false,
+    items: [],
     selectedItemId: null,
     selectedItemDescription: null,
     selectedItemCategory: null,
@@ -39,6 +43,20 @@ const Items = (props) => {
     {'name': 'Burger', 'description': 'Hello World', 'categories': 'Fast Food'}
   ]
 
+  const getItems = useCallback((e) => {
+    getAllItems()
+      .then(response => {
+        if(response.data.success) {
+          dispatch({type: 'get-all-items', items: response.data.items });
+        } else {
+          alert(response.data.message);
+        }
+      })
+      .catch(e => {
+        alert(e);
+      }) 
+  }, []);
+
   const toggleDeleteItem = useCallback((e) => {
     console.log('delete');
     dispatch({type: 'delete-item'});
@@ -50,7 +68,7 @@ const Items = (props) => {
     const itemDescription = e.target.dataset.itemdescription;
     const itemCategory = e.target.dataset.itemcategory;
     dispatch({type: 'open-add-item-modal', itemDescription: itemDescription, itemName: itemName, itemCategory: itemCategory});
-
+    // getItems();
   }, []);
 
   const toggleModalOnSubmit = useCallback(() => {
@@ -77,14 +95,14 @@ const Items = (props) => {
             <th>Description</th>
             <th>Actions</th>
           </tr>
-          {items.map((item, index) =>
+          {items?.map((item, index) =>
             <tr>
               <td>{item.name}</td>
-              <td>{item.categories}</td>
+              <td>{item.category}</td>
               <td>{item.description}</td>
               <td>
                 <div className="mb-2">
-                  <Button id={index} data-itemName={item.name} data-itemDescription={item.description} data-itemCategory={item.categories}
+                  <Button id={index} data-itemName={item.name} data-itemDescription={item.description} data-itemCategory={item.category}
                     variant="primary" size="sm" onClick={toggleOpenModal}>
                     Edit
                   </Button>
