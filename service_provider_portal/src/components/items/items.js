@@ -6,9 +6,9 @@ import ItemModal from "./item_modal";
 const reducer = (state, action) => {
   switch (action.type) {
     case 'open-add-item-modal':
-      return {modalOpen: true, selectedItemId: null, selectedItemDescription: null, selectedItemName: null};
+      return {modalOpen: true, selectedItemId: null, selectedItemDescription: action.itemDescription, selectedItemName: action.itemName, selectedItemCategory: action.itemCategory };
     case 'submit-add-item-modal':
-      return {modalOpen: false, selectedItemDescription: action.itemDescription, selectedItemName: action.itemName};
+      return {modalOpen: false, selectedItemDescription: action.itemDescription, selectedItemName: action.itemName, selectedItemCategory: action.itemCategory };
     case 'delete-item':
       return {};
     case 'open-edit-item-modal':
@@ -29,6 +29,7 @@ const Items = (props) => {
     modalOpen: false,
     selectedItemId: null,
     selectedItemDescription: null,
+    selectedItemCategory: null,
     selectedItemName: null
   });
 
@@ -42,12 +43,14 @@ const Items = (props) => {
     console.log('delete');
     dispatch({type: 'delete-item'});
   }, []);
+
   const toggleOpenModal = useCallback((e) => {
-    const itemId = e.target.id;
+    // const itemId = e.target.id;
     const itemName = e.target.dataset.itemname;
     const itemDescription = e.target.dataset.itemdescription;
-    console.log(itemDescription, itemName);
-    dispatch({type: 'open-edit-item-modal', itemDescription: itemDescription, itemName: itemName});
+    itemCategory = e.target.dataset.itemCategory;
+    dispatch({type: 'open-add-item-modal', itemDescription: itemDescription, itemName: itemName, itemCategory: itemCategory});
+
   }, []);
 
   const toggleModalOnSubmit = useCallback(() => {
@@ -62,8 +65,11 @@ const Items = (props) => {
     <>
       <Container>
         <ItemModal isOpen={state.modalOpen} onClose={toggleModalOnClose} onSubmit={toggleModalOnSubmit}
-          itemName={state.selectedItemName} itemDescription={state.selectedItemDescription} />
-        <Button variant="success" onClick={toggleOpenModal}>Add Item</Button>
+          itemName={state.selectedItemName} itemDescription={state.selectedItemDescription} itemCategory={state.selectedItemCategory} />
+        <Button variant="success" id={index} data-itemName='' data-itemDescription='' data-itemCategory=''
+          onClick={toggleOpenModal}>
+          Add Item
+        </Button>
         <Table striped bordered hover>
           <tr>
             <th>Name</th>
@@ -74,12 +80,12 @@ const Items = (props) => {
           {items.map((item, index) =>
             <tr>
               <td>{item.name}</td>
+              <td>{item.categories}</td>
               <td>{item.description}</td>
-              <td>This is food</td>
               <td>
                 <div className="mb-2">
-                  <Button id={index} data-itemName={item.name} data-itemDescription={item.description} variant="primary"
-                      size="sm" onClick={toggleOpenModal}>
+                  <Button id={index} data-itemName={item.name} data-itemDescription={item.description} data-itemCategory={item.categories}
+                    variant="primary" size="sm" onClick={toggleOpenModal}>
                     Edit
                   </Button>
                   <Button id={index} variant="danger" size="sm" onClick={toggleDeleteItem}>
