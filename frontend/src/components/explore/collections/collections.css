@@ -1,6 +1,7 @@
 .collections {
-    background-color: var(--inactive-color);
-    width: 100%;
+    /* background-color: var(--inactive-color); */
+    width: 90%;
     padding: 40px 0px;
+    margin: auto;
     
 }

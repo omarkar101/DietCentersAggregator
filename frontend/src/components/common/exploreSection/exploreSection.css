@@ -1,5 +1,8 @@
 .explore-section {
-    margin-top: 16px;
+    padding-top: 50px;
+    max-width: 90%;
+    justify-content: center;
+    margin: auto;
 }
 
 .explore-grid {

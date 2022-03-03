@@ -4,9 +4,12 @@
   --primary-bg: rgb(255, 255, 255);
   --zomato-gray: #828282;
   --zomato-red: #ff738b;
+  --jaro-green: #21ad83;
+  --jaro-light-green: #bce6d988;
   --gray: rgb(207, 207, 207);
   --inactive-text: #696969;
   --inactive-color: #f8f8f8;
+  --inactive-color2: #f1f0f0;
   --filter-text: #9c9c9c;
   --collection-shadow: rgb(0 0 0 / 8%) 0px 3px 12px;
   --tag-red: #d92662;
