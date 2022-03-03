@@ -1,14 +1,21 @@
 from sqlalchemy import Column, BigInteger, Text, ForeignKey
 from sqlalchemy.orm import relationship
+from dataclasses import dataclass
 from sqlalchemy.ext.hybrid import hybrid_property
 from database.orm import Base
 
 metadata = Base.metadata
 
+@dataclass
 class Item(Base):
     __tablename__ = 'items'
 
+    id: int
+    category: str
+    name: str
+
     id = Column(BigInteger, primary_key=True, autoincrement=True)
+    # category must be a foreign key
     _category = Column('category', Text, nullable=False, unique=True)
     _description = Column('description', Text, nullable=False, unique=True)
     _name = Column('name', Text, nullable=False, unique=True)

@@ -16,11 +16,7 @@ const SignUp = (props) => {
   const [validated, setValidated] = useState(false);
 
   const handleSubmit = (e) => {
-    const form = e.currentTarget;
-    if (form.checkValidity() === false) {
-      e.preventDefault();
-    }
-    setValidated(true);
+    e.preventDefault();
     signUpClient(email, password, firstName, lastName, phoneNumber)
       .then(response => {
         if(response.data.success) {
@@ -44,23 +40,27 @@ const SignUp = (props) => {
             <Col lg={5} md={6} sm={12} style={{ borderStyle: "solid", borderWidth: 2, borderColor: "#21ad83"}} className='rounded p-5 m-auto shadow-sm rounded-lg'>
               <Form  className="align-items:center" noValidate validated={validated} onSubmit={handleSubmit}>
                 <Form.Group className='mb-3' controlId='formBasicFirstName'>
-                  <Form.Control required type='text' placeholder='First Name' onChange={e => setFirstName(e.target.value)} />
+                  <Form.Control required type='text' placeholder='First Name' pattern="[a-z]+" onChange={e => setFirstName(e.target.value)} />
                 </Form.Group>
 
                 <Form.Group className='mb-3' controlId='formBasicLastName'>
-                  <Form.Control required type='text' placeholder='Last Name' onChange={e => setLastName(e.target.value)} />
+                  <Form.Control required type='text' placeholder='Last Name' pattern="[a-z]+" onChange={e => setLastName(e.target.value)} />
                 </Form.Group>
 
                 <Form.Group className='mb-3' controlId='formBasicPhoneNumber'>
-                  <Form.Control required type='text' placeholder='Phone Number' onChange={e => setPhoneNumber(e.target.value)} />
+                  <Form.Control required type='text' placeholder='Phone Number' pattern="[0-9]+" onChange={e => setPhoneNumber(e.target.value)} />
                 </Form.Group>
 
                 <Form.Group className='mb-3' controlId='formBasicEmail'>
-                  <Form.Control required type='email' placeholder='Enter email' onChange={e => setEmail(e.target.value)} />
+                  <Form.Control required type='email' placeholder='Enter email' pattern="^\S+@\S+\.\S+$" onChange={e => setEmail(e.target.value)} />
                 </Form.Group>
 
                 <Form.Group className='mb-3' controlId='formBasicPassword'>
-                  <Form.Control required type='password' placeholder='Password' onChange={e => setPassword(e.target.value)} />
+                  <Form.Control required type='password' placeholder='Password' pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$" onChange={e => setPassword(e.target.value)} />
+                <Form.Text className="text-muted">
+                  Minimum eight characters, at least one uppercase letter, one lowercase letter and one number.
+                </Form.Text>
+
                 </Form.Group>
 
                 <Button className="mt-5" style={{color:"white", backgroundColor: "#21ad83", borderColor: "#21ad83", width: "100%"}} outline type='submit'>
