@@ -1,19 +1,25 @@
 import React from "react";
 import { Card } from "react-bootstrap";
 
-const OrderCard = () => {
+const OrderCard = (props) => {
+  const {
+    orderid,
+    cardtext,
+    serviceprovider,
+    footer
+  } = props;
+
   return (
-      <Card>
-        <Card.Img variant="top" src="" alt="image" width='100%' height={100} />
+      <Card style={{margin: "auto", minWidth: '600px', borderStyle: "solid", borderWidth: 2, borderColor: "#21ad83"}}>
         <Card.Body>
-          <Card.Title>Card title</Card.Title>
+          <Card.Title>Order ID: {orderid}</Card.Title>
+          <Card.Title>Service Provider: {serviceprovider}</Card.Title>
           <Card.Text>
-            This is a wider card with supporting text below as a natural lead-in
-            to additional content. This content is a little bit longer.
+            {cardtext}
           </Card.Text>
         </Card.Body>
-        <Card.Footer>
-          <small className="text-muted">Last updated 3 mins ago</small>
+        <Card.Footer style={{ backgroundColor: "#bce6d988"}}>
+          <small className="text-muted">Last Updated: {footer}</small>
         </Card.Footer>
       </Card>
   );

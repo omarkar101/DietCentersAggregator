@@ -1,5 +1,11 @@
 .top-brands {
-    padding-top: 30px;
+    /* padding-top: 50px;
+    padding-bottom: 50px;
+    background-color: var(--inactive-color2);
+    width: 100%; */
+    background-color: var(--inactive-color2);
+    width: 100%;
+    padding: 40px 0px;
 }
 
 .top-brands-cover {

@@ -10,8 +10,8 @@ const Explore = () => {
   return (
     <>
       <ExploreCollections />
-      <TopBrands />
-      <ExploreSection list={restaurantList} collectionName='Explore Service Providers in Beirut' />
+      {/* <TopBrands /> */}
+      <ExploreSection list={restaurantList} collectionName='Explore Service Providers in your area' />
     </>
   );
 };

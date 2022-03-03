@@ -4,6 +4,7 @@
 
 .options-wrapper {
     display: flex;
+    justify-content: space-between;
 }
 
 .tab-item {
@@ -19,6 +20,7 @@
 }
 
 .tab-image-container {
+    margin: 10px;
     height: 60px;
     width: 60px;
     border-radius: 50%;
@@ -28,13 +30,12 @@
 .tab-image {
     height: 30px;
     width: 30px;
-
 }
 
 .active-tab {
-    border-bottom: 2px solid var(--zomato-red);
+    border-bottom: 2px solid var(--jaro-green);
 }
 
 .active-tab .tab-name {
-    color: var(--zomato-red);
+    color: var(--jaro-green);
 }
