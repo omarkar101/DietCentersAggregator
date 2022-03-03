@@ -12,7 +12,7 @@ import ServiceProviderPage from "./components/serviceProvider/serviceProvider";
 import Package from "./components/mealPackages/package";
 import Authentication from "./containers/user_authentication";
 
-const App = () => { 
+const App = () => {
   return (
     <Authentication.Provider>
     <BrowserRouter>
