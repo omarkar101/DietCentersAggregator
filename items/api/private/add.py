@@ -11,7 +11,7 @@ from user import UserType, get_user
 add_api = Blueprint('add_api', __name__, url_prefix='/add')
 
 @add_api.route('/one', methods=['POST'])
-# @require_user(UserType.SERVICE_PROVIDER)s
+# @require_user(UserType.SERVICE_PROVIDER)
 @cross_origin(origins='*', supports_credentials=True)
 def add_item():
   # we need to know which user is logged in
@@ -26,9 +26,9 @@ def add_item():
       .first()
     user = user.user
     # items = user.service_provider.items
-    item_name = request.get_json().get('item_name')
-    item_description = request.get_json().get('item_description')
-    category = request.get_json().get('category')
+    item_name = request.form.get('item_name')
+    item_description = request.form.get('item_description')
+    category = request.form.get('category')
     # we should associate the items to the current user
     item = Item(name=item_name, description=item_description, category=category)
     user.service_provider.items.append(item)

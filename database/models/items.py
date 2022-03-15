@@ -11,6 +11,7 @@ class Item(Base):
     __tablename__ = 'items'
 
     id: int
+    description: str
     category: str
     name: str
 

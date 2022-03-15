@@ -17,7 +17,7 @@ export const loginServiceProvider = (email, password) => {
   return Post('/auth/login/user', data);
 }
 
-export const addOneItem = (item_name, item_category, item_description) => {
+export const addOneItem = (item_name, item_description, item_category) => {
   const data = new FormData();
   data.append('item_name', item_name);
   data.append('category', item_category);
