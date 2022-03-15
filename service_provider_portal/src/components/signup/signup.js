@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import { signUpServiceProvider } from '../../api/requests';
-import Authentication from "../../containers/auth_container";
 import { useNavigate } from 'react-router-dom';
 
 // do a modal instead of a container
@@ -11,7 +10,6 @@ const SignUp = (props) => {
   const [phoneNumber, setPhoneNumber] = useState(null);
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
-  const auth = Authenti'cation.useContainer();
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {

@@ -3,52 +3,22 @@ import { Button, Form, Modal } from "react-bootstrap";
 import UploadAndDisplayImage from "../uploadImage/UploadAndDisplayImage";
 import { addOneItem } from '../../api/requests';
 
-const reducer = (state, action) => {
-  switch (action.type) {
-    case 'submit-add-item-modal':
-      return { items: action.items };
-    case 'submit-edit-item-modal':
-      return {};
-    default:
-      throw new Error();
-  }
-}
-
 const ItemModal = (props) => {
   const { isOpen, onClose, onSubmit, itemName, itemDescription, itemCategory } = props;
 
-  const [name, setName] = useState(null);
-  const [description, setDescription] = useState(null);
-  const [category, setCategory] = useState(null);
-
-
-  // const [state, dispatch] = useReducer(reducer, {
-  //   items: []
-  // });
-
-  // const { items } = state;
-
+  const [name, setName] = useState('');
+  const [description, setDescription] = useState('');
+  const [category, setCategory] = useState('');
 
   const handleSubmit = (e) => {
-    // e.preventDefault();
-    // addOneItem(name, description, category)
-    //   .then(response => {
-    //     if(response.data.success) {
-    //       items = response.data.items;
-    //       dispatch({type: 'submit-add-item-modal', items: items });
-    //     } else {
-    //       alert(response.data.message);
-    //     }
-    //   })
-    //   .catch(e => {
-    //     alert(e);
-    //   }) 
+    e.preventDefault();
+    onSubmit(name, description, category);
   }
 
   useEffect(() => {
     setName(itemName);
     setDescription(itemDescription);
-    setCategory(itemCategory)
+    setCategory(itemCategory);
   }, [itemName, itemDescription, itemCategory]);
 
   return (
@@ -80,7 +50,7 @@ const ItemModal = (props) => {
         <Button variant="secondary" onClick={onClose}>
           Close
         </Button>
-        <Button variant="primary" onClick={onSubmit}>
+        <Button variant="primary" onClick={handleSubmit}>
           Save Changes
         </Button>
       </Modal.Footer>

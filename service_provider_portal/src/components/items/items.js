@@ -2,48 +2,61 @@ import { useCallback, useReducer, useState, useEffect } from "react";
 import { Button, Table } from "react-bootstrap";
 import styled from "styled-components";
 import ItemModal from "./item_modal";
-import { getAllItems } from "../../api/requests";
+import { addOneItem, deleteOneItem, editOneItem, getAllItems } from "../../api/requests";
 
 const reducer = (state, action) => {
   switch (action.type) {
     case "get-all-items":
-      return { modalOpen: false, items: action.items };
+      return { ...state, modalOpen: false, items: action.items };
     case "open-add-item-modal":
       return {
+        ...state,
         modalOpen: true,
-        // selectedItemId: null,
+        selectedItemId: null,
         selectedItemDescription: action.itemDescription,
         selectedItemName: action.itemName,
         selectedItemCategory: action.itemCategory,
       };
     case "submit-add-item-modal":
       return {
+        ...state,
         modalOpen: false,
-        selectedItemDescription: action.itemDescription,
-        selectedItemName: action.itemName,
-        selectedItemCategory: action.itemCategory,
+        selectedItemDescription: "",
+        selectedItemName: "",
+        selectedItemCategory: "",
+        items: action.items,
       };
     case "delete-item":
-      return {};
+      return {
+        ...state,
+        items: action.items
+      };
     case "open-edit-item-modal":
       return {
+        ...state,
         modalOpen: true,
+        selectedItemId: action.itemId,
         selectedItemDescription: action.itemDescription,
         selectedItemName: action.itemName,
+        selectedItemCategory: action.itemCategory
       };
     case "submit-edit-item-modal":
       return {
+        ...state,
         modalOpen: false,
-        selectedItemDescription: action.itemDescription,
-        selectedItemName: action.itemName,
-        selectedItemId: action.itemId,
+        selectedItemId: null,
+        selectedItemDescription: '',
+        selectedItemName: '',
+        selectedItemId: '',
+        items: action.items
       };
     case "close-item-modal":
       return {
+        ...state,
         modalOpen: false,
-        selectedItemDescription: null,
-        selectedItemName: null,
-        selectedItemId: null,
+        selectedItemDescription: "",
+        selectedItemName: "",
+        selectedItemId: "",
       };
     default:
       throw new Error();
@@ -53,38 +66,71 @@ const reducer = (state, action) => {
 const Items = (props) => {
   const [state, dispatch] = useReducer(reducer, {
     modalOpen: false,
-    selectedItemId: null,
-    selectedItemDescription: null,
-    selectedItemCategory: null,
-    selectedItemName: null,
+    selectedItemId: "",
+    selectedItemDescription: "",
+    selectedItemCategory: "",
+    selectedItemName: "",
+    items: [],
   });
 
-  const items = [
-    { name: "Item 1", description: "This is item 1", categories: "This is category 1" },
-    { name: "Item 2", description: "This is item 2", categories: "This is category 2" },
-    { name: "Item 3", description: "This is item 3", categories: "This is category 3" },
-  ];
-
-  // useEffect(() => {
-  //   getAllItems()
-  //     .then((response) => {
-  //       if (response.data.success) {
-  //         dispatch({ type: "get-all-items", items: response.data.items }); // remove constant items array and add items to state
-  //       } else {
-  //         alert(response.data.message);
-  //       }
-  //     })
-  //     .catch((e) => {
-  //       alert(e);
-  //     });
-  // }, []);
-
-  const toggleDeleteItem = useCallback((e) => {
-    console.log("delete");
-    dispatch({ type: "delete-item" });
+  useEffect(() => {
+    getAllItems()
+      .then((response) => {
+        if (response.data.success) {
+          dispatch({ type: "get-all-items", items: response.data.items });
+        } else {
+          alert(response.data.message);
+        }
+      })
+      .catch((e) => {
+        alert(e);
+      });
   }, []);
 
-  const toggleOpenModal = useCallback((e) => {
+  const toggleModalOnSubmit = (itemName, itemDescription, itemCategory) => {
+    if (state.selectedItemId == null) {
+      addOneItem(itemName, itemDescription, itemCategory)
+        .then((response) => {
+          if (response.data.success) {
+            dispatch({ type: "submit-add-item-modal", items: response.data.items });
+          } else {
+            alert(response.data.message);
+          }
+        })
+        .catch((e) => {
+          alert(e);
+        });
+    } else {
+      editOneItem(state.selectedItemId, itemName, itemDescription, itemCategory)
+        .then((response) => {
+          if (response.data.success) {
+            dispatch({ type: "submit-edit-item-modal", items: response.data.items });
+          } else {
+            alert(response.data.message);
+          }
+        })
+        .catch((e) => {
+          alert(e);
+        });
+    }
+  };
+
+  const toggleDeleteItem = useCallback((e) => {
+    const itemId = e.target.id;
+    deleteOneItem(itemId)
+      .then((response) => {
+        if (response.data.success) {
+          dispatch({ type: "delete-item", items: response.data.items })
+        } else {
+          alert(response.data.message);
+        }
+      })
+      .catch((e) => {
+        alert(e);
+      });
+  }, []);
+
+  const toggleOpenAddItemModal = useCallback((e) => {
     // const itemId = e.target.id;
     const itemName = e.target.dataset.itemname;
     const itemDescription = e.target.dataset.itemdescription;
@@ -97,13 +143,25 @@ const Items = (props) => {
     });
   }, []);
 
-  const toggleModalOnSubmit = useCallback(() => {
-    dispatch({ type: "close-item-modal" });
+  const toggleOpenEditItemModal = useCallback((e) => {
+    const itemId = e.target.id;
+    const itemName = e.target.dataset.itemname;
+    const itemDescription = e.target.dataset.itemdescription;
+    const itemCategory = e.target.dataset.itemcategory;
+    dispatch({
+      type: "open-edit-item-modal",
+      itemId: itemId,
+      itemDescription: itemDescription,
+      itemName: itemName,
+      itemCategory: itemCategory,
+    });
   }, []);
 
   const toggleModalOnClose = useCallback(() => {
     dispatch({ type: "close-item-modal" });
   }, []);
+
+  console.log("ITEMS:", state.items);
 
   return (
     <>
@@ -117,51 +175,48 @@ const Items = (props) => {
           itemCategory={state.selectedItemCategory}
         />
         <Button
-          variant="success"
-          data-itemName=""
-          data-itemDescription=""
-          data-itemCategory=""
-          onClick={toggleOpenModal}
-        >
+          variant='success'
+          data-itemname=''
+          data-itemdescription=''
+          data-itemcategory=''
+          onClick={toggleOpenAddItemModal}>
           Add Item
         </Button>
         <Table striped bordered hover>
-          <tr>
-            <th>Name</th>
-            <th>Category</th>
-            <th>Description</th>
-            <th>Actions</th>
-          </tr>
-          {items?.map((item, index) => (
+          <thead>
             <tr>
-              <td>{item.name}</td>
-              <td>{item.categories}</td>
-              <td>{item.description}</td>
-              <td>
-                <div className="mb-2">
-                  <Button
-                    id={index}
-                    data-itemName={item.name}
-                    data-itemDescription={item.description}
-                    data-itemCategory={item.categories}
-                    variant="primary"
-                    size="sm"
-                    onClick={toggleOpenModal}
-                  >
-                    Edit
-                  </Button>
-                  <Button
-                    id={index}
-                    variant="danger"
-                    size="sm"
-                    onClick={toggleDeleteItem}
-                  >
-                    Delete
-                  </Button>
-                </div>
-              </td>
+              <th>Name</th>
+              <th>Category</th>
+              <th>Description</th>
+              <th>Actions</th>
             </tr>
-          ))}
+          </thead>
+          <tbody>
+            {state.items?.map((item) => (
+              <tr>
+                <td>{item.name}</td>
+                <td>{item.category}</td>
+                <td>{item.description}</td>
+                <td>
+                  <div className='mb-2'>
+                    <Button
+                      id={item.id}
+                      data-itemName={item.name}
+                      data-itemDescription={item.description}
+                      data-itemCategory={item.category}
+                      variant='primary'
+                      size='sm'
+                      onClick={toggleOpenEditItemModal}>
+                      Edit
+                    </Button>
+                    <Button id={item.id} variant='danger' size='sm' onClick={toggleDeleteItem}>
+                      Delete
+                    </Button>
+                  </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
         </Table>
       </Container>
     </>
