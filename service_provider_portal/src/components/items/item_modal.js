@@ -12,7 +12,6 @@ const ItemModal = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('HELLLOOOO:', name, description, category);
     onSubmit(name, description, category);
   }
 

@@ -2,22 +2,24 @@ import { useCallback, useReducer, useState, useEffect } from "react";
 import { Button, Table } from "react-bootstrap";
 import styled from "styled-components";
 import ItemModal from "./item_modal";
-import { addOneItem, getAllItems } from "../../api/requests";
+import { addOneItem, deleteOneItem, editOneItem, getAllItems } from "../../api/requests";
 
 const reducer = (state, action) => {
   switch (action.type) {
     case "get-all-items":
-      return { modalOpen: false, items: action.items };
+      return { ...state, modalOpen: false, items: action.items };
     case "open-add-item-modal":
       return {
+        ...state,
         modalOpen: true,
-        // selectedItemId: null,
+        selectedItemId: null,
         selectedItemDescription: action.itemDescription,
         selectedItemName: action.itemName,
         selectedItemCategory: action.itemCategory,
       };
     case "submit-add-item-modal":
       return {
+        ...state,
         modalOpen: false,
         selectedItemDescription: "",
         selectedItemName: "",
@@ -25,22 +27,32 @@ const reducer = (state, action) => {
         items: action.items,
       };
     case "delete-item":
-      return {};
+      return {
+        ...state,
+        items: action.items
+      };
     case "open-edit-item-modal":
       return {
+        ...state,
         modalOpen: true,
+        selectedItemId: action.itemId,
         selectedItemDescription: action.itemDescription,
         selectedItemName: action.itemName,
+        selectedItemCategory: action.itemCategory
       };
     case "submit-edit-item-modal":
       return {
+        ...state,
         modalOpen: false,
-        selectedItemDescription: action.itemDescription,
-        selectedItemName: action.itemName,
-        selectedItemId: action.itemId,
+        selectedItemId: null,
+        selectedItemDescription: '',
+        selectedItemName: '',
+        selectedItemId: '',
+        items: action.items
       };
     case "close-item-modal":
       return {
+        ...state,
         modalOpen: false,
         selectedItemDescription: "",
         selectedItemName: "",
@@ -76,11 +88,39 @@ const Items = (props) => {
   }, []);
 
   const toggleModalOnSubmit = (itemName, itemDescription, itemCategory) => {
-    console.log("HANDLE SUBMITTTT");
-    addOneItem(itemName, itemDescription, itemCategory)
+    if (state.selectedItemId == null) {
+      addOneItem(itemName, itemDescription, itemCategory)
+        .then((response) => {
+          if (response.data.success) {
+            dispatch({ type: "submit-add-item-modal", items: response.data.items });
+          } else {
+            alert(response.data.message);
+          }
+        })
+        .catch((e) => {
+          alert(e);
+        });
+    } else {
+      editOneItem(state.selectedItemId, itemName, itemDescription, itemCategory)
+        .then((response) => {
+          if (response.data.success) {
+            dispatch({ type: "submit-edit-item-modal", items: response.data.items });
+          } else {
+            alert(response.data.message);
+          }
+        })
+        .catch((e) => {
+          alert(e);
+        });
+    }
+  };
+
+  const toggleDeleteItem = useCallback((e) => {
+    const itemId = e.target.id;
+    deleteOneItem(itemId)
       .then((response) => {
         if (response.data.success) {
-          dispatch({ type: "submit-add-item-modal", items: response.data.items });
+          dispatch({ type: "delete-item", items: response.data.items })
         } else {
           alert(response.data.message);
         }
@@ -88,19 +128,29 @@ const Items = (props) => {
       .catch((e) => {
         alert(e);
       });
-  };
-
-  const toggleDeleteItem = useCallback((e) => {
-    dispatch({ type: "delete-item" });
   }, []);
 
-  const toggleOpenModal = useCallback((e) => {
+  const toggleOpenAddItemModal = useCallback((e) => {
     // const itemId = e.target.id;
     const itemName = e.target.dataset.itemname;
     const itemDescription = e.target.dataset.itemdescription;
     const itemCategory = e.target.dataset.itemcategory;
     dispatch({
       type: "open-add-item-modal",
+      itemDescription: itemDescription,
+      itemName: itemName,
+      itemCategory: itemCategory,
+    });
+  }, []);
+
+  const toggleOpenEditItemModal = useCallback((e) => {
+    const itemId = e.target.id;
+    const itemName = e.target.dataset.itemname;
+    const itemDescription = e.target.dataset.itemdescription;
+    const itemCategory = e.target.dataset.itemcategory;
+    dispatch({
+      type: "open-edit-item-modal",
+      itemId: itemId,
       itemDescription: itemDescription,
       itemName: itemName,
       itemCategory: itemCategory,
@@ -129,7 +179,7 @@ const Items = (props) => {
           data-itemname=''
           data-itemdescription=''
           data-itemcategory=''
-          onClick={toggleOpenModal}>
+          onClick={toggleOpenAddItemModal}>
           Add Item
         </Button>
         <Table striped bordered hover>
@@ -142,7 +192,7 @@ const Items = (props) => {
             </tr>
           </thead>
           <tbody>
-            {state.items?.map((item, index) => (
+            {state.items?.map((item) => (
               <tr>
                 <td>{item.name}</td>
                 <td>{item.category}</td>
@@ -150,16 +200,16 @@ const Items = (props) => {
                 <td>
                   <div className='mb-2'>
                     <Button
-                      id={index}
+                      id={item.id}
                       data-itemName={item.name}
                       data-itemDescription={item.description}
                       data-itemCategory={item.category}
                       variant='primary'
                       size='sm'
-                      onClick={toggleOpenModal}>
+                      onClick={toggleOpenEditItemModal}>
                       Edit
                     </Button>
-                    <Button id={index} variant='danger' size='sm' onClick={toggleDeleteItem}>
+                    <Button id={item.id} variant='danger' size='sm' onClick={toggleDeleteItem}>
                       Delete
                     </Button>
                   </div>
