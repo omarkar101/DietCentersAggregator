@@ -19,10 +19,10 @@ const reducer = (state, action) => {
     case "submit-add-item-modal":
       return {
         modalOpen: false,
-        selectedItemDescription: '',
-        selectedItemName: '',
-        selectedItemCategory: '',
-        items: action.items
+        selectedItemDescription: "",
+        selectedItemName: "",
+        selectedItemCategory: "",
+        items: action.items,
       };
     case "delete-item":
       return {};
@@ -42,9 +42,9 @@ const reducer = (state, action) => {
     case "close-item-modal":
       return {
         modalOpen: false,
-        selectedItemDescription: '',
-        selectedItemName: '',
-        selectedItemId: '',
+        selectedItemDescription: "",
+        selectedItemName: "",
+        selectedItemId: "",
       };
     default:
       throw new Error();
@@ -54,11 +54,11 @@ const reducer = (state, action) => {
 const Items = (props) => {
   const [state, dispatch] = useReducer(reducer, {
     modalOpen: false,
-    selectedItemId: '',
-    selectedItemDescription: '',
-    selectedItemCategory: '',
-    selectedItemName: '',
-    items: []
+    selectedItemId: "",
+    selectedItemDescription: "",
+    selectedItemCategory: "",
+    selectedItemName: "",
+    items: [],
   });
 
   useEffect(() => {
@@ -76,19 +76,19 @@ const Items = (props) => {
   }, []);
 
   const toggleModalOnSubmit = (itemName, itemDescription, itemCategory) => {
-    console.log('HANDLE SUBMITTTT');
+    console.log("HANDLE SUBMITTTT");
     addOneItem(itemName, itemDescription, itemCategory)
-      .then(response => {
-        if(response.data.success) {
+      .then((response) => {
+        if (response.data.success) {
           dispatch({ type: "submit-add-item-modal", items: response.data.items });
         } else {
           alert(response.data.message);
         }
       })
-      .catch(e => {
+      .catch((e) => {
         alert(e);
-      }) 
-  }
+      });
+  };
 
   const toggleDeleteItem = useCallback((e) => {
     dispatch({ type: "delete-item" });
@@ -111,7 +111,7 @@ const Items = (props) => {
     dispatch({ type: "close-item-modal" });
   }, []);
 
-  console.log('ITEMS:', state.items);
+  console.log("ITEMS:", state.items);
 
   return (
     <>
@@ -125,12 +125,11 @@ const Items = (props) => {
           itemCategory={state.selectedItemCategory}
         />
         <Button
-          variant="success"
-          data-itemname=""
-          data-itemdescription=""
-          data-itemcategory=""
-          onClick={toggleOpenModal}
-        >
+          variant='success'
+          data-itemname=''
+          data-itemdescription=''
+          data-itemcategory=''
+          onClick={toggleOpenModal}>
           Add Item
         </Button>
         <Table striped bordered hover>
@@ -149,30 +148,24 @@ const Items = (props) => {
                 <td>{item.category}</td>
                 <td>{item.description}</td>
                 <td>
-                  <div className="mb-2">
+                  <div className='mb-2'>
                     <Button
                       id={index}
                       data-itemName={item.name}
                       data-itemDescription={item.description}
                       data-itemCategory={item.category}
-                      variant="primary"
-                      size="sm"
-                      onClick={toggleOpenModal}
-                    >
+                      variant='primary'
+                      size='sm'
+                      onClick={toggleOpenModal}>
                       Edit
                     </Button>
-                    <Button
-                      id={index}
-                      variant="danger"
-                      size="sm"
-                      onClick={toggleDeleteItem}
-                    >
+                    <Button id={index} variant='danger' size='sm' onClick={toggleDeleteItem}>
                       Delete
                     </Button>
                   </div>
                 </td>
               </tr>
-          ))}
+            ))}
           </tbody>
         </Table>
       </Container>
