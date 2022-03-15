@@ -8,6 +8,19 @@ import Profile from "./components/profile/profile";
 import SignUp from "./components/signup/signup";
 import Authentication from "./containers/auth_container";
 import User from "./containers/user_container";
+import { browserHistory } from 'react-router';
+import axios from 'axios';
+
+axios.interceptors.response.use(function (response) {
+  return response;
+}, function (error) {
+  const originalRequest = error.config;
+  if (error.response.status === 440) {
+    // Hace la solicitud de refresco de tokens
+    browserHistory.push('/login');
+  }
+  return Promise.reject(error);
+});
 
 const App = () => {
   return (

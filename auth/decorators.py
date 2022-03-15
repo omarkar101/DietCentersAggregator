@@ -5,6 +5,7 @@ from database.models.credentials import Credentials
 from database.models.users import User
 from flask import current_app
 import jwt
+from jwt.exceptions import ExpiredSignatureError
 from database.orm import generate_db_session
 from user import UserType, get_user_email_from_token
 
@@ -29,6 +30,8 @@ def require_user(user_type: UserType):
                     return jsonify(success=False, message='Invalid Authentication!', response_status=401)
                 if credentials.user.user_type != user_type:
                     return jsonify(success=False, message='Invalid Authentication', response_status=401)
+            except ExpiredSignatureError:
+                return jsonify(success=False, message='Login session expired', response_status=440)
             except:
                 return jsonify(success=False, message='Invalid Authentication')
             # returns the current logged in users contex to the routes

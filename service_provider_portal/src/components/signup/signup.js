@@ -11,7 +11,7 @@ const SignUp = (props) => {
   const [phoneNumber, setPhoneNumber] = useState(null);
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
-  const auth = Authenti'cation.useContainer();
+  const auth = Authentication.useContainer();
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
