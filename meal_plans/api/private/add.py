@@ -3,7 +3,7 @@ from flask_cors import CORS, cross_origin
 from auth.decorators import require_user
 from sqlalchemy.orm import joinedload
 from database.models.credentials import Credentials
-from database.models.items import Item
+from database.models.service_providers_meal_plans import ServiceProviderMealPlan
 from database.models.users import User
 from database.orm import generate_db_session
 from user import UserType, get_user
@@ -13,7 +13,7 @@ add_api = Blueprint('add_api', __name__, url_prefix='/add')
 @add_api.route('/one', methods=['POST'])
 # @require_user(UserType.SERVICE_PROVIDER)
 @cross_origin(origins='*', supports_credentials=True)
-def add_item():
+def add_meal_plan():
   # we need to know which user is logged in
   # user = get_user()
   # for now we will use test user
@@ -25,12 +25,10 @@ def add_item():
       .filter(Credentials.email == 'test@gmail.com') \
       .first()
     user = user.user
-    # items = user.service_provider.items
-    item_name = request.form.get('item_name')
-    item_description = request.form.get('item_description')
-    category = request.form.get('category')
-    # we should associate the items to the current user
-    item = Item(name=item_name, description=item_description, category=category)
-    user.service_provider.items.append(item)
+    meal_plan_name = request.form.get('meal_plan_name')
+    meal_plan_description = request.form.get('meal_plan_description')
+    # we should associate the meal plans to the current user
+    meal_plan = ServiceProviderMealPlan(name=meal_plan_name, description=meal_plan_description)
+    user.service_provider.meal_plans.append(meal_plan)
     db_session.refresh(user)
-  return jsonify(success=True, items=user.service_provider.items)
+  return jsonify(success=True, meal_plans=user.service_provider.meal_plans)

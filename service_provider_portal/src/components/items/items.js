@@ -13,9 +13,9 @@ const reducer = (state, action) => {
         ...state,
         modalOpen: true,
         selectedItemId: null,
-        selectedItemDescription: action.itemDescription,
-        selectedItemName: action.itemName,
-        selectedItemCategory: action.itemCategory,
+        selectedItemDescription: null,
+        selectedItemName: null,
+        selectedItemCategory: null,
       };
     case "submit-add-item-modal":
       return {
@@ -47,7 +47,7 @@ const reducer = (state, action) => {
         selectedItemId: null,
         selectedItemDescription: '',
         selectedItemName: '',
-        selectedItemId: '',
+        selectedItemCategory: '',
         items: action.items
       };
     case "close-item-modal":
@@ -56,6 +56,7 @@ const reducer = (state, action) => {
         modalOpen: false,
         selectedItemDescription: "",
         selectedItemName: "",
+        selectedItemCategory: "",
         selectedItemId: "",
       };
     default:
@@ -160,8 +161,6 @@ const Items = (props) => {
   const toggleModalOnClose = useCallback(() => {
     dispatch({ type: "close-item-modal" });
   }, []);
-
-  console.log("ITEMS:", state.items);
 
   return (
     <>

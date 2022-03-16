@@ -24,21 +24,21 @@ const ItemModal = (props) => {
   return (
     <Modal show={isOpen} onHide={onClose}>
       <Modal.Header closeButton>
-        <Modal.Title>Modal heading</Modal.Title>
+        <Modal.Title>Item</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form onSubmit={handleSubmit}>
           <Form.Group className="mb-3" controlId="formBasicName">
             <Form.Label>Name</Form.Label>
-            <Form.Control type="text" placeholder="Enter Name" value={name} onChange={e => setName(e.target.value)} />
+            <Form.Control required type="text" placeholder="Enter Name" value={name} onChange={e => setName(e.target.value)} />
           </Form.Group>
           <Form.Group className="mb-3" controlId="formBasicCategory">
-            <Form.Label>Categroy</Form.Label>
-            <Form.Control type="text" placeholder="Category" value={category} onChange={e => setCategory(e.target.value)} />
+            <Form.Label>Category</Form.Label>
+            <Form.Control required type="text" placeholder="Category" value={category} onChange={e => setCategory(e.target.value)} />
           </Form.Group>
           <Form.Group className="mb-3" controlId="formBasicDescription">
             <Form.Label>Description</Form.Label>
-            <Form.Control as="textarea" placeholder="Description" rows={3} value={description} onChange={e => setDescription(e.target.value)} />
+            <Form.Control required as="textarea" placeholder="Description" rows={3} value={description} onChange={e => setDescription(e.target.value)} />
           </Form.Group>
           <Form.Group className="mb-3" >
             <Form.Label>Item Image</Form.Label>

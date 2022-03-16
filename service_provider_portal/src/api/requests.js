@@ -1,4 +1,4 @@
-import { Post } from "./setup";
+import { Post, Get } from "./setup";
 
 export const signUpServiceProvider = (email, password, name, phoneNumber) => {
   const data = new FormData();
@@ -41,5 +41,30 @@ export const editOneItem = (itemId, item_name, item_description, item_category) 
 }
 
 export const getAllItems = () => {
-  return Post('/items/get/all');
+  return Get('/items/get/all');
+}
+
+export const addOneMealPlan = (mealPlanName, mealPlanDescription) => {
+  const data = new FormData();
+  data.append('meal_plan_name', mealPlanName);
+  data.append('meal_plan_description', mealPlanDescription);
+  return Post('/meal_plans/add/one', data)
+}
+
+export const deleteOneMealPlan = (mealPlanId) => {
+  const data = new FormData();
+  data.append('meal_plan_id', mealPlanId);
+  return Post('/meal_plans/delete/one', data)
+}
+
+export const editOneMealPlan = (mealPlanId, mealPlanName, mealPlanDescription) => {
+  const data = new FormData();
+  data.append('meal_plan_id', mealPlanId);
+  data.append('meal_plan_name', mealPlanName);
+  data.append('meal_plan_description', mealPlanDescription);
+  return Post('/meal_plans/edit/one', data)
+}
+
+export const getAllMealPlans = () => {
+  return Get('/meal_plans/get/all')
 }
