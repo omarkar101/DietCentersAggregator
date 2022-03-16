@@ -19,7 +19,7 @@ const App = () => {
   const navigate = useNavigate();
   API.interceptors.response.use((response) => {
     if (response.data.response_status == 440) {
-      window.location.pathname = "/profile";
+      window.location.pathname = "/login";
     }
     return response;
   });
