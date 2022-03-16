@@ -1,4 +1,5 @@
 import datetime
+from urllib import response
 from flask import Blueprint, current_app, jsonify, request
 from flask_cors import cross_origin
 import jwt
@@ -43,6 +44,7 @@ def user():
             else:
                 raise ValueError('Invalid user type')
     except Exception as e:
-        return jsonify(success=False, message=e.args[0])
-    return jsonify(success=True, token=jwt.encode({'email' : email, 'exp': datetime.datetime.utcnow() 
-        + datetime.timedelta(minutes=2000) },current_app.config['SECRET_KEY']))
+        return jsonify(success=False, message=e.args[0],response_status= 440)
+    # return jsonify(success=True, token=jwt.encode({'email' : email, 'exp': datetime.datetime.utcnow() 
+    #     + datetime.timedelta(minutes=2000) },current_app.config['SECRET_KEY']))
+    return jsonify(success=False, message='your log in session expired', response_status=440)
