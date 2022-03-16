@@ -18,8 +18,8 @@ const reducer = (state, action) => {
         ...state,
         modalOpen: true,
         selectedMealPlanId: null,
-        selectedMealPlanDescription: action.mealPlanDescription,
-        selectedMealPlanName: action.mealPlanName,
+        selectedMealPlanDescription: null,
+        selectedMealPlanName: null,
       };
     case "submit-add-meal-plan-modal":
       return {
@@ -63,7 +63,7 @@ const reducer = (state, action) => {
 const MealPlans = (props) => {
   const [state, dispatch] = useReducer(reducer, {
     modalOpen: false,
-    selectedMealPlanId: "",
+    selectedMealPlanId: null,
     selectedMealPlanDescription: "",
     selectedMealPlanName: "",
     mealPlans: [],
@@ -180,8 +180,8 @@ const MealPlans = (props) => {
                 <div className="mb-4">
                   <Button
                     id={mealPlan.id}
-                    data-mealPlanName={mealPlan.name}
-                    data-mealPlanDescription={mealPlan.description}
+                    data-mealplanname={mealPlan.name}
+                    data-mealplandescription={mealPlan.description}
                     variant="primary"
                     size="sm"
                     onClick={toggleOpenEditMealPlanModal}

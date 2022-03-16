@@ -22,7 +22,7 @@ def edit_meal_plan():
     user = db_session.query(Credentials) \
       .options(joinedload(Credentials.user).options(
         joinedload(User.service_provider).options(
-          joinedload(ServiceProvider.items))
+          joinedload(ServiceProvider.meal_plans))
       )) \
       .filter(Credentials.email == 'test@gmail.com') \
       .first()

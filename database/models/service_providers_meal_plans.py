@@ -1,13 +1,18 @@
 from sqlalchemy import Column, BigInteger, Text, ForeignKey
 from sqlalchemy.orm import relationship, validates
+from dataclasses import dataclass
 from sqlalchemy.ext.hybrid import hybrid_property
 from database.orm import Base
 from user import UserType
 
 metadata = Base.metadata
-
+@dataclass
 class ServiceProviderMealPlan(Base):
     __tablename__ = 'service_providers_meal_plans'
+
+    id: int
+    description: str
+    name: str
 
     id = Column(BigInteger, primary_key=True, autoincrement=True)
     _name = Column('name', Text, nullable=False)
@@ -40,8 +45,8 @@ class ServiceProviderMealPlan(Base):
     def description(self, description):
         self._description = description
 
-    @validates('service_provider')
-    def validate_user(self, key, service_provider):
-        if not self.service_provider:
-            raise Exception('Invalid user type for owning a meal plan')
-        return service_provider
+    # @validates('service_provider')
+    # def validate_user(self, key, service_provider):
+    #     if not self.service_provider:
+    #         raise Exception('Invalid user type for owning a meal plan')
+    #     return service_provider
