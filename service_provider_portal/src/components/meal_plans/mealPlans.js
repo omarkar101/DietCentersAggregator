@@ -18,8 +18,8 @@ const reducer = (state, action) => {
         ...state,
         modalOpen: true,
         selectedMealPlanId: null,
-        selectedMealPlanDescription: null,
-        selectedMealPlanName: null,
+        selectedMealPlanDescription: action.mealPlanDescription,
+        selectedMealPlanName: action.mealPlanName,
       };
     case "submit-add-meal-plan-modal":
       return {
@@ -46,6 +46,7 @@ const reducer = (state, action) => {
         selectedMealPlanId: null,
         selectedMealPlanDescription: "",
         selectedMealPlanName: "",
+        mealPlans: action.mealPlans,
       };
     case "close-meal-plan-modal":
       return {
@@ -63,7 +64,7 @@ const reducer = (state, action) => {
 const MealPlans = (props) => {
   const [state, dispatch] = useReducer(reducer, {
     modalOpen: false,
-    selectedMealPlanId: null,
+    selectedMealPlanId: "",
     selectedMealPlanDescription: "",
     selectedMealPlanName: "",
     mealPlans: [],
@@ -83,7 +84,7 @@ const MealPlans = (props) => {
     });
   }, []);
 
-  const toggleModalOnSubmit = useCallback((mealPlanName, mealPlanDescription) => {
+  const toggleModalOnSubmit = (mealPlanName, mealPlanDescription) => {
     if (state.selectedMealPlanId == null) {
       addOneMealPlan(mealPlanName, mealPlanDescription)
       .then((response) => {
@@ -109,7 +110,7 @@ const MealPlans = (props) => {
         alert(e);
       });
     }
-  }, []);
+  };
 
   const toggleDeleteMealPlan = useCallback((e) => {
     const mealPlanId = e.target.id;

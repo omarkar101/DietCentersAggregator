@@ -13,9 +13,9 @@ const reducer = (state, action) => {
         ...state,
         modalOpen: true,
         selectedItemId: null,
-        selectedItemDescription: null,
-        selectedItemName: null,
-        selectedItemCategory: null,
+        selectedItemDescription: action.itemDescription,
+        selectedItemName: action.itemName,
+        selectedItemCategory: action.itemCategory,
       };
     case "submit-add-item-modal":
       return {
@@ -47,7 +47,7 @@ const reducer = (state, action) => {
         selectedItemId: null,
         selectedItemDescription: '',
         selectedItemName: '',
-        selectedItemId: '',
+        selectedItemCategory: '',
         items: action.items
       };
     case "close-item-modal":
@@ -66,7 +66,7 @@ const reducer = (state, action) => {
 const Items = (props) => {
   const [state, dispatch] = useReducer(reducer, {
     modalOpen: false,
-    selectedItemId: null,
+    selectedItemId: "",
     selectedItemDescription: "",
     selectedItemCategory: "",
     selectedItemName: "",
@@ -87,7 +87,7 @@ const Items = (props) => {
       });
   }, []);
 
-  const toggleModalOnSubmit = useCallback((itemName, itemDescription, itemCategory) => {
+  const toggleModalOnSubmit = (itemName, itemDescription, itemCategory) => {
     if (state.selectedItemId == null) {
       addOneItem(itemName, itemDescription, itemCategory)
         .then((response) => {
@@ -113,7 +113,7 @@ const Items = (props) => {
           alert(e);
         });
     }
-  }, []);
+  };
 
   const toggleDeleteItem = useCallback((e) => {
     const itemId = e.target.id;
