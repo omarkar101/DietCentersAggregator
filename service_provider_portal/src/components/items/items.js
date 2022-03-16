@@ -13,9 +13,9 @@ const reducer = (state, action) => {
         ...state,
         modalOpen: true,
         selectedItemId: null,
-        selectedItemDescription: null,
-        selectedItemName: null,
-        selectedItemCategory: null,
+        selectedItemDescription: action.itemDescription,
+        selectedItemName: action.itemName,
+        selectedItemCategory: action.itemCategory,
       };
     case "submit-add-item-modal":
       return {

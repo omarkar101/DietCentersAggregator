@@ -13,6 +13,10 @@ const ItemModal = (props) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     onSubmit(name, description, category);
+
+    setName('');
+    setDescription('');
+    setCategory('');
   }
 
   useEffect(() => {

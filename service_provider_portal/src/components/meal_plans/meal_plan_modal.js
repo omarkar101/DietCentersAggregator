@@ -34,6 +34,8 @@ const MealPlanModal = (props) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     onSubmit(planName, planDescription);
+    setPlanName('');
+    setPlanDescription('');
   }
 
   const [state, dispatch] = useReducer(reducer, {

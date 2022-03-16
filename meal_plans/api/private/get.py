@@ -17,3 +17,4 @@ def get_all_meal_plans():
   with generate_db_session() as db_session:
     meal_plans = db_session.query(ServiceProviderMealPlan).all()
   return jsonify(success=True, meal_plans=meal_plans)
+
