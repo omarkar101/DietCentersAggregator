@@ -18,8 +18,8 @@ const reducer = (state, action) => {
         ...state,
         modalOpen: true,
         selectedMealPlanId: null,
-        selectedMealPlanDescription: action.mealPlanDescription,
-        selectedMealPlanName: action.mealPlanName,
+        selectedMealPlanDescription: null,
+        selectedMealPlanName: null,
       };
     case "submit-add-meal-plan-modal":
       return {
