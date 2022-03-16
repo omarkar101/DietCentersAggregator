@@ -2,6 +2,7 @@ from flask import Flask
 from flask_cors import CORS, cross_origin
 from auth.api import auth_api
 from items.api import items_api
+from meal_plans.api import meal_plans_api
 from auth.decorators import require_user
 from database.models.credentials import Credentials
 from database.models.addresses import Address
@@ -20,6 +21,7 @@ CORS(app, support_credentials=True)
 app.config['SECRET_KEY'] = 'this_key_here'
 app.register_blueprint(auth_api)
 app.register_blueprint(items_api)
+app.register_blueprint(meal_plans_api)
 
 @app.route('/',methods = ['POST'])
 @require_user(UserType.CLIENT)
