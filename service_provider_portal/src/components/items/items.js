@@ -87,7 +87,7 @@ const Items = (props) => {
       });
   }, []);
 
-  const toggleModalOnSubmit = (itemName, itemDescription, itemCategory) => {
+  const toggleModalOnSubmit = useCallback((itemName, itemDescription, itemCategory) => {
     if (state.selectedItemId == null) {
       addOneItem(itemName, itemDescription, itemCategory)
         .then((response) => {
@@ -113,7 +113,7 @@ const Items = (props) => {
           alert(e);
         });
     }
-  };
+  }, []);
 
   const toggleDeleteItem = useCallback((e) => {
     const itemId = e.target.id;
@@ -160,8 +160,6 @@ const Items = (props) => {
   const toggleModalOnClose = useCallback(() => {
     dispatch({ type: "close-item-modal" });
   }, []);
-
-  console.log("ITEMS:", state.items);
 
   return (
     <>
