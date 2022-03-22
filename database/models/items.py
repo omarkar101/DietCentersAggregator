@@ -11,14 +11,15 @@ class Item(Base):
     __tablename__ = 'items'
 
     id: int
+    description: str
     category: str
     name: str
 
     id = Column(BigInteger, primary_key=True, autoincrement=True)
     # category must be a foreign key
-    _category = Column('category', Text, nullable=False, unique=True)
-    _description = Column('description', Text, nullable=False, unique=True)
-    _name = Column('name', Text, nullable=False, unique=True)
+    _category = Column('category', Text, nullable=False)
+    _description = Column('description', Text, nullable=False)
+    _name = Column('name', Text, nullable=False)
 
     user_id = Column(ForeignKey('service_providers.user_id', ondelete='CASCADE'), nullable=False)
 

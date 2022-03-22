@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import { signUpServiceProvider } from '../../api/requests';
-import Authentication from "../../containers/auth_container";
 import { useNavigate } from 'react-router-dom';
 
 // do a modal instead of a container

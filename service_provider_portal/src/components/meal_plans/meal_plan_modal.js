@@ -28,9 +28,15 @@ const reducer = (state, action) => {
 const MealPlanModal = (props) => {
   const { isOpen, onClose, onSubmit, mealPlanName, mealPlanDescription } = props;
 
-  console.log(mealPlanName);
-  const [planName, setPlanName] = useState(null);
-  const [planDescription, setPlanDescription] = useState(null);
+  const [planName, setPlanName] = useState('');
+  const [planDescription, setPlanDescription] = useState('');
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    onSubmit(planName, planDescription);
+    setPlanName('');
+    setPlanDescription('');
+  }
 
   const [state, dispatch] = useReducer(reducer, {
     modalOpen: false,
@@ -74,7 +80,7 @@ const MealPlanModal = (props) => {
         <Modal.Title>Meal Plan</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <Form>
+        <Form onSubmit={handleSubmit}>
           <Form.Group className="mb-3" controlId="formBasicName">
             <Form.Label>Name</Form.Label>
             <Form.Control
@@ -130,7 +136,7 @@ const MealPlanModal = (props) => {
         <Button variant="secondary" onClick={onClose}>
           Close
         </Button>
-        <Button variant="primary" onClick={onSubmit}>
+        <Button variant="primary" onClick={handleSubmit}>
           Save Changes
         </Button>
       </Modal.Footer>
