@@ -8,10 +8,9 @@ import Profile from "./components/profile/profile";
 import SignUp from "./components/signup/signup";
 import Authentication from "./containers/auth_container";
 import User from "./containers/user_container";
-import { useNavigate } from "react-router-dom";
 import API from "./api/api";
+
 const App = () => {
-  const navigate = useNavigate();
   API.interceptors.response.use((response) => {
     if (response.data.response_status === 440) {
       window.location.pathname = "/login";
