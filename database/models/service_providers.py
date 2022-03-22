@@ -1,4 +1,4 @@
-from sqlalchemy import Column, BigInteger, Text, ForeignKey
+from sqlalchemy import Column, Text, ForeignKey
 from sqlalchemy.orm import relationship
 from sqlalchemy.ext.hybrid import hybrid_property
 from database.orm import Base
@@ -25,7 +25,6 @@ class ServiceProvider(Base):
         primaryjoin='ServiceProvider.user_id == Item.user_id',
         uselist=True,
         back_populates='service_provider')
-    
 
     @hybrid_property
     def name(self):
