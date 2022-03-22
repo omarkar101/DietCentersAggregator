@@ -11,12 +11,9 @@ import Login from "./pages/login";
 import ServiceProviderPage from "./components/serviceProvider/serviceProvider";
 import Package from "./components/mealPackages/package";
 import Authentication from "./containers/user_authentication";
-import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import API from "./api/api";
 
 const App = () => {
-  const navigate = useNavigate();
   API.interceptors.response.use((response) => {
     if (response.data.response_status == 440) {
       window.location.pathname = "/login";
