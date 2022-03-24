@@ -33,7 +33,7 @@ const ServiceProviderPage = (props) => {
     items: [],
     mealPlans: []
   });
-  
+
   useEffect(() => {
     getAllMealPlans()
     .then((response) => {
@@ -91,7 +91,7 @@ const ServiceProviderPage = (props) => {
           <MenuSectionTitle>Menu Items</MenuSectionTitle>
         </StyledSection>
         {state.items?.map((item) => (
-          <ItemCard item={item} />
+          <ItemCard key={item.id} item={item} />
         ))}
 
         <StyledSection>
@@ -99,7 +99,7 @@ const ServiceProviderPage = (props) => {
         </StyledSection>
         <PackageModal isOpen={state.modalOpen} onClose={toggleModalOnClose} packageItems={state.selectedPackageItems} />
         {state.mealPlans?.map((plan) => (
-          <PackageCard plan={plan} openModal={toggleOpenModal} />
+          <PackageCard key={plan.id} plan={plan} openModal={toggleOpenModal} />
         ))}
 
       </MenuItemsContainer>
