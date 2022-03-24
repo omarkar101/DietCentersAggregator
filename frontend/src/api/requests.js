@@ -12,9 +12,9 @@ export const signUpClient = (email, password, firstName, lastName, phoneNumber) 
 }
 
 export const getAllItems = () => {
-  return Get('/items/get/all');
+  return Get('/items/public/get/all');
 }
 
 export const getAllMealPlans = () => {
-  return Get('/meal_plans/get/all')
+  return Get('/meal_plans/public/get/all')
 }
