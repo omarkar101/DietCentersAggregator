@@ -18,7 +18,7 @@ const Package = () => {
         <h2>Name of the package</h2>
         <h4>Items inside the package:</h4>
         {Array.from({ length: 4 }).map((_, idx) => (
-          <Col className="orders-card">
+          <Col key={idx} className="orders-card">
             <ItemCard item={item} />
           </Col>
         ))}

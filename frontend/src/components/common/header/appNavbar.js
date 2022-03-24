@@ -20,7 +20,7 @@ const AppNavbar = () => {
             </Nav.Link>
           </Nav>
           <PlaceDropDown />
-          <Form inline>
+          <Form className='d-flex'>
             <Form.Control type='text' placeholder='Search' className='mr-sm-2' />
           </Form>
           <Nav>
