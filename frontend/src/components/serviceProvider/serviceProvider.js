@@ -15,7 +15,7 @@ const reducer = (state, action) => {
     case "get-all-meal-plans":
       return { ...state, modalOpen: false, mealPlans: action.mealPlans };
     case 'open-package-modal':
-      return { ... state, modalOpen: true, selectedPackageItems: action.packageItems };
+      return { ...state, modalOpen: true, selectedPackageItems: action.packageItems };
     case 'close-package-modal':
       return { ...state, modalOpen: false };
     default:
@@ -54,45 +54,6 @@ const ServiceProviderPage = (props) => {
 
   }, []);
 
-  const packagesinfo = [
-    {
-      name: "Package 1",
-      price: "100 $",
-      description: "Cashews, green peas and tomato masala gravy."
-    },
-    {
-      name: "Package 2",
-      price: "150 $",
-      description: "Cashews, green peas and tomato masala gravy."
-    },
-    {
-      name: "Package 3",
-      price: "100 $",
-      description: "Cashews, green peas and tomato masala gravy."
-    },
-    {
-      name: "Package 4",
-      price: "200 $",
-      description: "Cashews, green peas and tomato masala gravy."
-    },
-  ];
-
-  const itemsinfo = [
-    {
-      name: "Kaju Matar Masala",
-      price: "AED24",
-      description: "Cashews, green peas and tomato masala gravy.",
-      imagelink:
-        "https://b.zmtcdn.com/data/dish_photos/14d/fc2cd40b2b5a93852f4e1fde9612c14d.jpg?output-format=webp&fit=around|130:130&crop=130:130;*,*",
-    },
-    {
-      name: "Kaju Matar Masala",
-      price: "AED24",
-      description: "Cashews, green peas and tomato masala gravy.",
-      imagelink:
-        "https://b.zmtcdn.com/data/dish_photos/14d/fc2cd40b2b5a93852f4e1fde9612c14d.jpg?output-format=webp&fit=around|130:130&crop=130:130;*,*",
-    },
-  ];
 
   const [state, dispatch] = useReducer(reducer, {
     modalOpen: false,
@@ -101,15 +62,9 @@ const ServiceProviderPage = (props) => {
     mealPlans: []
   });
 
-  const items = [
-    {'name': 'Burger', 'description': 'Hello World', 'categories': 'Fast Food'},
-    {'name': 'Burger', 'description': 'Hello World', 'categories': 'Fast Food'},
-    {'name': 'Burger', 'description': 'Hello World', 'categories': 'Fast Food'}
-  ]
-
   const toggleOpenModal = useCallback((e) => {
-    dispatch({type: 'open-package-modal', packageItems: items});
-  }, []);
+    dispatch({type: 'open-package-modal', packageItems: state.items});
+  }, [state.items]);
 
   const toggleModalOnClose = useCallback(() => {
     dispatch({type: 'close-package-modal'});
