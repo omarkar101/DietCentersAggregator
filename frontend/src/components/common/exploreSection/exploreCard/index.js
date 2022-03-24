@@ -14,6 +14,7 @@ const ExploreCard = ({restaurant}) => {
     // const goldOff = restaurant?.gold?.text;
     // const proOff = offers.length > 1 ? offers[0].text : null;
     // const discount = offers.length > 1 ? offers[1].text : offers.length === 1 ? offers[0].text : null;
+    const id = restaurant.user_id;
     const name = restaurant.name;
     const coverImg = "";
     const deliveryTime = "31min";
@@ -27,7 +28,7 @@ const ExploreCard = ({restaurant}) => {
     const discount = null;
 
     return (
-        <Link to={`/serviceProvider/${1}`} style={{ color: 'inherit', textDecoration: 'inherit'}}>
+        <Link to={`/serviceProvider/${id}`} style={{ color: 'inherit', textDecoration: 'inherit'}}>
         <div className="explore-card cur-po">
                 <div className="explore-card-cover">
                     <img src={coverImg} alt={name} className="explore-card-image" />
