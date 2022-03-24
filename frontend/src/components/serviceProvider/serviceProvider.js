@@ -4,15 +4,20 @@ import ImagesSection from "./ImagesSection";
 import { useParams } from "react-router-dom";
 import PackageModal from "./packageModal";
 import PackageCard from "./packageCard";
-import { useCallback, useReducer, useState } from "react";
+import { useCallback, useReducer, useState, useEffect } from "react";
 import ItemCard from "./itemCard";
+import { getAllMealPlans, getAllItems } from "../../api/requests";
 
 const reducer = (state, action) => {
   switch (action.type) {
+    case "get-all-items":
+      return { ...state, modalOpen: false, items: action.items };
+    case "get-all-meal-plans":
+      return { ...state, modalOpen: false, mealPlans: action.mealPlans };
     case 'open-package-modal':
-      return {modalOpen: true, selectedPackageItems: action.packageItems };
+      return { ... state, modalOpen: true, selectedPackageItems: action.packageItems };
     case 'close-package-modal':
-      return { modalOpen: false };
+      return { ...state, modalOpen: false };
     default:
       throw new Error();
   }
@@ -21,6 +26,33 @@ const reducer = (state, action) => {
 
 const ServiceProviderPage = (props) => {
   // const { name, description, stars, reviews, images } = props;
+
+  useEffect(() => {
+    getAllMealPlans()
+    .then((response) => {
+      if (response.data.success) {
+        dispatch({ type: 'get-all-meal-plans', mealPlans: response.data.meal_plans})
+      } else {
+        alert(response.data.message);
+      }
+    })
+    .catch((e) => {
+      alert(e);
+    });
+
+    getAllItems()
+    .then((response) => {
+      if (response.data.success) {
+        dispatch({ type: "get-all-items", items: response.data.items });
+      } else {
+        alert(response.data.message);
+      }
+    })
+    .catch((e) => {
+      alert(e);
+    });
+
+  }, []);
 
   const packagesinfo = [
     {
@@ -64,7 +96,9 @@ const ServiceProviderPage = (props) => {
 
   const [state, dispatch] = useReducer(reducer, {
     modalOpen: false,
-    selectedPackageItems: []
+    selectedPackageItems: [],
+    items: [],
+    mealPlans: []
   });
 
   const items = [
@@ -102,7 +136,7 @@ const ServiceProviderPage = (props) => {
         <StyledSection>
           <MenuSectionTitle>Menu Items</MenuSectionTitle>
         </StyledSection>
-        {itemsinfo.map((item) => (
+        {state.items?.map((item) => (
           <ItemCard item={item} />
         ))}
 
@@ -110,7 +144,7 @@ const ServiceProviderPage = (props) => {
           <MenuSectionTitle>Our Package Deals</MenuSectionTitle>
         </StyledSection>
         <PackageModal isOpen={state.modalOpen} onClose={toggleModalOnClose} packageItems={state.selectedPackageItems} />
-        {packagesinfo.map((plan) => (
+        {state.mealPlans?.map((plan) => (
           <PackageCard plan={plan} openModal={toggleOpenModal} />
         ))}
 
