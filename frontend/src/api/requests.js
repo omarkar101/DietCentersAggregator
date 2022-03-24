@@ -10,3 +10,11 @@ export const signUpClient = (email, password, firstName, lastName, phoneNumber) 
   data.append('user_type', 'client');
   return Post('/auth/signup/user', data);
 }
+
+export const getAllItems = () => {
+  return Get('/items/get/all');
+}
+
+export const getAllMealPlans = () => {
+  return Get('/meal_plans/get/all')
+}
