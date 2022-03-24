@@ -10,7 +10,8 @@ class ServiceProvider(Base):
     __tablename__ = 'service_providers'
 
     name: str
-
+    user_id: int
+    
     _name = Column('name', Text, nullable=False, unique=True)
 
     user_id = Column(ForeignKey('users.id', ondelete='CASCADE'), primary_key=True, nullable=False)
