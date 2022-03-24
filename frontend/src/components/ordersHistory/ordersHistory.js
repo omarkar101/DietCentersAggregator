@@ -12,7 +12,7 @@ const OrdersHistory = () => {
       </h1>
       <div className="orders">
         {Array.from({ length: 7 }).map((_, idx) => (
-          <Col className="orders-card">
+          <Col key={idx} className="orders-card">
             <OrderCard orderid={idx} text={"a description of the order"} serviceprovider={"service " + idx} footer={idx+1 + " mins ago."}/>
           </Col>
         ))}

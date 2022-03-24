@@ -50,7 +50,7 @@ const ExploreCard = ({restaurant}) => {
                             <div className="res-cuisine">
                                 {cuisines.map((item, i) => {
                                     return (
-                                        <span className="res-cuisine-tag">
+                                        <span key={cuisines} className="res-cuisine-tag">
                                             {item}
                                             {i !== cuisines.length - 1 && ","}
                                         </span>

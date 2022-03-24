@@ -49,12 +49,12 @@ const settings = {
 const TopBrands = () => {
   return (
     <div className='top-brands'>
-      <div style={{ "max-width": "1100px", margin: "0px auto" }}>
+      <div style={{ maxWidth: "1100px", margin: "0px auto" }}>
       <div className='collection-title'>Top Service Providers for you</div>
       <Slider {...settings}>
         {topBrandsList.map((brand) => {
           return (
-            <div>
+            <div key={brand.id}>
               <Link to={`/serviceProvider/${1}`} style={{ color: 'inherit', textDecoration: 'inherit'}}>
                 <div className='top-brands-cover'>
                   <img src={brand.cover} className='top-brands-image' alt={brand.time} />

@@ -118,7 +118,7 @@ const SignUp = (props) => {
                     borderColor: "#21ad83",
                     width: "100%",
                   }}
-                  outline
+                  variant="outline-success"
                   type="submit"
                 >
                   Sign-up

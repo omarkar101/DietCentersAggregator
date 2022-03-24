@@ -27,7 +27,7 @@ const Collection = ({ list }) => {
         </div>
         <Slider {...settings}>
           {list.map((item) => (
-            <div>
+            <div key={item.id}>
               <Link to={`/package/${1}`} style={{ color: 'inherit', textDecoration: 'inherit'}}>
               <div className='collection-cover'>
                 <img src={item.cover} className='collection-image' alt={item.title} />
