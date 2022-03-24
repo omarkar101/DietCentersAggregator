@@ -8,7 +8,7 @@ from database.models.items import Item
 from database.models.service_providers import ServiceProvider
 from database.models.users import User
 from database.orm import generate_db_session
-from user import UserType, get_user
+from user import UserType, get_user_id
 
 edit_api = Blueprint('edit_api', __name__, url_prefix='/edit')
 
@@ -16,7 +16,7 @@ edit_api = Blueprint('edit_api', __name__, url_prefix='/edit')
 @cross_origin(origins='*', supports_credentials=True)
 def edit_item():
   # we need to know which user is logged in
-  # user = get_user()
+  # user_id = get_user_id()
   # for now we will use test user
   with generate_db_session() as db_session:
     user = db_session.query(Credentials) \

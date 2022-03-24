@@ -14,7 +14,7 @@ delete_api = Blueprint('delete_api', __name__, url_prefix='/delete')
 @cross_origin(origins='*', supports_credentials=True)
 def delete_meal_plan():
   # we need to know which user is logged in
-  # user = get_user()
+  # user = get_user_id()
   # for now we will use test user
   with generate_db_session() as db_session:
     user = db_session.query(Credentials) \
