@@ -27,6 +27,13 @@ const reducer = (state, action) => {
 const ServiceProviderPage = (props) => {
   // const { name, description, stars, reviews, images } = props;
 
+  const [state, dispatch] = useReducer(reducer, {
+    modalOpen: false,
+    selectedPackageItems: [],
+    items: [],
+    mealPlans: []
+  });
+  
   useEffect(() => {
     getAllMealPlans()
     .then((response) => {
@@ -53,14 +60,6 @@ const ServiceProviderPage = (props) => {
     });
 
   }, []);
-
-
-  const [state, dispatch] = useReducer(reducer, {
-    modalOpen: false,
-    selectedPackageItems: [],
-    items: [],
-    mealPlans: []
-  });
 
   const toggleOpenModal = useCallback((e) => {
     dispatch({type: 'open-package-modal', packageItems: state.items});

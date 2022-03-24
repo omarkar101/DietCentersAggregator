@@ -1,12 +1,15 @@
 from sqlalchemy import Column, Text, ForeignKey
 from sqlalchemy.orm import relationship
+from dataclasses import dataclass
 from sqlalchemy.ext.hybrid import hybrid_property
 from database.orm import Base
 
 metadata = Base.metadata
-
+@dataclass
 class ServiceProvider(Base):
     __tablename__ = 'service_providers'
+
+    name: str
 
     _name = Column('name', Text, nullable=False, unique=True)
 
