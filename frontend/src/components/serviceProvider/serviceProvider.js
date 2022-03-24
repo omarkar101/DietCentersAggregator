@@ -4,15 +4,20 @@ import ImagesSection from "./ImagesSection";
 import { useParams } from "react-router-dom";
 import PackageModal from "./packageModal";
 import PackageCard from "./packageCard";
-import { useCallback, useReducer, useState } from "react";
+import { useCallback, useReducer, useState, useEffect } from "react";
 import ItemCard from "./itemCard";
+import { getAllMealPlans, getAllItems } from "../../api/requests";
 
 const reducer = (state, action) => {
   switch (action.type) {
+    case "get-all-items":
+      return { ...state, modalOpen: false, items: action.items };
+    case "get-all-meal-plans":
+      return { ...state, modalOpen: false, mealPlans: action.mealPlans };
     case 'open-package-modal':
-      return {modalOpen: true, selectedPackageItems: action.packageItems };
+      return { ...state, modalOpen: true, selectedPackageItems: action.packageItems };
     case 'close-package-modal':
-      return { modalOpen: false };
+      return { ...state, modalOpen: false };
     default:
       throw new Error();
   }
@@ -22,60 +27,44 @@ const reducer = (state, action) => {
 const ServiceProviderPage = (props) => {
   // const { name, description, stars, reviews, images } = props;
 
-  const packagesinfo = [
-    {
-      name: "Package 1",
-      price: "100 $",
-      description: "Cashews, green peas and tomato masala gravy."
-    },
-    {
-      name: "Package 2",
-      price: "150 $",
-      description: "Cashews, green peas and tomato masala gravy."
-    },
-    {
-      name: "Package 3",
-      price: "100 $",
-      description: "Cashews, green peas and tomato masala gravy."
-    },
-    {
-      name: "Package 4",
-      price: "200 $",
-      description: "Cashews, green peas and tomato masala gravy."
-    },
-  ];
+  useEffect(() => {
+    getAllMealPlans()
+    .then((response) => {
+      if (response.data.success) {
+        dispatch({ type: 'get-all-meal-plans', mealPlans: response.data.meal_plans})
+      } else {
+        alert(response.data.message);
+      }
+    })
+    .catch((e) => {
+      alert(e);
+    });
 
-  const itemsinfo = [
-    {
-      name: "Kaju Matar Masala",
-      price: "AED24",
-      description: "Cashews, green peas and tomato masala gravy.",
-      imagelink:
-        "https://b.zmtcdn.com/data/dish_photos/14d/fc2cd40b2b5a93852f4e1fde9612c14d.jpg?output-format=webp&fit=around|130:130&crop=130:130;*,*",
-    },
-    {
-      name: "Kaju Matar Masala",
-      price: "AED24",
-      description: "Cashews, green peas and tomato masala gravy.",
-      imagelink:
-        "https://b.zmtcdn.com/data/dish_photos/14d/fc2cd40b2b5a93852f4e1fde9612c14d.jpg?output-format=webp&fit=around|130:130&crop=130:130;*,*",
-    },
-  ];
+    getAllItems()
+    .then((response) => {
+      if (response.data.success) {
+        dispatch({ type: "get-all-items", items: response.data.items });
+      } else {
+        alert(response.data.message);
+      }
+    })
+    .catch((e) => {
+      alert(e);
+    });
+
+  }, []);
+
 
   const [state, dispatch] = useReducer(reducer, {
     modalOpen: false,
-    selectedPackageItems: []
+    selectedPackageItems: [],
+    items: [],
+    mealPlans: []
   });
 
-  const items = [
-    {'name': 'Burger', 'description': 'Hello World', 'categories': 'Fast Food'},
-    {'name': 'Burger', 'description': 'Hello World', 'categories': 'Fast Food'},
-    {'name': 'Burger', 'description': 'Hello World', 'categories': 'Fast Food'}
-  ]
-
   const toggleOpenModal = useCallback((e) => {
-    dispatch({type: 'open-package-modal', packageItems: items});
-  }, []);
+    dispatch({type: 'open-package-modal', packageItems: state.items});
+  }, [state.items]);
 
   const toggleModalOnClose = useCallback(() => {
     dispatch({type: 'close-package-modal'});
@@ -102,7 +91,7 @@ const ServiceProviderPage = (props) => {
         <StyledSection>
           <MenuSectionTitle>Menu Items</MenuSectionTitle>
         </StyledSection>
-        {itemsinfo.map((item) => (
+        {state.items?.map((item) => (
           <ItemCard item={item} />
         ))}
 
@@ -110,7 +99,7 @@ const ServiceProviderPage = (props) => {
           <MenuSectionTitle>Our Package Deals</MenuSectionTitle>
         </StyledSection>
         <PackageModal isOpen={state.modalOpen} onClose={toggleModalOnClose} packageItems={state.selectedPackageItems} />
-        {packagesinfo.map((plan) => (
+        {state.mealPlans?.map((plan) => (
           <PackageCard plan={plan} openModal={toggleOpenModal} />
         ))}
 

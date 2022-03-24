@@ -1,4 +1,4 @@
-import { Post } from "./setup";
+import { Post, Get } from "./setup";
 
 export const signUpClient = (email, password, firstName, lastName, phoneNumber) => {
   const data = new FormData();
@@ -9,4 +9,12 @@ export const signUpClient = (email, password, firstName, lastName, phoneNumber) 
   data.append('password', password);
   data.append('user_type', 'client');
   return Post('/auth/signup/user', data);
+}
+
+export const getAllItems = () => {
+  return Get('/items/get/all');
+}
+
+export const getAllMealPlans = () => {
+  return Get('/meal_plans/get/all')
 }
