@@ -5,7 +5,7 @@ import styled from "styled-components";
 const Profile = () => {
   return (
     <Container>
-      <h1 className="shadow-sm text-black-50 p-3 text-center rounded">
+      <h1 className="text-black-50 p-3 text-center rounded">
         My Account
       </h1>
       <Form >

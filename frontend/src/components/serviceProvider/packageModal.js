@@ -11,7 +11,7 @@ const PackageModal = (props) => {
       </Modal.Header>
       <Modal.Body>
         {packageItems?.map((item) => (
-          <Card>
+          <Card key={item.id}>
             <Card.Img
               variant="top"
               src=""

@@ -71,11 +71,11 @@ const ExploreCollections = () => {
     <div className='collections' 
     style={{ borderBottomStyle: "solid", borderBottomWidth: 2, borderBottomColor: "#21ad83"}}
     >
-      <div style={{ "max-width": "1100px", margin: "0px auto" }}>
+      <div style={{ maxWidth: "1100px", margin: "0px auto" }}>
         <div className='title'>Eat right!</div>
         <Slider {...settings}>
           {deliveryItems.map((item) => {
-            return <Item item={item} />;
+            return <Item key={item.id} item={item} />;
           })}
         </Slider>
       </div>

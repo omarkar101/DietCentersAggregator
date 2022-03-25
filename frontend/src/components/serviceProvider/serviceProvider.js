@@ -4,7 +4,7 @@ import ImagesSection from "./ImagesSection";
 import { useParams } from "react-router-dom";
 import PackageModal from "./packageModal";
 import PackageCard from "./packageCard";
-import { useCallback, useReducer, useState, useEffect } from "react";
+import { useCallback, useReducer, useEffect } from "react";
 import ItemCard from "./itemCard";
 import { getAllMealPlans, getAllItems } from "../../api/requests";
 
@@ -14,62 +14,68 @@ const reducer = (state, action) => {
       return { ...state, modalOpen: false, items: action.items };
     case "get-all-meal-plans":
       return { ...state, modalOpen: false, mealPlans: action.mealPlans };
-    case 'open-package-modal':
-      return { ...state, modalOpen: true, selectedPackageItems: action.packageItems };
-    case 'close-package-modal':
+    case "open-package-modal":
+      return {
+        ...state,
+        modalOpen: true,
+        selectedPackageItems: action.packageItems,
+      };
+    case "close-package-modal":
       return { ...state, modalOpen: false };
     default:
       throw new Error();
   }
-}
-
+};
 
 const ServiceProviderPage = (props) => {
   // const { name, description, stars, reviews, images } = props;
-
-  useEffect(() => {
-    getAllMealPlans()
-    .then((response) => {
-      if (response.data.success) {
-        dispatch({ type: 'get-all-meal-plans', mealPlans: response.data.meal_plans})
-      } else {
-        alert(response.data.message);
-      }
-    })
-    .catch((e) => {
-      alert(e);
-    });
-
-    getAllItems()
-    .then((response) => {
-      if (response.data.success) {
-        dispatch({ type: "get-all-items", items: response.data.items });
-      } else {
-        alert(response.data.message);
-      }
-    })
-    .catch((e) => {
-      alert(e);
-    });
-
-  }, []);
-
 
   const [state, dispatch] = useReducer(reducer, {
     modalOpen: false,
     selectedPackageItems: [],
     items: [],
-    mealPlans: []
+    mealPlans: [],
   });
 
-  const toggleOpenModal = useCallback((e) => {
-    dispatch({type: 'open-package-modal', packageItems: state.items});
-  }, [state.items]);
+  useEffect(() => {
+    getAllMealPlans()
+      .then((response) => {
+        if (response.data.success) {
+          dispatch({
+            type: "get-all-meal-plans",
+            mealPlans: response.data.meal_plans,
+          });
+        } else {
+          alert(response.data.message);
+        }
+      })
+      .catch((e) => {
+        alert(e);
+      });
+
+    getAllItems()
+      .then((response) => {
+        if (response.data.success) {
+          dispatch({ type: "get-all-items", items: response.data.items });
+        } else {
+          alert(response.data.message);
+        }
+      })
+      .catch((e) => {
+        alert(e);
+      });
+  }, []);
+
+  const toggleOpenModal = useCallback(
+    (e) => {
+      dispatch({ type: "open-package-modal", packageItems: state.items });
+    },
+    [state.items]
+  );
 
   const toggleModalOnClose = useCallback(() => {
-    dispatch({type: 'close-package-modal'});
+    dispatch({ type: "close-package-modal" });
   }, []);
-  
 
   const { id } = useParams();
 
@@ -79,32 +85,26 @@ const ServiceProviderPage = (props) => {
     <PageBase>
       <ImagesSection {...props} />
 
-      
-
-      {/* <OrderOnlineInnerWrapper>
-        <OrderOnlineHeader>Order Online</OrderOnlineHeader> */}
-        <hr style={{ alignSelf: "flex-start", width: "100%", marginBottom: "3rem" }} />
-      {/* </OrderOnlineInnerWrapper> */}
-
-      <MenuItemsContainer>
-
+      <MenuItemsContainer className="mt-5">
         <StyledSection>
           <MenuSectionTitle>Menu Items</MenuSectionTitle>
         </StyledSection>
         {state.items?.map((item) => (
-          <ItemCard item={item} />
+          <ItemCard key={item.id} item={item} />
         ))}
 
         <StyledSection>
           <MenuSectionTitle>Our Package Deals</MenuSectionTitle>
         </StyledSection>
-        <PackageModal isOpen={state.modalOpen} onClose={toggleModalOnClose} packageItems={state.selectedPackageItems} />
+        <PackageModal
+          isOpen={state.modalOpen}
+          onClose={toggleModalOnClose}
+          packageItems={state.selectedPackageItems}
+        />
         {state.mealPlans?.map((plan) => (
-          <PackageCard plan={plan} openModal={toggleOpenModal} />
+          <PackageCard key={plan.id} plan={plan} openModal={toggleOpenModal} />
         ))}
-
       </MenuItemsContainer>
-      
     </PageBase>
   );
 };
@@ -113,7 +113,7 @@ const StyledSection = styled.section`
   position: relative;
   margin-bottom: 2rem;
   width: 100%;
-`
+`;
 
 const MenuItemsContainer = styled.section`
   width: 100%;

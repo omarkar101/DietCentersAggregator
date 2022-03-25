@@ -1,13 +1,17 @@
 from sqlalchemy import Column, Text, ForeignKey
 from sqlalchemy.orm import relationship
+from dataclasses import dataclass
 from sqlalchemy.ext.hybrid import hybrid_property
 from database.orm import Base
 
 metadata = Base.metadata
-
+@dataclass
 class ServiceProvider(Base):
     __tablename__ = 'service_providers'
 
+    name: str
+    user_id: int
+    
     _name = Column('name', Text, nullable=False, unique=True)
 
     user_id = Column(ForeignKey('users.id', ondelete='CASCADE'), primary_key=True, nullable=False)

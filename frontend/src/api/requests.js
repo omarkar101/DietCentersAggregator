@@ -18,3 +18,7 @@ export const getAllItems = () => {
 export const getAllMealPlans = () => {
   return Get('/meal_plans/public/get/all')
 }
+
+export const getAllServiceProviders = () => {
+  return Get('/service_providers/public/get/all')
+}

@@ -7,12 +7,12 @@ import { Col } from "react-bootstrap";
 const OrdersHistory = () => {
   return (
     <Container>
-      <h1 className="shadow-sm text-black-50 p-3 text-center rounded">
+      <h1 className="text-black-50 p-3 text-center rounded">
         Your Orders
       </h1>
       <div className="orders">
         {Array.from({ length: 7 }).map((_, idx) => (
-          <Col className="orders-card">
+          <Col key={idx} className="orders-card">
             <OrderCard orderid={idx} text={"a description of the order"} serviceprovider={"service " + idx} footer={idx+1 + " mins ago."}/>
           </Col>
         ))}
