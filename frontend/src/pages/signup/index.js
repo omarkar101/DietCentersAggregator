@@ -35,9 +35,7 @@ const SignUp = (props) => {
       {redirectToLogin && <Login />}
       {!redirectToLogin && (
         <Container>
-          <h1 className="shadow-sm text-black-50 p-3 text-center rounded">
-            Sign-Up
-          </h1>
+          <h1 className="text-black-50 p-3 text-center rounded">Sign-Up</h1>
           <Row className="mt-5">
             <Col
               lg={5}
@@ -96,7 +94,7 @@ const SignUp = (props) => {
                   />
                 </Form.Group>
 
-                <Form.Group className="mb-3" controlId="formBasicPassword">
+                <Form.Group className="mb-2" controlId="formBasicPassword">
                   <Form.Control
                     required
                     type="password"
@@ -104,7 +102,10 @@ const SignUp = (props) => {
                     pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$"
                     onChange={(e) => setPassword(e.target.value)}
                   />
-                  <Form.Text className="text-muted">
+                </Form.Group>
+
+                <Form.Group className="w-75 text-center m-auto">
+                  <Form.Text className="text-muted" style={{fontSize: 16, width: '50%'}}>
                     Minimum eight characters, at least one uppercase letter, one
                     lowercase letter and one number.
                   </Form.Text>
