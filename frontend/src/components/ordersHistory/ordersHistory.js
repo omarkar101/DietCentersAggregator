@@ -7,7 +7,7 @@ import { Col } from "react-bootstrap";
 const OrdersHistory = () => {
   return (
     <Container>
-      <h1 className="shadow-sm text-black-50 p-3 text-center rounded">
+      <h1 className="text-black-50 p-3 text-center rounded">
         Your Orders
       </h1>
       <div className="orders">
