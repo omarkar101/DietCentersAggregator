@@ -4,7 +4,7 @@ from database.models.items import Item
 from database.models.service_providers_meal_plans import ServiceProviderMealPlan
 from database.orm import generate_db_session
 import meal_plans
-from user import get_user, get_user_email_from_token
+from user import get_user_id, get_user_email_from_token
 
 public_get_api = Blueprint('public_get_api', __name__, url_prefix='/public/get')
 
@@ -12,7 +12,7 @@ public_get_api = Blueprint('public_get_api', __name__, url_prefix='/public/get')
 # @require_user
 def get_all_meal_plans():
   # we need to know which user is logged in
-  # user = get_user()
+  # user = get_user_id()
   # items = user.service_provider.items
   with generate_db_session() as db_session:
     meal_plans = db_session.query(ServiceProviderMealPlan).all()

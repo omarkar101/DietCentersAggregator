@@ -20,7 +20,9 @@ def require_user(user_type: UserType):
         def decorated(*args, **kwargs):
             try:
                 # decoding the payload to fetch the stored details
+                print('HELLO')
                 email = get_user_email_from_token()
+                print('email:', email)
                 with generate_db_session() as db_session:
                     credentials = db_session.query(Credentials) \
                         .options(joinedload(Credentials.user)) \
