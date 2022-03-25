@@ -49,9 +49,9 @@ const MealPlanModal = (props) => {
     currentItems: []
   });
 
-  useEffect(() => {
-
-  });
+  // useEffect(() => {
+  //   getMealPlanItems(meal_plan_id)
+  // });
 
   const items = []
 

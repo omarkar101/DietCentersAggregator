@@ -52,7 +52,7 @@ const SignUp = (props) => {
 
               <Form.Group controlId='formBasicPassword'>
                 <Form.Label>Password</Form.Label>
-                <Form.Control type='password' pattern='^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$'
+                <Form.Control type='password'
                   placeholder='Password' onChange={e => setPassword(e.target.value)} />
               </Form.Group>
               <Button variant='success btn-block' type='submit'>Sign-up</Button>
