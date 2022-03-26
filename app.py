@@ -5,6 +5,7 @@ from items.api import items_api
 from meal_plans.api import meal_plans_api
 from service_providers.api import service_providers_api
 from auth.decorators import require_user
+from database.models.meal_plans_items import MealPlanItem
 from database.models.credentials import Credentials
 from database.models.addresses import Address
 from database.models.users import User

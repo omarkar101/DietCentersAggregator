@@ -4,6 +4,7 @@ from sqlalchemy import engine_from_config
 from sqlalchemy import pool
 from alembic import context
 
+from database.models.meal_plans_items import MealPlanItem
 from database.models.credentials import Credentials
 from database.models.addresses import Address
 from database.models.users import User

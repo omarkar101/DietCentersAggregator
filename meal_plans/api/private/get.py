@@ -1,10 +1,10 @@
 from flask import Blueprint, jsonify, request
 from sqlalchemy import and_
+from sqlalchemy.orm import joinedload
 from auth.decorators import require_user
-from database.models.items import Item
 from database.models.service_providers_meal_plans import ServiceProviderMealPlan
 from database.orm import generate_db_session
-from user import UserType, get_user_id, get_user_email_from_token
+from user import UserType, get_user_id
 
 get_api = Blueprint('get_api', __name__, url_prefix='/get')
 
@@ -27,5 +27,7 @@ def get_meal_plan_items():
   with generate_db_session() as db_session:
     meal_plan = db_session.query(ServiceProviderMealPlan) \
       .filter(and_(ServiceProviderMealPlan.user_id == user_id, ServiceProviderMealPlan.id == meal_plan_id)) \
+      .options(joinedload(ServiceProviderMealPlan.items)) \
       .first()
-  return jsonify(success=True, meal_plan=meal_plan)
+    items = [x.item for x in meal_plan.items]
+  return jsonify(success=True, meal_plan_items=items)

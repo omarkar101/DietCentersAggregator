@@ -68,3 +68,9 @@ export const editOneMealPlan = (mealPlanId, mealPlanName, mealPlanDescription) =
 export const getAllMealPlans = () => {
   return Get('/meal_plans/get/all')
 }
+
+export const getMealPlanItems = (meal_plan_id) => {
+  const data = new FormData();
+  data.append('meal_plan_id', meal_plan_id);
+  return Get('/meal_plans/get/items');
+}
