@@ -72,5 +72,18 @@ export const getAllMealPlans = () => {
 export const getMealPlanItems = (meal_plan_id) => {
   const data = new FormData();
   data.append('meal_plan_id', meal_plan_id);
-  return Get('/meal_plans/get/items');
+  return Post('/meal_plans/get/items', data);
+}
+
+export const removeItemFromMealPlan = (mealPlanId, itemId) => {
+  const data = new FormData();
+  data.append('meal_plan_id', mealPlanId);
+  data.append('item_id', itemId);
+  return Post('/meal_plans/delete/item', data);
+}
+
+export const getItemsNotInMealPlan = (mealPlanId) => {
+  const data = new FormData();
+  data.append('meal_plan_id', mealPlanId);
+  return Post('/meal_plans/get/items_not_in_meal_plan', data);
 }

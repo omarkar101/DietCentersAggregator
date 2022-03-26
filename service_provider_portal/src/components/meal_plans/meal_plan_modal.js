@@ -1,36 +1,25 @@
 import React, { useState, useReducer, useEffect, useCallback } from "react";
 import { Button, Form, Modal, Table } from "react-bootstrap";
 import styled from "styled-components";
+import { getMealPlanItems, removeItemFromMealPlan } from "../../api/requests";
 import UploadAndDisplayImage from "../uploadImage/UploadAndDisplayImage";
 import AddNewItemModal from "./add_new_item_modal";
 
 const reducer = (state, action) => {
   switch (action.type) {
-    case "open-add-item-modal":
-      return { modalOpen: true, selectedItemId: null, selectedItemDescription: null, selectedItemName: null };
-    case "submit-add-item-modal":
-      return { modalOpen: false, selectedItemDescription: action.itemDescription, selectedItemName: action.itemName };
-    case "delete-item":
-      return {};
-    case "open-edit-item-modal":
-      return { modalOpen: true, selectedItemDescription: action.itemDescription, selectedItemName: action.itemName };
-    case "submit-edit-item-modal":
-      return {
-        modalOpen: false,
-        selectedItemDescription: action.itemDescription,
-        selectedItemName: action.itemName,
-        selectedItemId: action.itemId,
-      };
-    case "close-item-modal":
-      return { modalOpen: false, selectedItemDescription: null, selectedItemName: null, selectedItemId: null };
+    case 'success-load-meal-plan-items':
+      return {...state, selectedMealPlanItems: action.selectedMealPlanItems};
+    case 'open-add-item-modal':
+      return { ...state, modalOpen: true };
+    case 'close-item-modal':
+      return { ...state, modalOpen: false };
     default:
       throw new Error();
   }
 };
 
 const MealPlanModal = (props) => {
-  const { isOpen, onClose, onSubmit, mealPlanName, mealPlanDescription } = props;
-
+  const { isOpen, onClose, onSubmit, mealPlanId, mealPlanName, mealPlanDescription } = props;
   const [planName, setPlanName] = useState("");
   const [planDescription, setPlanDescription] = useState("");
 
@@ -43,17 +32,26 @@ const MealPlanModal = (props) => {
 
   const [state, dispatch] = useReducer(reducer, {
     modalOpen: false,
-    selectedItemId: null,
-    selectedItemDescription: null,
-    selectedItemName: null,
-    currentItems: []
+    selectedMealPlanItems: []
   });
 
-  // useEffect(() => {
-  //   getMealPlanItems(meal_plan_id)
-  // });
+  console.log('mealPLANNIDDDD:', mealPlanId);
 
-  const items = []
+  useEffect(() => {
+    if(mealPlanId != null) {
+      getMealPlanItems(mealPlanId)
+        .then((response) => {
+          if (response.data.success) {
+            dispatch({ type: 'success-load-meal-plan-items', selectedMealPlanItems: response.data.meal_plan_items });
+          } else {
+            alert(response.data.message)
+          }
+        })
+        .catch((e) => {
+          alert(e)
+        })
+    }
+  }, [mealPlanId]);
 
   useEffect(() => {
     setPlanName(mealPlanName);
@@ -62,7 +60,17 @@ const MealPlanModal = (props) => {
 
   const toggleDeleteItem = useCallback((e) => {
     console.log("delete");
-    dispatch({ type: "delete-item" });
+    removeItemFromMealPlan(mealPlanId, e.target.id)
+      .then((response) => {
+        if (response.data.success) {
+          dispatch({ type: 'success-load-meal-plan-items', selectedMealPlanItems: response.data.meal_plan_items });
+        } else {
+          alert(response.data.message);
+        }
+      })
+      .catch((e) => {
+        alert(e);
+      })
   }, []);
 
   const toggleOpenModal = useCallback((e) => {
@@ -112,8 +120,7 @@ const MealPlanModal = (props) => {
               isOpen={state.modalOpen}
               onClose={toggleModalOnClose}
               onSubmit={toggleModalOnSubmit}
-              mealPlanName={state.selectedMealPlanName}
-              mealPlanDescription={state.selectedMealPlanDescription}
+              mealPlanId={mealPlanId}
             />
             <h2>
               These are the items in this meal plan{" "}
@@ -128,13 +135,13 @@ const MealPlanModal = (props) => {
                 <th>Category</th>
                 <th>Actions</th>
               </tr>
-              {items.map((item, index) => (
+              {state.selectedMealPlanItems.map((item) => (
                 <tr>
                   <td>{item.name}</td>
-                  <td>This is food</td>
+                  <td>{item.description}</td>
                   <td>
                     <div className='mb-2'>
-                      <Button id={index} variant='danger' size='sm' onClick={toggleDeleteItem}>
+                      <Button id={item.id} variant='danger' size='sm' onClick={toggleDeleteItem}>
                         Delete
                       </Button>
                     </div>

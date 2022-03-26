@@ -1,14 +1,40 @@
-import React from "react";
-import { Button, Form, Modal, Table } from "react-bootstrap";
+import React, { useEffect, useReducer } from "react";
+import { Button, Modal, Table } from "react-bootstrap";
+import { getItemsNotInMealPlan } from "../../api/requests";
+
+const reducer = (state, action) => {
+  switch (action.type) {
+    case 'success-load-items':
+      return {...state, items: action.items};
+    default:
+      throw new Error();
+  }
+};
 
 const AddNewItemModal = (props) => {
-  const { isOpen, onClose, onSubmit, itemName, itemDescription } = props;
+  const { isOpen, onClose, mealPlanId } = props;
 
-  const items = [
-    { name: "Burger", description: "Hello World", categories: "Fast Food" },
-    { name: "Burger", description: "Hello World", categories: "Fast Food" },
-    { name: "Burger", description: "Hello World", categories: "Fast Food" },
-  ];
+  const [state, dispatch] = useReducer(reducer, {
+    selectedItemId: null,
+    items: []
+  });
+
+  useEffect(() => {
+    console.log('mealPlanId:', mealPlanId);
+    if (mealPlanId != null) {
+      getItemsNotInMealPlan(mealPlanId)
+        .then((response) => {
+          if (response.data.success) {
+            dispatch({ type: 'success-load-items', items: response.data.items });
+          } else {
+            alert(response.data.message);
+          }
+        })
+        .catch((e) => {
+          alert(e)
+        })
+    }
+  }, [mealPlanId]);
 
   return (
     <Modal
@@ -26,13 +52,13 @@ const AddNewItemModal = (props) => {
             <th>Category</th>
             <th>Actions</th>
           </tr>
-          {items.map((item, index) => (
+          {state.items.map((item) => (
             <tr>
               <td>{item.name}</td>
-              <td>This is food</td>
+              <td>{item.description}</td>
               <td>
                 <div className="mb-2">
-                  <Button id={index} variant="success" size="sm">
+                  <Button id={item.id} variant="success" size="sm">
                     Add this item to your meal plan
                   </Button>
                 </div>
