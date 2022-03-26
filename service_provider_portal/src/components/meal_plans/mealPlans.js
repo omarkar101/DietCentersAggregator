@@ -52,7 +52,7 @@ const reducer = (state, action) => {
       return {
         ...state,
         modalOpen: false,
-        selectedMealPlanId: "",
+        selectedMealPlanId: null,
         selectedMealPlanDescription: "",
         selectedMealPlanName: "",
       };
@@ -64,7 +64,7 @@ const reducer = (state, action) => {
 const MealPlans = (props) => {
   const [state, dispatch] = useReducer(reducer, {
     modalOpen: false,
-    selectedMealPlanId: "",
+    selectedMealPlanId: null,
     selectedMealPlanDescription: "",
     selectedMealPlanName: "",
     mealPlans: [],
@@ -160,6 +160,7 @@ const MealPlans = (props) => {
           isOpen={state.modalOpen}
           onClose={toggleModalOnClose}
           onSubmit={toggleModalOnSubmit}
+          mealPlanId={state.selectedMealPlanId}
           mealPlanName={state.selectedMealPlanName}
           mealPlanDescription={state.selectedMealPlanDescription}
         />
