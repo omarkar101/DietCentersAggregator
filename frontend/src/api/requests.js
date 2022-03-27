@@ -16,9 +16,15 @@ export const getAllItems = () => {
 }
 
 export const getAllMealPlans = () => {
-  return Get('/meal_plans/public/get/all')
+  return Get('/meal_plans/public/get/all');
 }
 
 export const getAllServiceProviders = () => {
-  return Get('/service_providers/public/get/all')
+  return Get('/service_providers/public/get/all');
+}
+
+export const searchForServiceProvidersByName = (serviceProviderName) => {
+  const data = new FormData();
+  data.append('service_provider_name', serviceProviderName);
+  return Get('/service_providers/public/get/search', data);
 }

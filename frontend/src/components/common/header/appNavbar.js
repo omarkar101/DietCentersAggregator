@@ -1,8 +1,16 @@
-import { Container, Form, Nav, Navbar } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Container, Form, Nav, Navbar, Button } from "react-bootstrap";
+import { Link, useNavigate } from "react-router-dom";
 import PlaceDropDown from "./placeDropDown";
 
 const AppNavbar = () => {
+  const [searchName, setSearchName] = useState(null);
+  const navigate = useNavigate();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    navigate('/search', {state:{serviceProviderName:searchName}});
+  };
   return (
     <Navbar collapseOnSelect expand='lg' bg='dark' variant='dark'>
       <Container>
@@ -20,8 +28,14 @@ const AppNavbar = () => {
             </Nav.Link>
           </Nav>
           <PlaceDropDown />
-          <Form className='d-flex'>
-            <Form.Control type='text' placeholder='Search' className='mr-sm-2' />
+          <Form className='d-flex' onSubmit={handleSubmit}>
+            <Form.Group>
+              <Form.Control onChange={(e) => setSearchName(e.target.value)}
+                type='text' placeholder='Search Service Providers...' className='mr-sm-2' />
+            </Form.Group>
+            <Button variant='success btn-block' type='submit'>
+              Search
+            </Button>
           </Form>
           <Nav>
             <Nav.Link as={Link} to='/profile'>
