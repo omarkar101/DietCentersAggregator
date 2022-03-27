@@ -26,5 +26,5 @@ export const getAllServiceProviders = () => {
 export const searchForServiceProvidersByName = (serviceProviderName) => {
   const data = new FormData();
   data.append('service_provider_name', serviceProviderName);
-  return Get('/service_providers/public/get/search', data);
+  return Post('/service_providers/public/get/search', data);
 }

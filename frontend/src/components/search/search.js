@@ -7,7 +7,7 @@ import ExploreSection from "../common/exploreSection";
 const reducer = (state, action) => {
     switch (action.type) {
       case "search-service-providers-by-name":
-        return { ...state, serviceProviders: action.serviceProviders, collectionName: `${state.serviceProviders?.length} result(s) found` };
+        return { ...state, serviceProviders: action.serviceProviders };
       default:
         throw new Error();
     }
@@ -19,13 +19,17 @@ const Search = () => {
     const location = useLocation();
     const [state, dispatch] = useReducer(reducer, {
         serviceProviders: [],
-        collectionName: ''
     });
     
     useEffect(() => {
+        console.log(location.state.serviceProviderName);
+        if (location.state.serviceProviderName == null) {
+            return;
+        }
         searchForServiceProvidersByName(location.state.serviceProviderName)
         .then((response) => {
             if (response.data.success) {
+                console.log(response.data.service_providers);
                 dispatch({ type: 'search-service-providers-by-name', serviceProviders: response.data.service_providers })
             } else {
             alert(response.data.message);
@@ -38,7 +42,7 @@ const Search = () => {
 
     return (
         <>
-          <ExploreSection list={state.serviceProviders == null ? [] : state.serviceProviders } collectionName={state.collectionName} />
+          <ExploreSection list={state.serviceProviders == null ? [] : state.serviceProviders } collectionName={`${state.serviceProviders?.length} result(s) found`} />
         </>
     );
 }
