@@ -12,6 +12,7 @@ import ServiceProviderPage from "./components/serviceProvider/serviceProvider";
 import Package from "./components/mealPackages/package";
 import Authentication from "./containers/user_authentication";
 import API from "./api/api";
+import Search from "./components/search/search";
 
 const App = () => {
   API.interceptors.response.use((response) => {
@@ -34,6 +35,7 @@ const App = () => {
               <Route path="/profile" element={<Profile />} />
               <Route path="/login" element={<Login />} />
               <Route path="/package/:id" element={<Package />} />
+              <Route path="/search" element={<Search />} />
               <Route
                 path="/serviceProvider/:id"
                 element={
