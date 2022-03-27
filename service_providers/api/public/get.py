@@ -15,6 +15,7 @@ def get_all_service_providers():
 def get_service_providers_by_name():
 
   serviceProviderName = request.form.get('service_provider_name')
+  print(serviceProviderName)
   with generate_db_session() as db_session:
     service_providers = db_session.query(ServiceProvider).filter(ServiceProvider.name == serviceProviderName).all()
     # service_providers = db_session.query(ServiceProvider).filter(ServiceProvider.name.like(serviceProviderName)).all()

@@ -6,7 +6,7 @@ import ExploreSection from "../common/exploreSection";
 
 const reducer = (state, action) => {
     switch (action.type) {
-      case "get-service-providers-by-name":
+      case "search-service-providers-by-name":
         return { ...state, serviceProviders: action.serviceProviders, collectionName: `${state.serviceProviders?.length} result(s) found` };
       default:
         throw new Error();
@@ -26,8 +26,7 @@ const Search = () => {
         searchForServiceProvidersByName(location.state.serviceProviderName)
         .then((response) => {
             if (response.data.success) {
-                console.log(response.data.service_providers);
-                dispatch({ type: 'get-service-providers-by-name', serviceProviders: response.data.service_providers })
+                dispatch({ type: 'search-service-providers-by-name', serviceProviders: response.data.service_providers })
             } else {
             alert(response.data.message);
             }
