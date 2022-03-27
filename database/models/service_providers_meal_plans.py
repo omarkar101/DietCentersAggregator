@@ -1,8 +1,9 @@
-from sqlalchemy import Column, BigInteger, Text, ForeignKey
+from sqlalchemy import Column, BigInteger, Text, ForeignKey, and_
 from sqlalchemy.orm import relationship, validates
 from dataclasses import dataclass
 from sqlalchemy.ext.hybrid import hybrid_property
-from database.orm import Base
+from database.models.items import Item
+from database.orm import Base, generate_db_session
 from user import UserType
 
 metadata = Base.metadata
@@ -50,6 +51,17 @@ class ServiceProviderMealPlan(Base):
     @description.setter
     def description(self, description):
         self._description = description
+    
+    def get_items(self):
+        return [x.item for x in self.items]
+
+    def get_items_not_in_meal_plan(self):
+        with generate_db_session() as db_session:
+            meal_plan_item_ids = [x.id for x in self.get_items()]
+            items_not_in_meal_plan = db_session.query(Item) \
+                .filter(and_(Item.id.notin_(meal_plan_item_ids))) \
+                .all()
+        return items_not_in_meal_plan
 
     # @validates('service_provider')
     # def validate_user(self, key, service_provider):

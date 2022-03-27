@@ -84,6 +84,14 @@ export const removeItemFromMealPlan = (mealPlanId, itemId) => {
 
 export const getItemsNotInMealPlan = (mealPlanId) => {
   const data = new FormData();
+  console.log('CALLED');
   data.append('meal_plan_id', mealPlanId);
   return Post('/meal_plans/get/items_not_in_meal_plan', data);
+}
+
+export const addItemToMealPlan = (mealPlanId, itemId) => {
+  const data = new FormData();
+  data.append('meal_plan_id', mealPlanId);
+  data.append('item_id', itemId);
+  return Post('/meal_plans/add/item', data);
 }

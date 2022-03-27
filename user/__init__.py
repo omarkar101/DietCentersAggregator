@@ -10,7 +10,6 @@ class UserType(Enum):
 
 def get_user_email_from_token():
     token = request.headers.get('x-access-token')
-    print('token:', token)
     a = jwt.decode(token,current_app.config['SECRET_KEY'],algorithms=['HS256'])
     email = a.get('email')
     return email

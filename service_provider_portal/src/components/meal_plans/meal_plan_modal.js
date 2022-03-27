@@ -13,6 +13,8 @@ const reducer = (state, action) => {
       return { ...state, modalOpen: true };
     case 'close-item-modal':
       return { ...state, modalOpen: false };
+    case 'clear-selected-meal-plan-items':
+      return { ...state, selectedMealPlanItems: [] };
     default:
       throw new Error();
   }
@@ -35,8 +37,6 @@ const MealPlanModal = (props) => {
     selectedMealPlanItems: []
   });
 
-  console.log('mealPLANNIDDDD:', mealPlanId);
-
   useEffect(() => {
     if(mealPlanId != null) {
       getMealPlanItems(mealPlanId)
@@ -50,6 +50,8 @@ const MealPlanModal = (props) => {
         .catch((e) => {
           alert(e)
         })
+    } else {
+      dispatch({ type: 'clear-selected-meal-plan-items' });
     }
   }, [mealPlanId]);
 
@@ -59,7 +61,8 @@ const MealPlanModal = (props) => {
   }, [mealPlanName, mealPlanDescription]);
 
   const toggleDeleteItem = useCallback((e) => {
-    console.log("delete");
+    console.log('mealPlanId:', mealPlanId);
+    console.log('itemId:', e.target.id);
     removeItemFromMealPlan(mealPlanId, e.target.id)
       .then((response) => {
         if (response.data.success) {

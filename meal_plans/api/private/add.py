@@ -54,5 +54,6 @@ def add_item_to_meal_plan():
     meal_plan_item = MealPlanItem(item_id=item_id, meal_plan_id=meal_plan_id)
     db_session.add(meal_plan_item)
     db_session.refresh(meal_plan)
-    items = [x.item for x in meal_plan.items]
-  return jsonify(success=True, meal_plan_items=items)
+    items_in_meal_plan = meal_plan.get_items()
+    items_not_in_meal_plan = meal_plan.get_items_not_in_meal_plan()
+  return jsonify(success=True, items_in_meal_plan=items_in_meal_plan, items_not_in_meal_plan=items_not_in_meal_plan)
