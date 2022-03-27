@@ -61,8 +61,6 @@ const MealPlanModal = (props) => {
   }, [mealPlanName, mealPlanDescription]);
 
   const toggleDeleteItem = useCallback((e) => {
-    console.log('mealPlanId:', mealPlanId);
-    console.log('itemId:', e.target.id);
     removeItemFromMealPlan(mealPlanId, e.target.id)
       .then((response) => {
         if (response.data.success) {
