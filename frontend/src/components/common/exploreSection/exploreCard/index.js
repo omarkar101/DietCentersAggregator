@@ -23,7 +23,7 @@ const ExploreCard = ({restaurant}) => {
     const offers = [];
     const cuisines = [];
     const bottomContainers = "";
-    const goldOff = "GOLD OFF";
+    const goldOff = "NEW";
     const proOff = null;
     const discount = null;
 
