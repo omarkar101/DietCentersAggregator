@@ -170,12 +170,14 @@ const MealPlans = (props) => {
         </Button>
         <Table striped bordered hover>
           <tr>
+            <th>Photo</th>
             <th>Name</th>
             <th>Description</th>
             <th>Actions</th>
           </tr>
           {state.mealPlans?.map((mealPlan) => (
             <tr>
+              <td><img src="https://299storage.blob.core.windows.net/container/download.jpeg" alt="2" /></td>
               <td>{mealPlan.name}</td>
               <td>{mealPlan.description}</td>
               <td>

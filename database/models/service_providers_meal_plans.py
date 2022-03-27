@@ -1,5 +1,5 @@
 from sqlalchemy import Column, BigInteger, Text, ForeignKey, and_
-from sqlalchemy.orm import relationship, validates
+from sqlalchemy.orm import relationship
 from dataclasses import dataclass
 from sqlalchemy.ext.hybrid import hybrid_property
 from database.models.items import Item
@@ -14,10 +14,12 @@ class ServiceProviderMealPlan(Base):
     id: int
     description: str
     name: str
+    image: str
 
     id = Column(BigInteger, primary_key=True, autoincrement=True)
     _name = Column('name', Text, nullable=False)
     _description = Column('description', Text, nullable=False)
+    image = Column(Text, nullable=True)
 
     user_id = Column(ForeignKey('service_providers.user_id', ondelete='CASCADE'), nullable=False)
 
@@ -51,7 +53,7 @@ class ServiceProviderMealPlan(Base):
     @description.setter
     def description(self, description):
         self._description = description
-    
+
     def get_items(self):
         return [x.item for x in self.items]
 
