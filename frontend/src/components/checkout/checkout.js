@@ -73,91 +73,6 @@ const Checkout = () => {
             </Row>
 
             <hr className="mt-5" />
-
-            <h4 className="text-black-50 p-3 text-center">
-              Payment Information
-            </h4>
-            <Row className="mb-3 mt-5">
-              <Form.Group as={Col} md="4" controlId="validationCustom03">
-                <Form.Label>Credit Card Number</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Credit Card Number"
-                  required
-                />
-                <Form.Control.Feedback type="invalid">
-                  Please provide a valid Credit Card Number.
-                </Form.Control.Feedback>
-              </Form.Group>
-            </Row>
-            <Row className="mb-3">
-              <Form.Group as={Col} md="4" controlId="validationCustom03">
-                <Form.Label>Month</Form.Label>
-                <Form.Select defaultValue="">
-                  <option>January</option>
-                  <option>February</option>
-                  <option>March</option>
-                  <option>April</option>
-                  <option>May</option>
-                  <option>June</option>
-                  <option>July</option>
-                  <option>August</option>
-                  <option>September</option>
-                  <option>October</option>
-                  <option>November</option>
-                  <option>December</option>
-                </Form.Select>
-                <Form.Control.Feedback type="invalid">
-                  Please provide a valid Month.
-                </Form.Control.Feedback>
-              </Form.Group>
-              <Form.Group as={Col} md="4" controlId="validationCustom04">
-                <Form.Label>Year</Form.Label>
-                <Form.Select defaultValue="">
-                  <option>2000</option>
-                  <option>2001</option>
-                  <option>2002</option>
-                  <option>2003</option>
-                  <option>2004</option>
-                  <option>2005</option>
-                  <option>2006</option>
-                  <option>2007</option>
-                  <option>2008</option>
-                  <option>2009</option>
-                  <option>2010</option>
-                  <option>2011</option>
-                  <option>2012</option>
-                  <option>2013</option>
-                  <option>2014</option>
-                  <option>2015</option>
-                  <option>2016</option>
-                  <option>2017</option>
-                  <option>2018</option>
-                  <option>2019</option>
-                  <option>2020</option>
-                  <option>2021</option>
-                  <option>2012</option>
-                </Form.Select>
-                <Form.Control.Feedback type="invalid">
-                  Please provide a valid Year.
-                </Form.Control.Feedback>
-              </Form.Group>
-              <Form.Group as={Col} md="4" controlId="validationCustom05">
-                <Form.Label>CVC</Form.Label>
-                <Form.Control type="text" placeholder="CVC" required />
-                <Form.Control.Feedback type="invalid">
-                  Please provide a valid CVC.
-                </Form.Control.Feedback>
-              </Form.Group>
-            </Row>
-            <Form.Group className="mb-5">
-              <Form.Check
-                required
-                label="Agree to terms and conditions"
-                feedback="You must agree before submitting."
-                feedbackType="invalid"
-              />
-            </Form.Group>
             <div style={{ marginTop: 100 }}>
               <Card className="text-center mb-5">
                 <Card.Header style={{ backgroundColor: "#bce6d988" }}>
@@ -192,7 +107,7 @@ const Checkout = () => {
                 }}
                 type="submit"
               >
-                Submit Form
+                Pay on Delivery
               </Button>
             </Col>
           </Form>
