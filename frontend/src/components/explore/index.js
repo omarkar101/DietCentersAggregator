@@ -29,7 +29,6 @@ const Explore = () => {
     .then((response) => {
       if (response.data.success) {
         dispatch({ type: 'get-all-service-providers', serviceProviders: response.data.service_providers })
-        console.log(response.data.service_providers);
       } else {
         alert(response.data.message)
       }

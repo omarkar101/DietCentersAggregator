@@ -44,7 +44,6 @@ def get_items_not_in_meal_plan():
       .options(joinedload(ServiceProviderMealPlan.items)) \
       .first()
     meal_plan_item_ids = [x.item_id for x in meal_plan.items]
-    print('meal_plan_item_ids:', meal_plan_item_ids);
     items = db_session.query(Item).filter(and_(Item.user_id == user_id, Item.id.notin_(meal_plan_item_ids))).all()
-    print('items:', items)
+  print('items:', items)
   return jsonify(success=True, items=items)

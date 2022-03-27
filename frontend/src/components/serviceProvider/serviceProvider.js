@@ -79,8 +79,6 @@ const ServiceProviderPage = (props) => {
 
   const { id } = useParams();
 
-  console.log(id);
-
   return (
     <PageBase>
       <ImagesSection {...props} />

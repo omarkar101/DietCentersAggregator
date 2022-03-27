@@ -16,7 +16,6 @@ const SignUp = (props) => {
     e.preventDefault();
     signUpServiceProvider(email, password, name, phoneNumber)
       .then((response) => {
-        console.log(response);
         if (response.data.success) {
           navigate("/login");
         } else {

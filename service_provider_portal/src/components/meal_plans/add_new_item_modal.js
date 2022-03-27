@@ -1,11 +1,11 @@
-import React, { useEffect, useReducer } from "react";
+import React, { useCallback, useEffect, useReducer } from "react";
 import { Button, Modal, Table } from "react-bootstrap";
-import { getItemsNotInMealPlan } from "../../api/requests";
+import { addItemToMealPlan, getItemsNotInMealPlan } from "../../api/requests";
 
 const reducer = (state, action) => {
   switch (action.type) {
     case 'success-load-items':
-      return {...state, items: action.items};
+      return {...state, itemsNotInMealPlan: action.itemsNotInMealPlan};
     default:
       throw new Error();
   }
@@ -16,16 +16,15 @@ const AddNewItemModal = (props) => {
 
   const [state, dispatch] = useReducer(reducer, {
     selectedItemId: null,
-    items: []
+    itemsNotInMealPlan: []
   });
 
   useEffect(() => {
-    console.log('mealPlanId:', mealPlanId);
     if (mealPlanId != null) {
       getItemsNotInMealPlan(mealPlanId)
         .then((response) => {
           if (response.data.success) {
-            dispatch({ type: 'success-load-items', items: response.data.items });
+            dispatch({ type: 'success-load-items', itemsNotInMealPlan: response.data.items });
           } else {
             alert(response.data.message);
           }
@@ -35,6 +34,22 @@ const AddNewItemModal = (props) => {
         })
     }
   }, [mealPlanId]);
+
+  const toggleAddItemToMealPlan = useCallback((e) => {
+    if(mealPlanId != null) {
+      addItemToMealPlan(mealPlanId, e.target.id)
+        .then((response) => {
+          if (response.data.success) {
+            dispatch({ type: 'success-load-items', itemsNotInMealPlan: response.data.items_not_in_meal_plan });
+          } else {
+            alert(response.data.message);
+          }
+        })
+        .catch((e) => {
+          alert(e)
+        })
+    }
+  })
 
   return (
     <Modal
@@ -52,13 +67,13 @@ const AddNewItemModal = (props) => {
             <th>Category</th>
             <th>Actions</th>
           </tr>
-          {state.items.map((item) => (
+          {state.itemsNotInMealPlan.map((item) => (
             <tr>
               <td>{item.name}</td>
               <td>{item.description}</td>
               <td>
                 <div className="mb-2">
-                  <Button id={item.id} variant="success" size="sm">
+                  <Button id={item.id} variant="success" size="sm" onClick={toggleAddItemToMealPlan}>
                     Add this item to your meal plan
                   </Button>
                 </div>
