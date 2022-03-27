@@ -16,6 +16,9 @@ def get_service_providers_by_name():
 
   serviceProviderName = request.form.get('service_provider_name')
   with generate_db_session() as db_session:
-    service_providers = db_session.query(ServiceProvider).filter(ServiceProvider.name == serviceProviderName).all()
+    # service_providers = db_session.query(ServiceProvider).filter(ServiceProvider.name == serviceProviderName).all()
+    service_providers = db_session.query(ServiceProvider).all()
 
-  return jsonify(success=True, service_providers=service_providers)
+  service_providers_copy = [service_provider for service_provider in service_providers if service_provider.name.startswith(serviceProviderName)]
+
+  return jsonify(success=True, service_providers=service_providers_copy)
