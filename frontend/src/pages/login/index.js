@@ -4,12 +4,14 @@ import HomePage from "../home";
 import styled from "styled-components";
 import { loginServiceProvider } from "../../api/requests";
 import Authentication from "../../containers/auth_container";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
   const [redirectToHome, setRedirectToHome] = useState(false);
   const auth = Authentication.useContainer()
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -17,6 +19,7 @@ const Login = () => {
       .then((response) => {
         if (response.data.success) {
           auth.setToken(response.data.token);
+          navigate('/');
         } else {
           alert(response.data.message);
         }
