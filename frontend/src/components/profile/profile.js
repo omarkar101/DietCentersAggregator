@@ -59,18 +59,18 @@ const Profile = () => {
               <Row className="mb-5">
                 <Form.Group controlId="formGridPhoneNumber">
                   <Form.Label>Phone Number</Form.Label>
-                  <Form.Control onChange={(e) => setPhoneNumber(e.target.value)} type="text" placeholder="+961 03/030303" />
+                  <Form.Control required onChange={(e) => setPhoneNumber(e.target.value)} type="text" placeholder="+961 03/030303" />
                 </Form.Group>
               </Row>
 
               <Row>
                 <Form.Group as={Col} md="6" controlId="formGridfirst">
                   <Form.Label>First Name</Form.Label>
-                  <Form.Control onChange={(e) => setFirstName(e.target.value)} type="text" placeholder="First Name" />
+                  <Form.Control required onChange={(e) => setFirstName(e.target.value)} type="text" placeholder="First Name" />
                 </Form.Group>
                 <Form.Group as={Col} md="6" controlId="formGridlast">
                   <Form.Label>Last Name</Form.Label>
-                  <Form.Control onChange={(e) => setLastName(e.target.value)} type="text" placeholder="Last Name" />
+                  <Form.Control required onChange={(e) => setLastName(e.target.value)} type="text" placeholder="Last Name" />
                 </Form.Group>
               </Row>
             </div>
@@ -87,16 +87,16 @@ const Profile = () => {
               <Row className="mb-5">
                 <Form.Group as={Col} md="4" controlId="formGridWeight">
                   <Form.Label>Weight</Form.Label>
-                  <Form.Control onChange={(e) => setWeight(e.target.value)} placeholder="Weight in Kg" />
+                  <Form.Control required onChange={(e) => setWeight(e.target.value)} placeholder="Weight in Kg" />
                 </Form.Group>
 
                 <Form.Group as={Col} md="4" controlId="formGridWeight">
                   <Form.Label>Height</Form.Label>
-                  <Form.Control onChange={(e) => setHeight(e.target.value)} placeholder="Height in cm" />
+                  <Form.Control required onChange={(e) => setHeight(e.target.value)} placeholder="Height in cm" />
                 </Form.Group>
                 <Form.Group as={Col} md="4" controlId="formGridWeight">
                   <Form.Label>Age</Form.Label>
-                  <Form.Control onChange={(e) => setAge(e.target.value)} placeholder="Age" />
+                  <Form.Control required onChange={(e) => setAge(e.target.value)} placeholder="Age" />
                 </Form.Group>
               </Row>
             </div>
@@ -109,11 +109,12 @@ const Profile = () => {
             <Row className="mb-5">
               <Form.Group className="mb-1" controlId="formGridEmailAddress">
                 <Form.Label>Email address</Form.Label>
-                <Form.Control onChange={(e) => setaddressEmail(e.target.value)} type="email" placeholder="xyz@example.com" />
+                <Form.Control required onChange={(e) => setaddressEmail(e.target.value)} type="email" placeholder="xyz@example.com" />
               </Form.Group>
               <Form.Group className="mb-1" controlId="formGridAddressName">
                 <Form.Label>Address Name</Form.Label>
                 <Form.Control
+                  required
                   type="text"
                   placeholder="Home,Work,University..."
                   onChange={(e) => setaddressName(e.target.value)}
@@ -124,17 +125,17 @@ const Profile = () => {
                 controlId="formGridAddressPhoneNumber"
               >
                 <Form.Label>Address Phone Number</Form.Label>
-                <Form.Control onChange={(e) => setaddressPhoneNumber(e.target.value)} type="tel" placeholder="+961 03/030303" />
+                <Form.Control required onChange={(e) => setaddressPhoneNumber(e.target.value)} type="tel" placeholder="+961 03/030303" />
               </Form.Group>
             </Row>
             <Row className="mb-3">
               <Form.Group as={Col} md="6" controlId="formGridCity">
                 <Form.Label>City</Form.Label>
-                <Form.Control onChange={(e) => setcity(e.target.value)} placeholder="Beirut" />
+                <Form.Control required onChange={(e) => setcity(e.target.value)} placeholder="Beirut" />
               </Form.Group>
               <Form.Group as={Col} md="6" controlId="formGridCountry">
                 <Form.Label>Country</Form.Label>
-                <Form.Select onChange={(e) => setcountry(e.target.value)} defaultValue="Choose...">
+                <Form.Select required onChange={(e) => setcountry(e.target.value)} defaultValue="Choose...">
                   <option value="Lebanon">Lebanon</option>
                   <option>...</option>
                 </Form.Select>
@@ -143,34 +144,34 @@ const Profile = () => {
             <Row className="mb-3">
               <Form.Group as={Col} controlId="formGridStreet">
                 <Form.Label>Street</Form.Label>
-                <Form.Control onChange={(e) => setstreet(e.target.value)} placeholder="Makdissi Street" />
+                <Form.Control required onChange={(e) => setstreet(e.target.value)} placeholder="Makdissi Street" />
               </Form.Group>
             </Row>
             <Row className="mb-3">
               <Form.Group as={Col} md="6" controlId="formGridBuilding">
                 <Form.Label>Building</Form.Label>
-                <Form.Control onChange={(e) => setbuilding(e.target.value)} placeholder="Mirage building" />
+                <Form.Control required onChange={(e) => setbuilding(e.target.value)} placeholder="Mirage building" />
               </Form.Group>
               <Form.Group as={Col} md="6" controlId="formGridFloor">
                 <Form.Label>Floor</Form.Label>
-                <Form.Control onChange={(e) =>setfloor(e.target.value)} placeholder="3rd floor" />
+                <Form.Control required onChange={(e) =>setfloor(e.target.value)} placeholder="3rd floor" />
               </Form.Group>
             </Row>
             <Row className="mb-3">
               <Form.Group as={Col} md="6" controlId="formGridAddressFirstName">
                 <Form.Label>Receiver First Name</Form.Label>
-                <Form.Control onChange={(e) => setreceiverFirstName(e.target.value)} placeholder="John" />
+                <Form.Control required onChange={(e) => setreceiverFirstName(e.target.value)} placeholder="John" />
               </Form.Group>
 
               <Form.Group as={Col} md="6" controlId="formGridAddressLastName">
                 <Form.Label>Receiver Last Name</Form.Label>
-                <Form.Control onChange={(e) => setreceiverLastName(e.target.value)} placeholder="Doe" />
+                <Form.Control required onChange={(e) => setreceiverLastName(e.target.value)} placeholder="Doe" />
               </Form.Group>
             </Row>
             <Row className="mb-3">
               <Form.Group as={Col} controlId="formGridAddressInstructions">
                 <Form.Label>Instructions</Form.Label>
-                <Form.Control onChange={(e) => setinstructions(e.target.value)} placeholder="Don't ring the bell, knock..." />
+                <Form.Control required onChange={(e) => setinstructions(e.target.value)} placeholder="Don't ring the bell, knock..." />
               </Form.Group>
             </Row>
           </Col>

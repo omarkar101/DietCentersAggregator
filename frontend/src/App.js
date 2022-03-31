@@ -10,7 +10,7 @@ import AppNavbar from "./components/common/header/appNavbar";
 import Login from "./pages/login";
 import ServiceProviderPage from "./components/serviceProvider/serviceProvider";
 import Package from "./components/mealPackages/package";
-import Authentication from "./containers/user_authentication";
+import Authentication from "./containers/auth_container";
 import API from "./api/api";
 import Search from "./components/search/search";
 

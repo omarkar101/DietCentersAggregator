@@ -52,3 +52,10 @@ export const updateClientProfile = (firstName, LastName, PhoneNumber, Weight, He
   data.append('instructions', instructions);
   return Post('/user/public/update/personal_info', data);
 }
+
+export const loginServiceProvider = (email, password) => {
+  const data = new FormData();
+  data.append('email', email);
+  data.append('password', password);
+  return Post('/auth/login/user', data);
+}

@@ -16,7 +16,7 @@ public_update_api = Blueprint('public_update_api', __name__, url_prefix='/public
 @cross_origin(origins='*', supports_credentials=True)
 def update_user():
     with generate_db_session() as db_session:
-        # user_id = get_user_id()
+        user_id = get_user_id()
         user_phone_number = request.form.get('phone_number')
         first_name = request.form.get('first_name')
         last_name = request.form.get('last_name')
@@ -34,7 +34,7 @@ def update_user():
         floor = request.form.get('floor')
         instructions = request.form.get('instructions')
         city = request.form.get('city')
-        user = db_session.query(User).filter(User.id == 131).first()
+        user = db_session.query(User).filter(User.id == user_id).first()
         if user is None:
             return jsonify(success=False, message='User does not exist')
         user.client.first_name = first_name
