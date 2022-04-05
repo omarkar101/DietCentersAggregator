@@ -19,7 +19,7 @@ class Client(Base):
         'User',
         uselist=False,
         back_populates='client')
-    mealplan = relationship(
+    meal_plan = relationship(
         'ServiceProviderMealPlan',
         uselist=False,
         back_populates='clients')
