@@ -11,7 +11,7 @@ const PackageCard = (props) => {
 
     return (
         <PackageCardWrapper onClick={onClickPackage}>
-            <ItemTextAndButtonWrapper>
+            {/* <ItemTextAndButtonWrapper> */}
             <ItemTextWrapper>
                 <ItemNameContanier>{plan.name}</ItemNameContanier>
                 <ItemPriceContainer>{plan.price}</ItemPriceContainer>
@@ -19,13 +19,13 @@ const PackageCard = (props) => {
                 {plan.description}
                 </ItemDescriptionParagraph>
             </ItemTextWrapper>
-            <ButtonContainer>
+            {/* <ButtonContainer>
                 <AddSpanStyle>ADD</AddSpanStyle>
                 <svg xmlns="http://www.w3.org/2000/svg" fill="#CFCFCF" width="16" height="16" viewBox="0 0 20 20" aria-labelledby="icon-svg-title- icon-svg-desc-" role="img">
                 <path d="M15.5 9.42h-4.5v-4.5c0-0.56-0.44-1-1-1s-1 0.44-1 1v4.5h-4.5c-0.56 0-1 0.44-1 1s0.44 1 1 1h4.5v4.5c0 0.54 0.44 1 1 1s1-0.46 1-1v-4.5h4.5c0.56 0 1-0.46 1-1s-0.44-1-1-1z"></path>
                 </svg>
-            </ButtonContainer>
-            </ItemTextAndButtonWrapper>
+            </ButtonContainer> */}
+            {/* </ItemTextAndButtonWrapper> */}
         </PackageCardWrapper>
     );
 
@@ -40,6 +40,7 @@ const PackageCardWrapper = styled.div`
   padding-bottom: 3.5rem;
   border-bottom: 1px solid rgb(232, 232, 232);
   cursor: pointer;
+  width: 100%;
 `;
 
 const ItemNameContanier = styled.div`
