@@ -29,6 +29,10 @@ class ServiceProviderMealPlan(Base):
 
     user_id = Column(ForeignKey('service_providers.user_id', ondelete='CASCADE'), nullable=False)
 
+    clients = relationship(
+        'Client',
+        uselist=True,
+        back_populates='meal_plan')
     service_provider = relationship(
         'ServiceProvider',
         primaryjoin='ServiceProvider.user_id == ServiceProviderMealPlan.user_id',

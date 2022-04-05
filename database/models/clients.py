@@ -13,10 +13,16 @@ class Client(Base):
 
     user_id = Column(ForeignKey('users.id', ondelete='CASCADE'), nullable=False, primary_key=True)
 
+    meal_plans = Column(ForeignKey('service_providers_meal_plans.id', ondelete='CASCADE'), nullable=False)
+
     user = relationship(
         'User',
         uselist=False,
         back_populates='client')
+    mealplan = relationship(
+        'ServiceProviderMealPlan',
+        uselist=False,
+        back_populates='clients')
     biometrics = relationship(
         'ClientBiometrics',
         uselist=False,
