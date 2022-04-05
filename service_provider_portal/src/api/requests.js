@@ -57,12 +57,14 @@ export const deleteOneMealPlan = (mealPlanId) => {
   return Post('/meal_plans/delete/one', data)
 }
 
-export const editOneMealPlan = (mealPlanId, mealPlanName, mealPlanDescription) => {
+export const editOneMealPlan = (mealPlanId, mealPlanName, mealPlanDescription, mealPlanImage) => {
   const data = new FormData();
   data.append('meal_plan_id', mealPlanId);
   data.append('meal_plan_name', mealPlanName);
   data.append('meal_plan_description', mealPlanDescription);
-  return Post('/meal_plans/edit/one', data)
+  console.log('mealPlanImage:', mealPlanImage);
+  data.append('meal_plan_image', mealPlanImage);
+  return Post('/meal_plans/edit/one', data);
 }
 
 export const getAllMealPlans = () => {

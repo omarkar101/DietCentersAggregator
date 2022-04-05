@@ -67,6 +67,7 @@ const MealPlans = (props) => {
     selectedMealPlanId: null,
     selectedMealPlanDescription: "",
     selectedMealPlanName: "",
+    selectedMealPlanImage: null,
     mealPlans: [],
   });
 
@@ -84,7 +85,7 @@ const MealPlans = (props) => {
     });
   }, []);
 
-  const toggleModalOnSubmit = (mealPlanName, mealPlanDescription) => {
+  const toggleModalOnSubmit = (mealPlanName, mealPlanDescription, mealPlanImage) => {
     if (state.selectedMealPlanId == null) {
       addOneMealPlan(mealPlanName, mealPlanDescription)
       .then((response) => {
@@ -98,7 +99,8 @@ const MealPlans = (props) => {
         alert(e);
       });
     } else {
-      editOneMealPlan(state.selectedMealPlanId, mealPlanName, mealPlanDescription)
+      console.log('IMMAAAGE:', mealPlanImage);
+      editOneMealPlan(state.selectedMealPlanId, mealPlanName, mealPlanDescription, mealPlanImage)
       .then((response) => {
         if (response.data.success) {
           dispatch({ type: 'submit-edit-meal-plan-modal', mealPlans: response.data.meal_plans })
@@ -163,6 +165,7 @@ const MealPlans = (props) => {
           mealPlanId={state.selectedMealPlanId}
           mealPlanName={state.selectedMealPlanName}
           mealPlanDescription={state.selectedMealPlanDescription}
+          mealPlanImage={state.selectedMealPlanImage}
         />
         <Button variant="success" data-mealplanname=''
           data-mealplandescription='' onClick={toggleOpenAddMealPlanModal}>
@@ -177,7 +180,7 @@ const MealPlans = (props) => {
           </tr>
           {state.mealPlans?.map((mealPlan) => (
             <tr>
-              <td><img src="https://299storage.blob.core.windows.net/container/download.jpeg" alt="2" /></td>
+              <td><img width={'100px'} height={'100px'} src={mealPlan.image} alt="2" /></td>
               <td>{mealPlan.name}</td>
               <td>{mealPlan.description}</td>
               <td>

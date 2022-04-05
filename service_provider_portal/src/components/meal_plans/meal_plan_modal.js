@@ -21,15 +21,17 @@ const reducer = (state, action) => {
 };
 
 const MealPlanModal = (props) => {
-  const { isOpen, onClose, onSubmit, mealPlanId, mealPlanName, mealPlanDescription } = props;
+  const { isOpen, onClose, onSubmit, mealPlanId, mealPlanName, mealPlanDescription, mealPlanImage } = props;
   const [planName, setPlanName] = useState("");
   const [planDescription, setPlanDescription] = useState("");
+  const [planImage, setPlanImage] = useState(null);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit(planName, planDescription);
+    onSubmit(planName, planDescription, planImage);
     setPlanName("");
     setPlanDescription("");
+    setPlanImage(null);
   };
 
   const [state, dispatch] = useReducer(reducer, {
@@ -58,7 +60,8 @@ const MealPlanModal = (props) => {
   useEffect(() => {
     setPlanName(mealPlanName);
     setPlanDescription(mealPlanDescription);
-  }, [mealPlanName, mealPlanDescription]);
+    setPlanImage(mealPlanImage);
+  }, [mealPlanName, mealPlanDescription, mealPlanImage]);
 
   const toggleDeleteItem = useCallback((e) => {
     removeItemFromMealPlan(mealPlanId, e.target.id)
@@ -114,7 +117,7 @@ const MealPlanModal = (props) => {
           </Form.Group>
           <Form.Group className='mb-3'>
             <Form.Label>Meal Plan Image</Form.Label>
-            <UploadAndDisplayImage />
+            <UploadAndDisplayImage mealPlanImage={planImage} setMealPlanImage={setPlanImage} />
           </Form.Group>
           <Container>
             <AddNewItemModal

@@ -1,11 +1,17 @@
+from flask import current_app
 from sqlalchemy import Column, BigInteger, Text, ForeignKey, and_
 from sqlalchemy.orm import relationship
 from dataclasses import dataclass
 from sqlalchemy.ext.hybrid import hybrid_property
 from database.models.items import Item
 from database.orm import Base, generate_db_session
+from azure.storage.blob import BlockBlobService
+import uuid
 from user import UserType
 
+blob_service = BlockBlobService(
+  account_name='299storage',
+  account_key='59A1sn1/V/JbS9fCQvtgWcJsP9WZYOJJMDnm+FZjCRFzsRtNYVce/NP7MZDHaf4VlhQgAlD16kRL+AStxRd4uQ==')
 metadata = Base.metadata
 @dataclass
 class ServiceProviderMealPlan(Base):
@@ -64,6 +70,12 @@ class ServiceProviderMealPlan(Base):
                 .filter(and_(Item.id.notin_(meal_plan_item_ids))) \
                 .all()
         return items_not_in_meal_plan
+
+    def set_image(self, image_file):
+        uid = uuid.uuid4()
+        filename = f'{self.name}_{uid.hex}_{image_file.filename}'
+        blob_service.create_blob_from_stream('container', filename, image_file)
+        self.image = f'https://299storage.blob.core.windows.net/container/{filename}'
 
     # @validates('service_provider')
     # def validate_user(self, key, service_provider):
