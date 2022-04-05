@@ -83,7 +83,7 @@ const ServiceProviderPage = (props) => {
           alert(e);
         });
     }
-  },[]);
+  },[id]);
 
   const toggleModalOnClose = useCallback(() => {
     dispatch({ type: "close-package-modal" });

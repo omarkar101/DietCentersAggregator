@@ -7,7 +7,7 @@ const PackageCard = (props) => {
 
     const onClickPackage = useCallback(() => {
       openModal(plan.id);
-    }, []);
+    }, [openModal, plan.id]);
 
     return (
         <PackageCardWrapper onClick={onClickPackage}>
