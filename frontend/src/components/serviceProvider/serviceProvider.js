@@ -6,7 +6,7 @@ import PackageModal from "./packageModal";
 import PackageCard from "./packageCard";
 import { useCallback, useReducer, useEffect } from "react";
 import ItemCard from "./itemCard";
-import { getAllMealPlans, getAllItems } from "../../api/requests";
+import { getMealPlansOfServiceProvider, getItemsOfServiceProvider, getItemsOfAMealPlanOfServiceProvider } from "../../api/requests";
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -29,6 +29,7 @@ const reducer = (state, action) => {
 
 const ServiceProviderPage = (props) => {
   // const { name, description, stars, reviews, images } = props;
+  const { id } = useParams();
 
   const [state, dispatch] = useReducer(reducer, {
     modalOpen: false,
@@ -38,7 +39,7 @@ const ServiceProviderPage = (props) => {
   });
 
   useEffect(() => {
-    getAllMealPlans()
+    getMealPlansOfServiceProvider(id)
       .then((response) => {
         if (response.data.success) {
           dispatch({
@@ -53,7 +54,7 @@ const ServiceProviderPage = (props) => {
         alert(e);
       });
 
-    getAllItems()
+    getItemsOfServiceProvider(id)
       .then((response) => {
         if (response.data.success) {
           dispatch({ type: "get-all-items", items: response.data.items });
@@ -64,20 +65,29 @@ const ServiceProviderPage = (props) => {
       .catch((e) => {
         alert(e);
       });
-  }, []);
+  }, [id]);
 
-  const toggleOpenModal = useCallback(
-    (e) => {
-      dispatch({ type: "open-package-modal", packageItems: state.items });
-    },
-    [state.items]
-  );
+  const toggleOpenModal = useCallback((meal_plan_id) => {
+    if (meal_plan_id == null){
+      return;
+    } else {
+      getItemsOfAMealPlanOfServiceProvider(id, meal_plan_id)
+        .then((response) => {
+          if (response.data.success) {
+            dispatch({ type: "open-package-modal", packageItems: response.data.meal_plan_items });
+          } else {
+            alert(response.data.message);
+          }
+        })
+        .catch((e) => {
+          alert(e);
+        });
+    }
+  },[]);
 
   const toggleModalOnClose = useCallback(() => {
     dispatch({ type: "close-package-modal" });
   }, []);
-
-  const { id } = useParams();
 
   return (
     <PageBase>
