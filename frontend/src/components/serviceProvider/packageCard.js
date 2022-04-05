@@ -39,6 +39,7 @@ const PackageCardWrapper = styled.div`
   flex-direction: row;
   padding-bottom: 3.5rem;
   border-bottom: 1px solid rgb(232, 232, 232);
+  cursor: pointer;
 `;
 
 const ItemNameContanier = styled.div`
