@@ -1,10 +1,16 @@
 import React from "react";
+import { useCallback, useReducer, useEffect } from "react";
 import styled from "styled-components";
 
 const PackageCard = (props) => {
     const { plan, openModal } = props;
+
+    const onClickPackage = useCallback(() => {
+      openModal(plan.id);
+    }, []);
+
     return (
-        <PackageCardWrapper onClick={openModal}>
+        <PackageCardWrapper onClick={onClickPackage}>
             <ItemTextAndButtonWrapper>
             <ItemTextWrapper>
                 <ItemNameContanier>{plan.name}</ItemNameContanier>

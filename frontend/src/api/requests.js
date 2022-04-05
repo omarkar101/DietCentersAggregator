@@ -23,6 +23,25 @@ export const getAllServiceProviders = () => {
   return Get('/service_providers/public/get/all');
 }
 
+export const getMealPlansOfServiceProvider = (id) => {
+  const data = new FormData();
+  data.append('service_provider_id', id);
+  return Post('/meal_plans/public/get/of_service_provider', data);
+}
+
+export const getItemsOfServiceProvider = (id) => {
+  const data = new FormData();
+  data.append('service_provider_id', id);
+  return Post('/items/public/get/of_service_provider', data);
+}
+
+export const getItemsOfAMealPlanOfServiceProvider = (serviceProviderId, mealPlanId) => {
+  const data = new FormData();
+  data.append('service_provider_id', serviceProviderId);
+  data.append('meal_plan_id', mealPlanId);
+  return Post('/meal_plans/public/get/items_of_meal_plan_of_service_provider', data);
+}
+
 export const searchForServiceProvidersByName = (serviceProviderName) => {
   const data = new FormData();
   data.append('service_provider_name', serviceProviderName);
