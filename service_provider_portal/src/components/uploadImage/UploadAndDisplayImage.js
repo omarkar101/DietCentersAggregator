@@ -1,32 +1,15 @@
-import React, { useState } from "react";
+import React from "react";
 
-import axios from "react";
-
-const UploadAndDisplayImage = () => {
-  const [selectedImage, setSelectedImage] = useState(null);
-
-//   const uploadHandler = () => {
-//     const formData = new FormData();
-//     formData.append(
-//       "myFile",
-//       this.state.selectedFile,
-//       this.state.selectedFile.name
-//     );
-//     axios.post("my-domain.com/file-upload", formData, {
-//       onUploadProgress: (progressEvent) => {
-//         console.log(progressEvent.loaded / progressEvent.total);
-//       },
-//     });
-//   };
-
+const UploadAndDisplayImage = ({mealPlanImage, setMealPlanImage}) => {
   return (
     <div>
-      {selectedImage && (
-        <div>
+      {mealPlanImage && (
+        <div style={{ width: '50px', height: '50px' }}>
           <img
             alt="not found"
-            width={"250px"}
-            src={URL.createObjectURL(selectedImage)}
+            width={'50px'}
+            height={'50px'}
+            src={URL.createObjectURL(mealPlanImage)}
           />
         </div>
       )}
@@ -34,10 +17,9 @@ const UploadAndDisplayImage = () => {
         type="file"
         name="myImage"
         onChange={(event) => {
-          setSelectedImage(event.target.files[0]);
+          setMealPlanImage(event.target.files[0]);
         }}
       />
-      {/* <button onClick={uploadHandler}>Upload!</button> */}
     </div>
   );
 };
