@@ -27,7 +27,7 @@ const AppNavbar = () => {
               Checkout
             </Nav.Link>
           </Nav>
-          <PlaceDropDown />
+          {/* <PlaceDropDown /> */}
           <Form className='d-flex' onSubmit={handleSubmit}>
             <Form.Group>
               <Form.Control onChange={(e) => setSearchName(e.target.value)}

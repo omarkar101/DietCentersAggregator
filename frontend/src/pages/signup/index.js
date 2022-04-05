@@ -55,6 +55,7 @@ const SignUp = (props) => {
                 onSubmit={handleSubmit}
               >
                 <Form.Group className="mb-3" controlId="formBasicFirstName">
+                  <Form.Label>First Name</Form.Label>
                   <Form.Control
                     required
                     type="text"
@@ -65,6 +66,7 @@ const SignUp = (props) => {
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="formBasicLastName">
+                  <Form.Label>Last Name</Form.Label>
                   <Form.Control
                     required
                     type="text"
@@ -75,6 +77,7 @@ const SignUp = (props) => {
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="formBasicPhoneNumber">
+                  <Form.Label>Phone Number</Form.Label>
                   <Form.Control
                     required
                     type="text"
@@ -85,6 +88,7 @@ const SignUp = (props) => {
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="formBasicEmail">
+                  <Form.Label>Email Address</Form.Label>
                   <Form.Control
                     required
                     type="email"
@@ -95,6 +99,7 @@ const SignUp = (props) => {
                 </Form.Group>
 
                 <Form.Group className="mb-2" controlId="formBasicPassword">
+                  <Form.Label>Password</Form.Label>
                   <Form.Control
                     required
                     type="password"
@@ -102,13 +107,14 @@ const SignUp = (props) => {
                     pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$"
                     onChange={(e) => setPassword(e.target.value)}
                   />
-                </Form.Group>
-
-                <Form.Group className="w-75 text-center m-auto">
-                  <Form.Text className="text-muted" style={{fontSize: 16, width: '50%'}}>
+                  <Form.Text className="text-muted" style={{fontSize: 12}}>
                     Minimum eight characters, at least one uppercase letter, one
                     lowercase letter and one number.
                   </Form.Text>
+                </Form.Group>
+
+                <Form.Group className="w-75 text-center m-auto">
+
                 </Form.Group>
 
                 <Button
