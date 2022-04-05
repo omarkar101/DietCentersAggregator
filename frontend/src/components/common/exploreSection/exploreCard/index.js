@@ -16,14 +16,14 @@ const ExploreCard = ({restaurant}) => {
     // const discount = offers.length > 1 ? offers[1].text : offers.length === 1 ? offers[0].text : null;
     const id = restaurant.user_id;
     const name = restaurant.name;
-    const coverImg = "";
+    const coverImg = "https://b.zmtcdn.com/data/pictures/chains/1/200651/c789090913b3e88155d40194cd4450c7_o2_featured_v2.jpg";
     const deliveryTime = "31min";
     const rating = "4.2";
     const approxPrice = "39 USD";
     const offers = [];
     const cuisines = [];
     const bottomContainers = "";
-    const goldOff = "GOLD OFF";
+    const goldOff = "NEW";
     const proOff = null;
     const discount = null;
 

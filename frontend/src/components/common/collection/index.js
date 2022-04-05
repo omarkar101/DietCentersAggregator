@@ -6,7 +6,7 @@ import Slider from "react-slick";
 import { Link } from "react-router-dom";
 
 const settings = {
-  infinite: false,
+  infinite: true,
   slidesToShow: 4,
   slidesToScroll: 1,
   nextArrow: <NextArrow />,

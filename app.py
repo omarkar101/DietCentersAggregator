@@ -4,6 +4,7 @@ from auth.api import auth_api
 from items.api import items_api
 from meal_plans.api import meal_plans_api
 from service_providers.api import service_providers_api
+from user.api import user_api
 from auth.decorators import require_user
 from database.models.meal_plans_items import MealPlanItem
 from database.models.credentials import Credentials
@@ -25,6 +26,7 @@ app.register_blueprint(auth_api)
 app.register_blueprint(items_api)
 app.register_blueprint(meal_plans_api)
 app.register_blueprint(service_providers_api)
+app.register_blueprint(user_api)
 
 @app.route('/',methods = ['POST'])
 @require_user(UserType.CLIENT)

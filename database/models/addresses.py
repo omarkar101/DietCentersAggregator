@@ -20,6 +20,7 @@ class Address(Base):
     _building = Column('building', Text, nullable=False)
     _floor = Column('floor', Text, nullable=False)
     _instructions = Column('instructions', Text, nullable=False)
+    _city = Column('city', Text, nullable=False)
 
     user_id = Column(ForeignKey('users.id', ondelete='CASCADE'), nullable=False)
 
@@ -101,3 +102,10 @@ class Address(Base):
     @instructions.setter
     def instructions(self, instructions):
         self._instructions = instructions
+    
+    @hybrid_property
+    def city(self):
+        return self._city
+    @city.setter
+    def city(self, city):
+        self._city = city

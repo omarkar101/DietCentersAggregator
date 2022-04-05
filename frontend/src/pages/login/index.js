@@ -2,25 +2,31 @@ import React, { useState } from "react";
 import { Button, Col, Form, Row } from "react-bootstrap";
 import HomePage from "../home";
 import styled from "styled-components";
+import { loginServiceProvider } from "../../api/requests";
+import Authentication from "../../containers/auth_container";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
   const [redirectToHome, setRedirectToHome] = useState(false);
+  const auth = Authentication.useContainer()
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setRedirectToHome(true);
-    //   signUpClient(email, password, firstName, lastName, phoneNumber)
-    //     .then(response => {
-    //       if(response.data.success) {
-    //       } else {
-    //         alert(response.data.message);
-    //       }
-    //     })
-    //     .catch(e => {
-    //       alert(e);
-    //     })
+    loginServiceProvider(email, password)
+      .then((response) => {
+        if (response.data.success) {
+          auth.setToken(response.data.token);
+          navigate('/');
+        } else {
+          alert(response.data.message);
+        }
+      })
+      .catch((e) => {
+        alert(e);
+      });
   };
   return (
     <>
