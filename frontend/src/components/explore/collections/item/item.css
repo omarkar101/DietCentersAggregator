@@ -23,5 +23,4 @@
 .delivery-item-cover{
     background-color: var(--primary-bg);
     border: 1px solid var(--border-white);
-    cursor: pointer;
 }

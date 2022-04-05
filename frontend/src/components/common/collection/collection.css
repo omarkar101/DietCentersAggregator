@@ -5,6 +5,7 @@
 .collection-wrapper:hover{
     background-color: var(--primary-bg);
     border: 1px solid var(--border-white);
+    cursor: pointer;
 }
 
 .collection {
