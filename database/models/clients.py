@@ -13,7 +13,7 @@ class Client(Base):
 
     user_id = Column(ForeignKey('users.id', ondelete='CASCADE'), nullable=False, primary_key=True)
 
-    meal_plans = Column(ForeignKey('service_providers_meal_plans.id', ondelete='CASCADE'), nullable=False)
+    meal_plan_id = Column(ForeignKey('service_providers_meal_plans.id', ondelete='CASCADE'), nullable=False)
 
     user = relationship(
         'User',

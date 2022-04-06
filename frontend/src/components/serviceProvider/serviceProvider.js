@@ -95,13 +95,6 @@ const ServiceProviderPage = (props) => {
 
       <MenuItemsContainer className="mt-5">
         <StyledSection>
-          <MenuSectionTitle>Menu Items</MenuSectionTitle>
-        </StyledSection>
-        {state.items?.map((item) => (
-          <ItemCard key={item.id} item={item} />
-        ))}
-
-        <StyledSection>
           <MenuSectionTitle>Our Package Deals</MenuSectionTitle>
         </StyledSection>
         <PackageModal
@@ -120,11 +113,17 @@ const ServiceProviderPage = (props) => {
             </ButtonContainer>
           </ItemTextAndButtonWrapper>
         ))}
+
+        <StyledSection>
+          <MenuSectionTitle>Menu Items</MenuSectionTitle>
+        </StyledSection>
+        {state.items?.map((item) => (
+          <ItemCard key={item.id} item={item} />
+        ))}
       </MenuItemsContainer>
     </PageBase>
   );
 };
-
 
 
 const AddSpanStyle = styled.span`
@@ -134,7 +133,7 @@ const AddSpanStyle = styled.span`
   font-weight: 600;
 `;
 
-const ButtonContainer = styled.div`
+const ButtonContainer = styled.button`
   display: flex;
   webkit-box-align: center;
   align-items: center;
@@ -142,15 +141,17 @@ const ButtonContainer = styled.div`
   justify-content: center;
   width: 8.2rem;
   height: 3.2rem;
-  border: 0.5px solid rgb(232, 232, 232);
   border-radius: 0.8rem;
   overflow: hidden;
   cursor: pointer;
   user-select: none;
-  background: rgb(248, 248, 248);
-  position: relative;
+  margin-top: auto;
+  margin-bottom: auto;
   border: 1px solid #114f3cd9;
   background: transparent;
+  &:hover {
+    background-color: #d9fffa9d;
+  }
 `;
 
 const ItemTextAndButtonWrapper = styled.div`
@@ -158,6 +159,8 @@ const ItemTextAndButtonWrapper = styled.div`
   display: flex;
   webkit-box-pack: justify;
   justify-content: space-between;
+  padding: 20px 10px 20px 10px;
+  border-bottom: 1px solid rgb(232, 232, 232);
 `;
 
 const StyledSection = styled.section`

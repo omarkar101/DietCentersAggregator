@@ -34,11 +34,8 @@ const PackageCard = (props) => {
 const PackageCardWrapper = styled.div`
   font-size: 1.6rem;
   padding: 10px;
-  margin-bottom: 3.5rem;
   display: flex;
   flex-direction: row;
-  padding-bottom: 3.5rem;
-  border-bottom: 1px solid rgb(232, 232, 232);
   cursor: pointer;
   width: 100%;
 `;
