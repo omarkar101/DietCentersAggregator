@@ -8,7 +8,7 @@ from database.models.service_providers_meal_plans import ServiceProviderMealPlan
 from database.orm import generate_db_session
 import meal_plans
 from user import get_user_id, get_user_email_from_token
-
+from utils import list_to_dict_list
 public_get_api = Blueprint('public_get_api', __name__, url_prefix='/public/get')
 
 @public_get_api.route('/all', methods=['GET'])
@@ -19,7 +19,8 @@ def get_all_meal_plans():
   # items = user.service_provider.items
   with generate_db_session() as db_session:
     meal_plans = db_session.query(ServiceProviderMealPlan).all()
-  return jsonify(success=True, meal_plans=meal_plans)
+    target_list = list_to_dict_list(meal_plans)
+  return jsonify(success=True, meal_plans=target_list)
 
 @public_get_api.route('/of_service_provider', methods=['POST'])
 def get_meal_plans_of_service_provider():
@@ -28,7 +29,8 @@ def get_meal_plans_of_service_provider():
     meal_plans = db_session.query(ServiceProviderMealPlan) \
       .filter(ServiceProviderMealPlan.user_id == service_provider_id) \
       .all()
-  return jsonify(success=True, meal_plans=meal_plans)
+    target_list = list_to_dict_list(meal_plans)
+  return jsonify(success=True, meal_plans=target_list)
 
 @public_get_api.route('items_of_meal_plan_of_service_provider', methods=['POST'])
 @cross_origin(origins='*', supports_credentials=True)

@@ -68,3 +68,10 @@ class ServiceProviderMealPlan(Base):
     #     if not self.service_provider:
     #         raise Exception('Invalid user type for owning a meal plan')
     #     return service_provider
+    def as_dict(self):
+        information = {c.name: getattr(self, c.name) for c in self.__table__.columns}
+        for pricemodel in self.prices:
+            if pricemodel.currency == 'USD':
+                information['price'] = pricemodel.price
+        return information
+        

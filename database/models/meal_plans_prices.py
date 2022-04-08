@@ -25,7 +25,7 @@ class MealPlanPrice(Base):
         return self._price
     @price.setter
     def price(self, price):
-        self.price = price
+        self._price = price
 
     @hybrid_property
     def currency(self):
