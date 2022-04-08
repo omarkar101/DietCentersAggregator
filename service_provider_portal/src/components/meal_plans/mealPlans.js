@@ -73,6 +73,7 @@ const MealPlans = (props) => {
     selectedMealPlanDescription: "",
     selectedMealPlanName: "",
     selectedMealPlanPrice: 0,
+    selectedMealPlanImage: null,
     mealPlans: [],
   });
 
@@ -90,7 +91,7 @@ const MealPlans = (props) => {
     });
   }, []);
 
-  const toggleModalOnSubmit = (mealPlanName, mealPlanDescription, mealPlanPrice) => {
+  const toggleModalOnSubmit = (mealPlanName, mealPlanDescription, mealPlanPrice, mealPlanImage) => {
     if (state.selectedMealPlanId == null) {
       addOneMealPlan(mealPlanName, mealPlanDescription, mealPlanPrice)
       .then((response) => {
@@ -104,7 +105,7 @@ const MealPlans = (props) => {
         alert(e);
       });
     } else {
-      editOneMealPlan(state.selectedMealPlanId, mealPlanName, mealPlanDescription, mealPlanPrice)
+      editOneMealPlan(state.selectedMealPlanId, mealPlanName, mealPlanDescription, mealPlanPrice, mealPlanImage)
       .then((response) => {
         if (response.data.success) {
           dispatch({ type: 'submit-edit-meal-plan-modal', mealPlans: response.data.meal_plans })
@@ -174,6 +175,7 @@ const MealPlans = (props) => {
           mealPlanName={state.selectedMealPlanName}
           mealPlanDescription={state.selectedMealPlanDescription}
           mealPlanPrice={state.selectedMealPlanPrice}
+          mealPlanImage={state.selectedMealPlanImage}
         />
         <Button variant="success" data-mealplanname=''
           data-mealplandescription='' data-mealplanprice='0' onClick={toggleOpenAddMealPlanModal}>
@@ -181,6 +183,7 @@ const MealPlans = (props) => {
         </Button>
         <Table striped bordered hover>
           <tr>
+            <th>Photo</th>
             <th>Name</th>
             <th>Description</th>
             <th>Price</th>
@@ -188,6 +191,7 @@ const MealPlans = (props) => {
           </tr>
           {state.mealPlans?.map((mealPlan) => (
             <tr>
+              <td><img width={'100px'} height={'100px'} src={mealPlan.image} alt="2" /></td>
               <td>{mealPlan.name}</td>
               <td>{mealPlan.description}</td>
               <td>{mealPlan.price}</td>

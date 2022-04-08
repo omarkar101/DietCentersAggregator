@@ -1,9 +1,6 @@
 from flask import Blueprint, jsonify, request
-from flask_cors import CORS, cross_origin
+from flask_cors import cross_origin
 from sqlalchemy import and_
-from auth.decorators import require_user
-from sqlalchemy.orm import joinedload
-from database.models.credentials import Credentials
 from database.models.service_providers_meal_plans import ServiceProviderMealPlan
 from database.models.service_providers import ServiceProvider
 from database.models.meal_plans_prices import MealPlanPrice
@@ -24,11 +21,13 @@ def edit_meal_plan():
     meal_plan_name = request.form.get('meal_plan_name')
     meal_plan_description = request.form.get('meal_plan_description')
     meal_plan_price = request.form.get('meal_plan_price')
+    meal_plan_image = request.files.get('meal_plan_image')
     meal_plan = db_session.query(ServiceProviderMealPlan) \
       .filter(and_(ServiceProviderMealPlan.user_id == user_id, ServiceProviderMealPlan.id == meal_plan_id)) \
       .first()
     if meal_plan is None:
       return jsonify(success=False, message='Meal plan does not exist')
+    meal_plan.set_image(meal_plan_image)
     meal_plan.name = meal_plan_name
     meal_plan.description = meal_plan_description
     for pricemodel in meal_plan.prices:

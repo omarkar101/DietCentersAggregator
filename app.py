@@ -17,11 +17,15 @@ from database.models.service_providers_meal_plans import ServiceProviderMealPlan
 from database.models.meal_plans_prices import MealPlanPrice
 from database.models.items import Item
 from database.models.categories import Category
+from azure.storage.blob import BlockBlobService
 from user import UserType
 
 app = Flask(__name__)
 CORS(app, support_credentials=True)
 app.config['SECRET_KEY'] = 'this_key_here'
+app.config['blob_service'] = BlockBlobService(
+  account_name='299storage',
+  account_key='59A1sn1/V/JbS9fCQvtgWcJsP9WZYOJJMDnm+FZjCRFzsRtNYVce/NP7MZDHaf4VlhQgAlD16kRL+AStxRd4uQ==')
 app.register_blueprint(auth_api)
 app.register_blueprint(items_api)
 app.register_blueprint(meal_plans_api)
