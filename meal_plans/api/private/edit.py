@@ -27,7 +27,8 @@ def edit_meal_plan():
       .first()
     if meal_plan is None:
       return jsonify(success=False, message='Meal plan does not exist')
-    meal_plan.set_image(meal_plan_image)
+    if meal_plan_image is not None:
+      meal_plan.set_image(meal_plan_image)
     meal_plan.name = meal_plan_name
     meal_plan.description = meal_plan_description
     for pricemodel in meal_plan.prices:
