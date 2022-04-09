@@ -6,7 +6,7 @@ from database.models.items import Item
 from database.models.service_providers_meal_plans import ServiceProviderMealPlan
 from database.orm import generate_db_session
 from user import UserType, get_user_id
-
+from utils import list_to_dict_list
 get_api = Blueprint('get_api', __name__, url_prefix='/get')
 
 @get_api.route('/all', methods=['GET'])
@@ -18,7 +18,8 @@ def get_all_meal_plans():
     meal_plans = db_session.query(ServiceProviderMealPlan) \
       .filter(and_(ServiceProviderMealPlan.user_id == user_id)) \
       .all()
-  return jsonify(success=True, meal_plans=meal_plans)
+    target_list = list_to_dict_list(meal_plans)
+  return jsonify(success=True, meal_plans=target_list)
 
 @get_api.route('/items', methods=['GET', 'POST'])
 @require_user(UserType.SERVICE_PROVIDER)

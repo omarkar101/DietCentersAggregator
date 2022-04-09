@@ -7,13 +7,13 @@ import AddNewItemModal from "./add_new_item_modal";
 
 const reducer = (state, action) => {
   switch (action.type) {
-    case 'success-load-meal-plan-items':
-      return {...state, selectedMealPlanItems: action.selectedMealPlanItems};
-    case 'open-add-item-modal':
+    case "success-load-meal-plan-items":
+      return { ...state, selectedMealPlanItems: action.selectedMealPlanItems };
+    case "open-add-item-modal":
       return { ...state, modalOpen: true };
-    case 'close-item-modal':
+    case "close-item-modal":
       return { ...state, modalOpen: false };
-    case 'clear-selected-meal-plan-items':
+    case "clear-selected-meal-plan-items":
       return { ...state, selectedMealPlanItems: [] };
     default:
       throw new Error();
@@ -21,60 +21,79 @@ const reducer = (state, action) => {
 };
 
 const MealPlanModal = (props) => {
-  const { isOpen, onClose, onSubmit, mealPlanId, mealPlanName, mealPlanDescription, mealPlanImage } = props;
+  const {
+    isOpen,
+    onClose,
+    onSubmit,
+    mealPlanId,
+    mealPlanName,
+    mealPlanDescription,
+    mealPlanPrice,
+    mealPlanImage
+  } = props;
   const [planName, setPlanName] = useState("");
   const [planDescription, setPlanDescription] = useState("");
+  const [planPrice, setPlanPrice] = useState(0);
   const [planImage, setPlanImage] = useState(null);
-
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit(planName, planDescription, planImage);
+    onSubmit(planName, planDescription, planPrice, planImage);
     setPlanName("");
     setPlanDescription("");
+    setPlanPrice(0);
     setPlanImage(null);
   };
 
   const [state, dispatch] = useReducer(reducer, {
     modalOpen: false,
-    selectedMealPlanItems: []
+    selectedMealPlanItems: [],
   });
 
   useEffect(() => {
-    if(mealPlanId != null) {
+    if (mealPlanId != null) {
       getMealPlanItems(mealPlanId)
         .then((response) => {
           if (response.data.success) {
-            dispatch({ type: 'success-load-meal-plan-items', selectedMealPlanItems: response.data.meal_plan_items });
+            dispatch({
+              type: "success-load-meal-plan-items",
+              selectedMealPlanItems: response.data.meal_plan_items,
+            });
           } else {
-            alert(response.data.message)
+            alert(response.data.message);
           }
         })
         .catch((e) => {
-          alert(e)
-        })
+          alert(e);
+        });
     } else {
-      dispatch({ type: 'clear-selected-meal-plan-items' });
+      dispatch({ type: "clear-selected-meal-plan-items" });
     }
   }, [mealPlanId]);
 
   useEffect(() => {
     setPlanName(mealPlanName);
     setPlanDescription(mealPlanDescription);
+    setPlanPrice(mealPlanPrice);
     setPlanImage(mealPlanImage);
-  }, [mealPlanName, mealPlanDescription, mealPlanImage]);
+  }, [mealPlanName, mealPlanDescription, mealPlanPrice, mealPlanImage]);
 
   const toggleDeleteItem = useCallback((e) => {
+    console.log("mealPlanId:", mealPlanId);
+    console.log("itemId:", e.target.id);
     removeItemFromMealPlan(mealPlanId, e.target.id)
       .then((response) => {
         if (response.data.success) {
-          dispatch({ type: 'success-load-meal-plan-items', selectedMealPlanItems: response.data.meal_plan_items });
+          dispatch({
+            type: "success-load-meal-plan-items",
+            selectedMealPlanItems: response.data.meal_plan_items,
+          });
         } else {
           alert(response.data.message);
         }
       })
       .catch((e) => {
         alert(e);
-      })
+      });
   }, []);
 
   const toggleOpenModal = useCallback((e) => {
@@ -90,32 +109,41 @@ const MealPlanModal = (props) => {
   }, []);
 
   return (
-    <Modal size='lg' show={isOpen} onHide={onClose}>
+    <Modal size="lg" show={isOpen} onHide={onClose}>
       <Modal.Header closeButton>
         <Modal.Title>Meal Plan</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form onSubmit={handleSubmit}>
-          <Form.Group className='mb-3' controlId='formBasicName'>
+          <Form.Group className="mb-3" controlId="formBasicName">
             <Form.Label>Name</Form.Label>
             <Form.Control
-              type='text'
-              placeholder='Enter Name'
+              type="text"
+              placeholder="Enter Name"
               value={planName}
               onChange={(e) => setPlanName(e.target.value)}
             />
           </Form.Group>
-          <Form.Group className='mb-3' controlId='formBasicDescription'>
+          <Form.Group className="mb-3" controlId="formBasicDescription">
             <Form.Label>Description</Form.Label>
             <Form.Control
-              as='textarea'
-              placeholder='Description'
+              as="textarea"
+              placeholder="Description"
               rows={3}
               value={planDescription}
               onChange={(e) => setPlanDescription(e.target.value)}
             />
           </Form.Group>
-          <Form.Group className='mb-3'>
+          <Form.Group className="mb-3" controlId="formBasicPrice">
+            <Form.Label>Price</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Enter Price"
+              value={planPrice}
+              onChange={(e) => setPlanPrice(e.target.value)}
+            />
+          </Form.Group>
+          <Form.Group className="mb-3">
             <Form.Label>Meal Plan Image</Form.Label>
             <UploadAndDisplayImage mealPlanImage={planImage} setMealPlanImage={setPlanImage} />
           </Form.Group>
@@ -128,7 +156,7 @@ const MealPlanModal = (props) => {
             />
             <h2>
               These are the items in this meal plan{" "}
-              <Button variant='success' onClick={toggleOpenModal}>
+              <Button variant="success" onClick={toggleOpenModal}>
                 Add new item
               </Button>
             </h2>
@@ -144,8 +172,13 @@ const MealPlanModal = (props) => {
                   <td>{item.name}</td>
                   <td>{item.description}</td>
                   <td>
-                    <div className='mb-2'>
-                      <Button id={item.id} variant='danger' size='sm' onClick={toggleDeleteItem}>
+                    <div className="mb-2">
+                      <Button
+                        id={item.id}
+                        variant="danger"
+                        size="sm"
+                        onClick={toggleDeleteItem}
+                      >
                         Delete
                       </Button>
                     </div>
@@ -157,10 +190,10 @@ const MealPlanModal = (props) => {
         </Form>
       </Modal.Body>
       <Modal.Footer>
-        <Button variant='secondary' onClick={onClose}>
+        <Button variant="secondary" onClick={onClose}>
           Close
         </Button>
-        <Button variant='primary' onClick={handleSubmit}>
+        <Button variant="primary" onClick={handleSubmit}>
           Save Changes
         </Button>
       </Modal.Footer>

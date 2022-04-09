@@ -26,7 +26,10 @@ def delete_meal_plan():
       .filter(and_(ServiceProviderMealPlan.user_id == user_id, ServiceProviderMealPlan.id == meal_plan_id)) \
       .delete()
     meal_plans = db_session.query(ServiceProviderMealPlan).filter(ServiceProviderMealPlan.user_id == user_id).all()
-  return jsonify(success=True, meal_plans=meal_plans)
+    target_list = []
+    for meal_plan in meal_plans:
+      target_list.append(meal_plan.as_dict())
+  return jsonify(success=True, meal_plans=target_list)
 
 @delete_api.route('/item', methods=['POST'])
 @require_user(UserType.SERVICE_PROVIDER)
