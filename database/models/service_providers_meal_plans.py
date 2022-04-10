@@ -1,11 +1,17 @@
+from flask import current_app
 from sqlalchemy import Column, BigInteger, Text, ForeignKey, and_
-from sqlalchemy.orm import relationship, validates
+from sqlalchemy.orm import relationship
 from dataclasses import dataclass
 from sqlalchemy.ext.hybrid import hybrid_property
 from database.models.items import Item
 from database.orm import Base, generate_db_session
+from azure.storage.blob import BlockBlobService
+import uuid
 from user import UserType
 
+blob_service = BlockBlobService(
+  account_name='299storage',
+  account_key='59A1sn1/V/JbS9fCQvtgWcJsP9WZYOJJMDnm+FZjCRFzsRtNYVce/NP7MZDHaf4VlhQgAlD16kRL+AStxRd4uQ==')
 metadata = Base.metadata
 @dataclass
 class ServiceProviderMealPlan(Base):
@@ -14,13 +20,19 @@ class ServiceProviderMealPlan(Base):
     id: int
     description: str
     name: str
+    image: str
 
     id = Column(BigInteger, primary_key=True, autoincrement=True)
     _name = Column('name', Text, nullable=False)
     _description = Column('description', Text, nullable=False)
+    image = Column(Text, nullable=True)
 
     user_id = Column(ForeignKey('service_providers.user_id', ondelete='CASCADE'), nullable=False)
 
+    clients = relationship(
+        'Client',
+        uselist=True,
+        back_populates='meal_plan')
     service_provider = relationship(
         'ServiceProvider',
         primaryjoin='ServiceProvider.user_id == ServiceProviderMealPlan.user_id',
@@ -51,7 +63,7 @@ class ServiceProviderMealPlan(Base):
     @description.setter
     def description(self, description):
         self._description = description
-    
+
     def get_items(self):
         return [x.item for x in self.items]
 
@@ -63,8 +75,21 @@ class ServiceProviderMealPlan(Base):
                 .all()
         return items_not_in_meal_plan
 
+    def set_image(self, image_file):
+        uid = uuid.uuid4()
+        filename = f'{self.name}_{uid.hex}_{image_file.filename}'
+        blob_service.create_blob_from_stream('container', filename, image_file)
+        self.image = f'https://299storage.blob.core.windows.net/container/{filename}'
+
     # @validates('service_provider')
     # def validate_user(self, key, service_provider):
     #     if not self.service_provider:
     #         raise Exception('Invalid user type for owning a meal plan')
     #     return service_provider
+    def as_dict(self):
+        information = {c.name: getattr(self, c.name) for c in self.__table__.columns}
+        for pricemodel in self.prices:
+            if pricemodel.currency == 'USD':
+                information['price'] = pricemodel.price
+        return information
+        

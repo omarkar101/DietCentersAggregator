@@ -24,7 +24,7 @@ const ItemCard = (props) => {
 
 const ItemWrapper = styled.div`
   font-size: 1.6rem;
-  padding: 10px;
+  padding: 20px 10px 20px 10px;
   margin-bottom: 3.5rem;
   display: flex;
   flex-direction: row;

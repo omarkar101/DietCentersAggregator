@@ -6,16 +6,18 @@ from sqlalchemy.orm import joinedload
 from database.models.credentials import Credentials
 from database.models.items import Item
 from database.models.meal_plans_items import MealPlanItem
+from database.models.meal_plans_prices import MealPlanPrice
 from database.models.service_providers_meal_plans import ServiceProviderMealPlan
 from database.models.service_providers import ServiceProvider
 from database.models.users import User
 from database.orm import generate_db_session
 from user import UserType, get_user_id
+from utils import list_to_dict_list
 
 add_api = Blueprint('add_api', __name__, url_prefix='/add')
 
 @add_api.route('/one', methods=['POST'])
-@require_user(UserType.SERVICE_PROVIDER)
+# @require_user(UserType.SERVICE_PROVIDER)
 @cross_origin(origins='*', supports_credentials=True)
 def add_meal_plan():
   # we need to know which user is logged in
@@ -24,8 +26,12 @@ def add_meal_plan():
   with generate_db_session() as db_session:
     meal_plan_name = request.form.get('meal_plan_name')
     meal_plan_description = request.form.get('meal_plan_description')
+    meal_plan_price = request.form.get('meal_plan_price')
     # we should associate the meal plans to the current user
     meal_plan = ServiceProviderMealPlan(name=meal_plan_name, description=meal_plan_description)
+    meal_plan_price_row = MealPlanPrice(price=meal_plan_price, currency='USD', meal_plan_id=meal_plan.id)
+    meal_plan.prices = []
+    meal_plan.prices.append(meal_plan_price_row)
     user = db_session.query(User) \
       .options(joinedload(
         User.service_provider).options(
@@ -34,7 +40,17 @@ def add_meal_plan():
       .first()
     user.service_provider.meal_plans.append(meal_plan)
     db_session.refresh(user)
-  return jsonify(success=True, meal_plans=user.service_provider.meal_plans)
+    user_meal_plans_with_prices = db_session.query(User) \
+      .options(joinedload(
+        User.service_provider).options(
+          joinedload(ServiceProvider.meal_plans).options(
+            joinedload(ServiceProviderMealPlan.prices)
+          ))) \
+      .filter(User.id == user_id) \
+      .first()
+    
+    target_list = list_to_dict_list(user_meal_plans_with_prices.service_provider.meal_plans)
+  return jsonify(success=True, meal_plans=target_list)
 
 @add_api.route('/item', methods=['POST'])
 @require_user(UserType.SERVICE_PROVIDER)

@@ -95,13 +95,6 @@ const ServiceProviderPage = (props) => {
 
       <MenuItemsContainer className="mt-5">
         <StyledSection>
-          <MenuSectionTitle>Menu Items</MenuSectionTitle>
-        </StyledSection>
-        {state.items?.map((item) => (
-          <ItemCard key={item.id} item={item} />
-        ))}
-
-        <StyledSection>
           <MenuSectionTitle>Our Package Deals</MenuSectionTitle>
         </StyledSection>
         <PackageModal
@@ -110,12 +103,65 @@ const ServiceProviderPage = (props) => {
           packageItems={state.selectedPackageItems}
         />
         {state.mealPlans?.map((plan) => (
-          <PackageCard key={plan.id} plan={plan} openModal={toggleOpenModal} />
+          <ItemTextAndButtonWrapper>
+            <PackageCard key={plan.id} plan={plan} openModal={toggleOpenModal} />
+            <ButtonContainer>
+              <AddSpanStyle>ADD</AddSpanStyle>
+              <svg xmlns="http://www.w3.org/2000/svg" fill="#114f3cd9" width="16" height="16" viewBox="0 0 20 20" aria-labelledby="icon-svg-title- icon-svg-desc-" role="img">
+              <path d="M15.5 9.42h-4.5v-4.5c0-0.56-0.44-1-1-1s-1 0.44-1 1v4.5h-4.5c-0.56 0-1 0.44-1 1s0.44 1 1 1h4.5v4.5c0 0.54 0.44 1 1 1s1-0.46 1-1v-4.5h4.5c0.56 0 1-0.46 1-1s-0.44-1-1-1z"></path>
+              </svg>
+            </ButtonContainer>
+          </ItemTextAndButtonWrapper>
+        ))}
+
+        <StyledSection>
+          <MenuSectionTitle>Menu Items</MenuSectionTitle>
+        </StyledSection>
+        {state.items?.map((item) => (
+          <ItemCard key={item.id} item={item} />
         ))}
       </MenuItemsContainer>
     </PageBase>
   );
 };
+
+
+const AddSpanStyle = styled.span`
+  color: #114f3cd9;
+  font-size: 1.4rem;
+  margin: 0px 0.5rem;
+  font-weight: 600;
+`;
+
+const ButtonContainer = styled.button`
+  display: flex;
+  webkit-box-align: center;
+  align-items: center;
+  webkit-box-pack: center;
+  justify-content: center;
+  width: 8.2rem;
+  height: 3.2rem;
+  border-radius: 0.8rem;
+  overflow: hidden;
+  cursor: pointer;
+  user-select: none;
+  margin-top: auto;
+  margin-bottom: auto;
+  border: 1px solid #114f3cd9;
+  background: transparent;
+  &:hover {
+    background-color: #d9fffa9d;
+  }
+`;
+
+const ItemTextAndButtonWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  webkit-box-pack: justify;
+  justify-content: space-between;
+  padding: 20px 10px 20px 10px;
+  border-bottom: 1px solid rgb(232, 232, 232);
+`;
 
 const StyledSection = styled.section`
   position: relative;
