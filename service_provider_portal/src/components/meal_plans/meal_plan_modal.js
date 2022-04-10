@@ -137,7 +137,7 @@ const MealPlanModal = (props) => {
           <Form.Group className="mb-3" controlId="formBasicPrice">
             <Form.Label>Price</Form.Label>
             <Form.Control
-              type="text"
+              type="number"
               placeholder="Enter Price"
               value={planPrice}
               onChange={(e) => setPlanPrice(e.target.value)}
