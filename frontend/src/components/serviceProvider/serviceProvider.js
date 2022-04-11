@@ -1,4 +1,5 @@
 import React from "react";
+import { Button } from "react-bootstrap";
 import styled from "styled-components";
 import ImagesSection from "./ImagesSection";
 import { useParams } from "react-router-dom";
@@ -7,6 +8,9 @@ import PackageCard from "./packageCard";
 import { useCallback, useReducer, useEffect } from "react";
 import ItemCard from "./itemCard";
 import { getMealPlansOfServiceProvider, getItemsOfServiceProvider, getItemsOfAMealPlanOfServiceProvider } from "../../api/requests";
+import SubscribeModal from "./subscribeModal";
+import { subscribeClientToMealPlan } from "../../api/requests";
+
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -22,6 +26,21 @@ const reducer = (state, action) => {
       };
     case "close-package-modal":
       return { ...state, modalOpen: false };
+    case "submit-subscribe-modal":
+      return{
+        ...state,
+        modalOpen: false
+      };
+    case "open-subscribe-modal":
+      return{
+        ...state,
+        modalOpen: true
+      };
+    case "close-subscribe-modal":
+      return{
+        ...state,
+        modalOpen: false
+      };
     default:
       throw new Error();
   }
@@ -37,6 +56,12 @@ const ServiceProviderPage = (props) => {
     items: [],
     mealPlans: [],
   });
+
+  const toggleOpenSubscribeModal = useCallback(() => {
+    dispatch({
+      type: "open-subscribe-modal"
+    });
+  }, []);
 
   useEffect(() => {
     getMealPlansOfServiceProvider(id)
@@ -85,32 +110,68 @@ const ServiceProviderPage = (props) => {
     }
   },[]);
 
+  const toggleSubscribeModalOnSubmit = () => {
+    subscribeClientToMealPlan(id)
+    .then((response) => {
+      if (response.data.success) {
+        dispatch({ type: 'submit-subscribe-modal'})
+      } else {
+        alert(response.data.message);
+      }
+    })
+    .catch((e) => {
+      alert(e);
+    });
+  };
+
   const toggleModalOnClose = useCallback(() => {
     dispatch({ type: "close-package-modal" });
   }, []);
 
+  const toggleSubscribeModalOnClose = useCallback(() => {
+    dispatch({ type: "close-subscribe-modal" });
+  }, []);
+  
+
   return (
     <PageBase>
+      <SubscribeModal
+        isOpen={state.modalOpen}
+        onClose={toggleSubscribeModalOnClose}
+        onSubmit={toggleSubscribeModalOnSubmit}
+        mealPlanId={id}
+      />
       <ImagesSection {...props} />
 
       <MenuItemsContainer className="mt-5">
         <StyledSection>
           <MenuSectionTitle>Our Package Deals</MenuSectionTitle>
         </StyledSection>
-        <PackageModal
+        {/* <PackageModal
           isOpen={state.modalOpen}
           onClose={toggleModalOnClose}
           packageItems={state.selectedPackageItems}
-        />
+        /> */}
         {state.mealPlans?.map((plan) => (
           <ItemTextAndButtonWrapper>
-            <PackageCard key={plan.id} plan={plan} openModal={toggleOpenModal} />
-            <ButtonContainer>
-              <AddSpanStyle>ADD</AddSpanStyle>
-              <svg xmlns="http://www.w3.org/2000/svg" fill="#114f3cd9" width="16" height="16" viewBox="0 0 20 20" aria-labelledby="icon-svg-title- icon-svg-desc-" role="img">
+            <PackageCard key={plan.id} plan={plan} 
+            // openModal={toggleOpenModal}
+             />
+            {/* <ButtonContainer> */}
+              <Button variant="success" 
+              onClick={toggleOpenSubscribeModal}
+              style={{backgroundColor: 'transparent', border: 'solid 1px #114f3cd9', height: '3.2rem', width: '3.2rem'}}
+                // data-mealplanname=''
+                // data-mealplandescription='' 
+                // onClick={addToCheckout}
+                >
+                {/* <AddSpanStyle>ADD</AddSpanStyle> */}
+                <svg xmlns="http://www.w3.org/2000/svg" fill="#114f3cd9" width="20" height="20" viewBox="0 0 20 20" aria-labelledby="icon-svg-title- icon-svg-desc-" role="img">
               <path d="M15.5 9.42h-4.5v-4.5c0-0.56-0.44-1-1-1s-1 0.44-1 1v4.5h-4.5c-0.56 0-1 0.44-1 1s0.44 1 1 1h4.5v4.5c0 0.54 0.44 1 1 1s1-0.46 1-1v-4.5h4.5c0.56 0 1-0.46 1-1s-0.44-1-1-1z"></path>
               </svg>
-            </ButtonContainer>
+              </Button>
+              
+            {/* </ButtonContainer> */}
           </ItemTextAndButtonWrapper>
         ))}
 
@@ -133,13 +194,13 @@ const AddSpanStyle = styled.span`
   font-weight: 600;
 `;
 
-const ButtonContainer = styled.button`
+const ButtonContainer = styled.div`
   display: flex;
   webkit-box-align: center;
   align-items: center;
   webkit-box-pack: center;
   justify-content: center;
-  width: 8.2rem;
+  width: 3.2rem;
   height: 3.2rem;
   border-radius: 0.8rem;
   overflow: hidden;
