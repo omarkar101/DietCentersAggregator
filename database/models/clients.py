@@ -13,7 +13,7 @@ class Client(Base):
 
     user_id = Column(ForeignKey('users.id', ondelete='CASCADE'), nullable=False, primary_key=True)
 
-    meal_plan_id = Column(ForeignKey('service_providers_meal_plans.id', ondelete='CASCADE'), nullable=False)
+    _meal_plan_id = Column('meal_plan_id', ForeignKey('service_providers_meal_plans.id', ondelete='CASCADE'), nullable=True)
 
     user = relationship(
         'User',
@@ -21,6 +21,7 @@ class Client(Base):
         back_populates='client')
     meal_plan = relationship(
         'ServiceProviderMealPlan',
+        primaryjoin = 'ServiceProviderMealPlan.id == Client.meal_plan_id',
         uselist=False,
         back_populates='clients')
     biometrics = relationship(
@@ -41,3 +42,12 @@ class Client(Base):
     @last_name.setter
     def last_name(self, last_name):
         self._last_name = last_name
+
+    @hybrid_property
+    def meal_plan_id(self):
+        return self._meal_plan_id
+    @meal_plan_id.setter
+    def meal_plan_id(self, meal_plan_id):
+        self._meal_plan_id= meal_plan_id
+    # def changeid(self , id_of_meal_plan):
+    #     self.meal_plan_id = id_of_meal_plan

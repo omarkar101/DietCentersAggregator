@@ -78,3 +78,13 @@ export const loginServiceProvider = (email, password) => {
   data.append('password', password);
   return Post('/auth/login/user', data);
 }
+
+export const getClientMealPlan = () => {
+  return Get('/user/private/get/meal_plan')
+}
+
+export const subscribeClientToMealPlan = (mealPlanId) => {
+  const data = new FormData();
+  data.append('meal_plan_id', mealPlanId);
+  return Post('/user/private/add/meal_plan', data);
+}
