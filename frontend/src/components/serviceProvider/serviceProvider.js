@@ -110,8 +110,8 @@ const ServiceProviderPage = (props) => {
     }
   },[]);
 
-  const toggleSubscribeModalOnSubmit = () => {
-    subscribeClientToMealPlan(id)
+  const toggleSubscribeModalOnSubmit = useCallback((e) => {
+    subscribeClientToMealPlan(e)
     .then((response) => {
       if (response.data.success) {
         dispatch({ type: 'submit-subscribe-modal'})
@@ -122,7 +122,7 @@ const ServiceProviderPage = (props) => {
     .catch((e) => {
       alert(e);
     });
-  };
+  }, []);
 
   const toggleModalOnClose = useCallback(() => {
     dispatch({ type: "close-package-modal" });
@@ -135,12 +135,6 @@ const ServiceProviderPage = (props) => {
 
   return (
     <PageBase>
-      <SubscribeModal
-        isOpen={state.modalOpen}
-        onClose={toggleSubscribeModalOnClose}
-        onSubmit={toggleSubscribeModalOnSubmit}
-        mealPlanId={id}
-      />
       <ImagesSection {...props} />
 
       <MenuItemsContainer className="mt-5">
@@ -157,6 +151,12 @@ const ServiceProviderPage = (props) => {
             <PackageCard key={plan.id} plan={plan} 
             // openModal={toggleOpenModal}
              />
+             <SubscribeModal
+                mealPlanId={plan.id}
+                isOpen={state.modalOpen}
+                onClose={toggleSubscribeModalOnClose}
+                onSubmit={(e) => toggleSubscribeModalOnSubmit(plan.id)}
+              />
             {/* <ButtonContainer> */}
               <Button variant="success" 
               onClick={toggleOpenSubscribeModal}
