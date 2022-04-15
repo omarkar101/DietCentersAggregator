@@ -19,6 +19,12 @@ export const getAllMealPlans = () => {
   return Get('/meal_plans/public/get/all');
 }
 
+export const getMealPlanById = (mealPlanId) => {
+  const data = new FormData();
+  data.append('meal_plan_id', mealPlanId);
+  return Post('/meal_plans/public/get/by_id', data);
+}
+
 export const getAllServiceProviders = () => {
   return Get('/service_providers/public/get/all');
 }

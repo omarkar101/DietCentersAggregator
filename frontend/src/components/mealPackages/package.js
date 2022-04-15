@@ -1,7 +1,11 @@
 import React from "react";
 import { Col, Row } from "react-bootstrap";
+import { useCallback, useReducer, useEffect } from "react";
 import ItemCard from "../serviceProvider/itemCard";
 import styled from "styled-components";
+import { useParams } from "react-router-dom";
+import { getItemsOfAMealPlanOfServiceProvider, getMealPlanById } from "../../api/requests";
+
 
 const item = {
   name: "Kaju Matar Masala",
@@ -11,7 +15,51 @@ const item = {
     "https://b.zmtcdn.com/data/dish_photos/14d/fc2cd40b2b5a93852f4e1fde9612c14d.jpg?output-format=webp&fit=around|130:130&crop=130:130;*,*",
 };
 
+const reducer = (state, action) => {
+  switch (action.type) {
+    case 'get-meal-plan-by-id':
+      return { ...state, mealPlan: action.mealPlan };
+    case 'get-items-of-meal-plan':
+      return { ...state, itemsOfMealPlan: action.itemsOfMealPlan}
+    default:
+      throw new Error();
+  }
+};
+
 const Package = () => {
+  const { id, service_provider_id } = useParams();
+
+  const [state, dispatch] = useReducer(reducer, {
+    mealPlan: null,
+    itemsOfMealPlan: []
+  });
+
+  useEffect(() => {
+    getMealPlanById(id)
+      .then((response) => {
+        if (response.data.success) {
+          dispatch({ type: 'get-meal-plan-by-id', mealPlan: response.data.meal_plan });
+        } else {
+          alert(response.data.message);
+        }
+      })
+      .catch((e) => {
+        alert(e);
+      });
+
+      getItemsOfAMealPlanOfServiceProvider(service_provider_id, id)
+      .then((response) => {
+        if (response.data.success) {
+          dispatch({ type: "get-items-of-meal-plan", itemsOfMealPlan: response.data.meal_plan_items });
+        } else {
+          alert(response.data.message);
+        }
+      })
+      .catch((e) => {
+        alert(e);
+      });
+  }, [id, service_provider_id]);
+
   return (
     <Container>
       <h1 className="text-black-50 p-3 text-center rounded">Package Summary</h1>
@@ -31,21 +79,20 @@ const Package = () => {
             <BigImageContainer>
               <br />
               <Title>
-                <div>Plan name...</div>
+                <div>{state.mealPlan?.name}</div>
               </Title>
 
               <TotalSection>
                 <AddAReviewButton>
-                  <Text>Total: 300$</Text>
+                  <Text>Total: {state.mealPlan?.price}</Text>
                 </AddAReviewButton>
               </TotalSection>
             </BigImageContainer>
             <SmallImagesSection>
               <SmallImageContainer>
                 <SmallImage
-                  src={
-                    "https://images.immediate.co.uk/production/volatile/sites/30/2020/08/chorizo-mozarella-gnocchi-bake-cropped-9ab73a3.jpg?quality=90&resize=556,505"
-                  }
+                  src={state.mealPlan?.image} // "https://images.immediate.co.uk/production/volatile/sites/30/2020/08/chorizo-mozarella-gnocchi-bake-cropped-9ab73a3.jpg?quality=90&resize=556,505"
+                  alt='No image'
                 />
               </SmallImageContainer>
             </SmallImagesSection>
@@ -61,8 +108,8 @@ const Package = () => {
         >
           <div className="d-flex flex-column">
             <h4 style={{ marginLeft: 10 }}>Items included in the package:</h4>
-            {Array.from({ length: 4 }).map((_, idx) => (
-              <Col key={idx} className="orders-card">
+            {state.itemsOfMealPlan?.map((item) => (
+              <Col key={item.id} className="orders-card">
                 <ItemCard item={item} />
               </Col>
             ))}

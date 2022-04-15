@@ -6,7 +6,7 @@ import Slider from "react-slick";
 import { Link } from "react-router-dom";
 
 const settings = {
-  infinite: true,
+  infinite: false,
   slidesToShow: 4,
   slidesToScroll: 1,
   nextArrow: <NextArrow />,
@@ -37,7 +37,7 @@ const Collection = ({ list }) => {
         </div>
 
         <Slider {...settings}>
-          {list.map((item) => {
+          {list?.map((item) => {
             return <Item key={item.id} item={item} />;
           })}
         </Slider>
@@ -50,15 +50,15 @@ const Item = ({ item }) => {
   return (
     <div key={item.id}>
       <Link
-        to={`/package/${1}`}
+        to={`/package/${item.id}/${item.user_id}`}
         style={{ color: "inherit", textDecoration: "inherit" }}
       >
         <div className="collection-cover">
-          <img src={item.cover} className="collection-image" alt={item.title} />
+          <img src={item.image} className="collection-image" alt={item.name} />
           <div className="gradient-bg"></div>
-          <div className="collection-card-title">{item.title}</div>
+          <div className="collection-card-title">{item.name}</div>
           <div className="collection-card-subtitle">
-            <div>{item.places}</div>
+            <div>${item.price}</div>
             <i className="fi fi-rr-caret-right absolute-center"></i>
           </div>
         </div>
