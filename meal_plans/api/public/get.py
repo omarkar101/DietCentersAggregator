@@ -22,6 +22,17 @@ def get_all_meal_plans():
     target_list = list_to_dict_list(meal_plans)
   return jsonify(success=True, meal_plans=target_list)
 
+@public_get_api.route('/by_id', methods=['POST'])
+@cross_origin(origins='*', supports_credentials=True)
+def get_meal_plan_by_id():
+  meal_plan_id = request.form.get('meal_plan_id')
+  with generate_db_session() as db_session:
+    meal_plan = db_session.query(ServiceProviderMealPlan) \
+      .filter(ServiceProviderMealPlan.id == meal_plan_id) \
+      .first()
+    target_meal_plan = meal_plan.as_dict();
+  return jsonify(success=True, meal_plan=target_meal_plan)
+
 @public_get_api.route('/of_service_provider', methods=['POST'])
 def get_meal_plans_of_service_provider():
   service_provider_id = request.form.get('service_provider_id')
@@ -42,5 +53,7 @@ def get_meal_plan_items():
       .filter(and_(ServiceProviderMealPlan.user_id == service_provider_id, ServiceProviderMealPlan.id == meal_plan_id)) \
       .options(joinedload(ServiceProviderMealPlan.items)) \
       .first()
+
+    print("meal plan is", meal_plan);
     items = [x.item for x in meal_plan.items]
   return jsonify(success=True, meal_plan_items=items)

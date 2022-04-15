@@ -34,7 +34,7 @@ const App = () => {
               <Route path="/ordershistory" element={<OrdersHistory />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/login" element={<Login />} />
-              <Route path="/package/:id" element={<Package />} />
+              <Route path="/package/:id/:service_provider_id" element={<Package />} />
               <Route path="/search" element={<Search />} />
               <Route
                 path="/serviceProvider/:id"

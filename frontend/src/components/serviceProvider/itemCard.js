@@ -6,12 +6,12 @@ const ItemCard = (props) => {
     return (
         <ItemWrapper>
           <ImageWrapper>
-            <ImageStyle src={item.imagelink} />
+            <ImageStyle src={item.image} alt='No Image' />
           </ImageWrapper>
           <ItemTextAndButtonWrapper>
             <ItemTextWrapper>
               <ItemNameContanier>{item.name}</ItemNameContanier>
-              <ItemPriceContainer>{item.price}</ItemPriceContainer>
+              <ItemPriceContainer>{item.category}</ItemPriceContainer>
               <ItemDescriptionParagraph>
                 {item.description}
               </ItemDescriptionParagraph>
