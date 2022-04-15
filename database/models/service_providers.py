@@ -36,3 +36,8 @@ class ServiceProvider(Base):
     @name.setter
     def name(self, name):
         self._name = name
+
+    def as_dict(self):
+        information = {c.name: getattr(self, c.name) for c in self.__table__.columns}
+        information['phone_number'] = self.user.phone_number;
+        return information

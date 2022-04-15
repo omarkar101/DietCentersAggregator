@@ -7,13 +7,15 @@ import PackageModal from "./packageModal";
 import PackageCard from "./packageCard";
 import { useCallback, useReducer, useEffect } from "react";
 import ItemCard from "./itemCard";
-import { getMealPlansOfServiceProvider, getItemsOfServiceProvider, getItemsOfAMealPlanOfServiceProvider } from "../../api/requests";
+import { getMealPlansOfServiceProvider, getItemsOfServiceProvider, getItemsOfAMealPlanOfServiceProvider, getServiceProviderById } from "../../api/requests";
 import SubscribeModal from "./subscribeModal";
 import { subscribeClientToMealPlan } from "../../api/requests";
 
 
 const reducer = (state, action) => {
   switch (action.type) {
+    case 'get-service-provider-by-id':
+      return { ...state, serviceProvider: action.serviceProvider };
     case "get-all-items":
       return { ...state, modalOpen: false, items: action.items };
     case "get-all-meal-plans":
@@ -46,8 +48,7 @@ const reducer = (state, action) => {
   }
 };
 
-const ServiceProviderPage = (props) => {
-  // const { name, description, stars, reviews, images } = props;
+const ServiceProviderPage = () => {
   const { id } = useParams();
 
   const [state, dispatch] = useReducer(reducer, {
@@ -56,6 +57,7 @@ const ServiceProviderPage = (props) => {
     selectedPackageItems: [],
     items: [],
     mealPlans: [],
+    serviceProvider: null
   });
 
   const toggleOpenSubscribeModal = useCallback(() => {
@@ -65,6 +67,18 @@ const ServiceProviderPage = (props) => {
   }, []);
 
   useEffect(() => {
+    getServiceProviderById(id)
+      .then((response) => {
+        if (response.data.success) {
+          dispatch({ type: 'get-service-provider-by-id', serviceProvider: response.data.service_provider});
+        } else {
+          alert(response.data.message);
+        }
+      })
+      .catch((e) => {
+        alert(e);
+      });
+
     getMealPlansOfServiceProvider(id)
       .then((response) => {
         if (response.data.success) {
@@ -109,7 +123,7 @@ const ServiceProviderPage = (props) => {
           alert(e);
         });
     }
-  },[]);
+  },[id]);
 
   const toggleSubscribeModalOnSubmit = useCallback((e) => {
     subscribeClientToMealPlan(e)
@@ -132,11 +146,10 @@ const ServiceProviderPage = (props) => {
   const toggleSubscribeModalOnClose = useCallback(() => {
     dispatch({ type: "close-subscribe-modal" });
   }, []);
-  
 
   return (
     <PageBase>
-      <ImagesSection {...props} />
+      <ImagesSection service_provider={state.serviceProvider} />
 
       <MenuItemsContainer className="mt-5">
         <StyledSection>

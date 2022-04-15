@@ -48,6 +48,12 @@ export const searchForServiceProvidersByName = (serviceProviderName) => {
   return Post('/service_providers/public/get/search', data);
 }
 
+export const getServiceProviderById = (serviceProviderId) => {
+  const data = new FormData();
+  data.append('service_provider_id', serviceProviderId);
+  return Post('/service_providers/public/get/by_id', data);
+}
+
 export const updateClientProfile = (firstName, LastName, PhoneNumber, Weight, Height, Age,
                                     addressEmail, addressName, addressPhoneNumber, city, country,
                                     street, building, floor, receiverFirstName, receiverLastName, instructions) => {
