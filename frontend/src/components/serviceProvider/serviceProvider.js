@@ -29,17 +29,17 @@ const reducer = (state, action) => {
     case "submit-subscribe-modal":
       return{
         ...state,
-        modalOpen: false
+        subscribeModalOpen: false
       };
     case "open-subscribe-modal":
       return{
         ...state,
-        modalOpen: true
+        subscribeModalOpen: true
       };
     case "close-subscribe-modal":
       return{
         ...state,
-        modalOpen: false
+        subscribeModalOpen: false
       };
     default:
       throw new Error();
@@ -52,6 +52,7 @@ const ServiceProviderPage = (props) => {
 
   const [state, dispatch] = useReducer(reducer, {
     modalOpen: false,
+    subscribeModalOpen: false,
     selectedPackageItems: [],
     items: [],
     mealPlans: [],
@@ -141,19 +142,19 @@ const ServiceProviderPage = (props) => {
         <StyledSection>
           <MenuSectionTitle>Our Package Deals</MenuSectionTitle>
         </StyledSection>
-        {/* <PackageModal
+        <PackageModal
           isOpen={state.modalOpen}
           onClose={toggleModalOnClose}
           packageItems={state.selectedPackageItems}
-        /> */}
+        />
         {state.mealPlans?.map((plan) => (
           <ItemTextAndButtonWrapper>
             <PackageCard key={plan.id} plan={plan} 
-            // openModal={toggleOpenModal}
+            openModal={toggleOpenModal}
              />
              <SubscribeModal
                 mealPlanId={plan.id}
-                isOpen={state.modalOpen}
+                isOpen={state.subscribeModalOpen}
                 onClose={toggleSubscribeModalOnClose}
                 onSubmit={(e) => toggleSubscribeModalOnSubmit(plan.id)}
               />
