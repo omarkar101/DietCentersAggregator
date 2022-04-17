@@ -22,5 +22,6 @@ def add_meal_plan_to_client():
       .filter(Client.user_id == user_id) \
       .first()
     client.meal_plan_id = meal_plan_id
+    client.subscription_counter = 28
     # db_session.refresh(client)
   return jsonify(success=True)

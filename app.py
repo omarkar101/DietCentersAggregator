@@ -19,6 +19,15 @@ from database.models.items import Item
 from database.models.categories import Category
 from azure.storage.blob import BlockBlobService
 from user import UserType
+from MonthlyActions.helpers import resetAllSessions
+
+import atexit
+
+from apscheduler.schedulers.background import BackgroundScheduler
+scheduler = BackgroundScheduler()
+scheduler.add_job(func=resetAllSessions, trigger="cron", year='*', month='*', day='last')
+scheduler.start()
+atexit.register(lambda: scheduler.shutdown())
 
 app = Flask(__name__)
 CORS(app, support_credentials=True)
