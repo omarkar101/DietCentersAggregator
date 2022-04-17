@@ -21,10 +21,12 @@ class ServiceProviderMealPlan(Base):
     description: str
     name: str
     image: str
+    meal_plan_uses: int
 
     id = Column(BigInteger, primary_key=True, autoincrement=True)
     _name = Column('name', Text, nullable=False)
     _description = Column('description', Text, nullable=False)
+    _meal_plan_uses = Column('meal_plan_uses', BigInteger, nullable = False)
     image = Column(Text, nullable=True)
 
     user_id = Column(ForeignKey('service_providers.user_id', ondelete='CASCADE'), nullable=False)
@@ -51,6 +53,12 @@ class ServiceProviderMealPlan(Base):
       back_populates='meal_plan')
 
     @hybrid_property
+    def meal_plan_uses(self):
+        return self._meal_plan_uses
+    @meal_plan_uses.setter
+    def meal_plan_uses(self, meal_plan_uses):
+        self._meal_plan_uses = meal_plan_uses
+    @hybrid_property
     def name(self):
         return self._name
     @name.setter
@@ -63,6 +71,7 @@ class ServiceProviderMealPlan(Base):
     @description.setter
     def description(self, description):
         self._description = description
+
 
     def get_items(self):
         return [x.item for x in self.items]

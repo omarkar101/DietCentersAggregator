@@ -18,6 +18,7 @@ def add_meal_plan_to_client():
   with generate_db_session() as db_session:
     # user_id = int(request.form.get('user_id'))
     meal_plan_id = int(request.form.get('meal_plan_id'))
+    #Should add a line like meal_plan_uses = request.form.get('meal_plan_uses)
     client = db_session.query(Client) \
       .filter(Client.user_id == user_id) \
       .first()

@@ -53,7 +53,5 @@ def get_meal_plan_items():
       .filter(and_(ServiceProviderMealPlan.user_id == service_provider_id, ServiceProviderMealPlan.id == meal_plan_id)) \
       .options(joinedload(ServiceProviderMealPlan.items)) \
       .first()
-
-    print("meal plan is", meal_plan);
     items = [x.item for x in meal_plan.items]
   return jsonify(success=True, meal_plan_items=items)
