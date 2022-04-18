@@ -39,7 +39,7 @@ def remove_item_from_meal_plan():
     db_session.query(MealPlanItem) \
       .filter(and_(MealPlanItem.item_id == item_id, MealPlanItem.meal_plan_id == meal_plan_id)) \
       .delete()
-  meal_plan = db_session.query(ServiceProviderMealPlan) \
+  meal_plan = ServiceProviderMealPlan.query \
     .options(joinedload(ServiceProviderMealPlan.items)) \
     .filter(and_(ServiceProviderMealPlan.user_id == user_id, ServiceProviderMealPlan.id == meal_plan_id)) \
     .first()
