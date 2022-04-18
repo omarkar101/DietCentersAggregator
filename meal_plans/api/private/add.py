@@ -27,8 +27,9 @@ def add_meal_plan():
     meal_plan_name = request.form.get('meal_plan_name')
     meal_plan_description = request.form.get('meal_plan_description')
     meal_plan_price = request.form.get('meal_plan_price')
+    meal_plan_uses = request.form.get('meal_plan_uses')
     # we should associate the meal plans to the current user
-    meal_plan = ServiceProviderMealPlan(name=meal_plan_name, description=meal_plan_description)
+    meal_plan = ServiceProviderMealPlan(name=meal_plan_name, description=meal_plan_description, meal_plan_uses=meal_plan_uses)
     meal_plan_price_row = MealPlanPrice(price=meal_plan_price, currency='USD', meal_plan_id=meal_plan.id)
     meal_plan.prices = []
     meal_plan.prices.append(meal_plan_price_row)

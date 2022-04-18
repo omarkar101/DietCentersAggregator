@@ -29,19 +29,22 @@ const MealPlanModal = (props) => {
     mealPlanName,
     mealPlanDescription,
     mealPlanPrice,
-    mealPlanImage
+    mealPlanImage,
+    mealPlanCounter,
   } = props;
   const [planName, setPlanName] = useState("");
   const [planDescription, setPlanDescription] = useState("");
   const [planPrice, setPlanPrice] = useState(0);
   const [planImage, setPlanImage] = useState(null);
+  const [planCounter, setPlanCounter] = useState(0);
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit(planName, planDescription, planPrice, planImage);
+    onSubmit(planName, planDescription, planPrice, planImage, planCounter);
     setPlanName("");
     setPlanDescription("");
     setPlanPrice(0);
     setPlanImage(null);
+    setPlanCounter(0);
   };
 
   const [state, dispatch] = useReducer(reducer, {
@@ -75,7 +78,14 @@ const MealPlanModal = (props) => {
     setPlanDescription(mealPlanDescription);
     setPlanPrice(mealPlanPrice);
     setPlanImage(mealPlanImage);
-  }, [mealPlanName, mealPlanDescription, mealPlanPrice, mealPlanImage]);
+    setPlanCounter(mealPlanCounter);
+  }, [
+    mealPlanName,
+    mealPlanDescription,
+    mealPlanPrice,
+    mealPlanImage,
+    mealPlanCounter,
+  ]);
 
   const toggleDeleteItem = useCallback((e) => {
     console.log("mealPlanId:", mealPlanId);
@@ -143,9 +153,21 @@ const MealPlanModal = (props) => {
               onChange={(e) => setPlanPrice(e.target.value)}
             />
           </Form.Group>
+          <Form.Group className="mb-3" controlId="formBasicCounter">
+            <Form.Label>Number of uses</Form.Label>
+            <Form.Control
+              type="number"
+              placeholder="Enter number of uses"
+              value={planCounter}
+              onChange={(e) => setPlanCounter(e.target.value)}
+            />
+          </Form.Group>
           <Form.Group className="mb-3">
             <Form.Label>Meal Plan Image</Form.Label>
-            <UploadAndDisplayImage mealPlanImage={planImage} setMealPlanImage={setPlanImage} />
+            <UploadAndDisplayImage
+              mealPlanImage={planImage}
+              setMealPlanImage={setPlanImage}
+            />
           </Form.Group>
           <Container>
             <AddNewItemModal

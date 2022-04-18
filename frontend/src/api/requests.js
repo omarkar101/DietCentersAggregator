@@ -101,8 +101,9 @@ export const getClientMealPlan = () => {
   return Get('/user/private/get/meal_plan')
 }
 
-export const subscribeClientToMealPlan = (mealPlanId) => {
+export const subscribeClientToMealPlan = (mealPlanId, mealPlanCounter) => {
   const data = new FormData();
   data.append('meal_plan_id', mealPlanId);
+  data.append('meal_plan_uses',mealPlanCounter);
   return Post('/user/private/add/meal_plan', data);
 }

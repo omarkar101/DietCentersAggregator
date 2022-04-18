@@ -44,11 +44,12 @@ export const getAllItems = () => {
   return Get('/items/get/all');
 }
 
-export const addOneMealPlan = (mealPlanName, mealPlanDescription, mealPlanPrice) => {
+export const addOneMealPlan = (mealPlanName, mealPlanDescription, mealPlanPrice, mealPlanCounter) => {
   const data = new FormData();
   data.append('meal_plan_name', mealPlanName);
   data.append('meal_plan_description', mealPlanDescription);
   data.append('meal_plan_price', mealPlanPrice);
+  data.append('meal_plan_uses', mealPlanCounter)
   return Post('/meal_plans/add/one', data)
 }
 
@@ -58,13 +59,14 @@ export const deleteOneMealPlan = (mealPlanId) => {
   return Post('/meal_plans/delete/one', data)
 }
 
-export const editOneMealPlan = (mealPlanId, mealPlanName, mealPlanDescription, mealPlanPrice, mealPlanImage) => {
+export const editOneMealPlan = (mealPlanId, mealPlanName, mealPlanDescription, mealPlanPrice, mealPlanImage, mealPlanCounter) => {
   const data = new FormData();
   data.append('meal_plan_id', mealPlanId);
   data.append('meal_plan_name', mealPlanName);
   data.append('meal_plan_description', mealPlanDescription);
   data.append('meal_plan_price', mealPlanPrice)
   data.append('meal_plan_image', mealPlanImage);
+  data.append('meal_plan_uses',mealPlanCounter)
   return Post('/meal_plans/edit/one', data)
 }
 
