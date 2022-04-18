@@ -38,11 +38,11 @@ const SubscribeModal = (props) => {
             mealPlan: response.data.meal_plan,
           });
         } else {
-          alert(response.data.message);
+          console.log(response.data.message);
         }
       })
       .catch((e) => {
-        alert(e);
+        console.log(e);
       });
 
     if (state.selectedMealPlanId == null) {
@@ -56,11 +56,11 @@ const SubscribeModal = (props) => {
               itemsOfMealPlan: response.data.meal_plan_items,
             });
           } else {
-            alert(response.data.message);
+            console.log(response.data.message);
           }
         })
         .catch((e) => {
-          alert(e);
+          console.log(e);
         });
     }
   }, [mealPlanId]);

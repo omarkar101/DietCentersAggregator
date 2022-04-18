@@ -33,7 +33,7 @@ const Profile = () => {
                         receiverFirstName, receiverFirstName, instructions)
       .then((response) => {})
       .catch((e) => {
-        alert(e);
+        console.log(e);
       });
   };
   return (

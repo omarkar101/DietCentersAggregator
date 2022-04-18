@@ -51,6 +51,9 @@ const MealPlanModal = (props) => {
     modalOpen: false,
     selectedMealPlanItems: [],
   });
+  useEffect(() => {
+    console.log('CHANGED MEAL PLAN ID:', mealPlanId);
+  }, [mealPlanId])
 
   useEffect(() => {
     if (mealPlanId != null) {
@@ -62,11 +65,11 @@ const MealPlanModal = (props) => {
               selectedMealPlanItems: response.data.meal_plan_items,
             });
           } else {
-            alert(response.data.message);
+            console.log(response.data.message);
           }
         })
         .catch((e) => {
-          alert(e);
+          console.log(e);
         });
     } else {
       dispatch({ type: "clear-selected-meal-plan-items" });
@@ -98,13 +101,13 @@ const MealPlanModal = (props) => {
             selectedMealPlanItems: response.data.meal_plan_items,
           });
         } else {
-          alert(response.data.message);
+          console.log(response.data.message);
         }
       })
       .catch((e) => {
-        alert(e);
+        console.log(e);
       });
-  }, []);
+  }, [mealPlanId]);
 
   const toggleOpenModal = useCallback((e) => {
     dispatch({ type: "open-add-item-modal" });

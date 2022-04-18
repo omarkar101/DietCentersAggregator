@@ -1,12 +1,11 @@
 from flask import Blueprint, jsonify, request
-from flask_cors import CORS, cross_origin
+from flask_cors import cross_origin
 from auth.decorators import require_user
 from sqlalchemy.orm import joinedload
-from database.models.credentials import Credentials
 from database.models.items import Item
 from database.models.service_providers import ServiceProvider
 from database.models.users import User
-from database.orm import generate_db_session
+from database.orm import db_session
 from user import UserType, get_user_id
 
 add_api = Blueprint('add_api', __name__, url_prefix='/add')
@@ -18,18 +17,19 @@ def add_item():
   # we need to know which user is logged in
   user_id = get_user_id()
   # for now we will use test user
-  with generate_db_session() as db_session:
-    user = db_session.query(User) \
-      .filter(User.id == user_id) \
-      .options(joinedload(
-        User.service_provider).options(
-          joinedload(ServiceProvider.items))) \
-      .first()
-    item_name = request.form.get('item_name')
-    item_description = request.form.get('item_description')
-    category = request.form.get('category')
+  user = db_session.query(User) \
+    .filter(User.id == user_id) \
+    .options(joinedload(
+      User.service_provider).options(
+        joinedload(ServiceProvider.items))) \
+    .first()
+  item_name = request.form.get('item_name')
+  item_description = request.form.get('item_description')
+  category = request.form.get('category')
+  item = Item(name=item_name, description=item_description, category=category)
+  with db_session.begin():
     # we should associate the items to the current user
-    item = Item(name=item_name, description=item_description, category=category)
     user.service_provider.items.append(item)
-    db_session.refresh(user)
-  return jsonify(success=True, items=user.service_provider.items)
+  db_session.refresh(user)
+  items = user.service_provider.items
+  return jsonify(success=True, items=sorted([item.as_dict() for item in items], key=lambda x: x['id']))

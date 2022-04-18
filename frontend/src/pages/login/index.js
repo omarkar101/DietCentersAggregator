@@ -21,11 +21,11 @@ const Login = () => {
           auth.setToken(response.data.token);
           navigate('/');
         } else {
-          alert(response.data.message);
+          console.log(response.data.message);
         }
       })
       .catch((e) => {
-        alert(e);
+        console.log(e);
       });
   };
   return (
@@ -64,7 +64,6 @@ const Login = () => {
                     required
                     type="password"
                     placeholder="Password"
-                    pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$"
                     onChange={(e) => setPassword(e.target.value)}
                   />
                   <Form.Text className="text-muted" style={{fontSize: 12}}>

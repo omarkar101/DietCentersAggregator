@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import { Button, Col, Form, Row, InputGroup, Card } from "react-bootstrap";
-import { signUpClient } from "../../api/requests";
-// import Login from "../login";
 import styled from "styled-components";
 
 const Checkout = () => {

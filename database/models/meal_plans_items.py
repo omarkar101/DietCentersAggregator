@@ -24,6 +24,10 @@ class MealPlanItem(Base):
     uselist=False,
     back_populates='items')
 
+  def as_dict(self):
+    information = {c.name: getattr(self, c.name) for c in self.__table__.columns}
+    return information
+
 # t_meal_plans_items = Table(
 #   'meal_plans_items', Base.metadata,
 #   Column('item_id', ForeignKey('items.id', ondelete='CASCADE'), primary_key=True),

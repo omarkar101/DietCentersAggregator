@@ -1,7 +1,7 @@
 import email
 from flask import Blueprint, request, jsonify
 from auth.decorators import require_user
-from database.orm import generate_db_session
+from database.orm import db_session
 from user import UserType, get_user_id
 from database.models.clients import Client
 from database.models.users import User
@@ -15,7 +15,7 @@ public_update_api = Blueprint('public_update_api', __name__, url_prefix='/public
 @public_update_api.route('/personal_info', methods=['POST']) #add address info
 @cross_origin(origins='*', supports_credentials=True)
 def update_user():
-    with generate_db_session() as db_session:
+    with db_session.begin():
         user_id = get_user_id()
         user_phone_number = request.form.get('phone_number')
         first_name = request.form.get('first_name')

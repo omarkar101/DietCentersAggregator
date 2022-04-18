@@ -3,7 +3,7 @@ from flask import current_app, request
 import jwt
 from sqlalchemy.orm import joinedload
 from database.models.credentials import Credentials
-from database.orm import generate_db_session
+from database.orm import db_session
 class UserType(Enum):
     CLIENT = 'client'
     SERVICE_PROVIDER = 'service_provider'
@@ -17,10 +17,9 @@ def get_user_email_from_token():
 def get_user_id(email=None):
     if email is None:
         email = get_user_email_from_token()
-    with generate_db_session() as db_session:
-        credentials = db_session.query(Credentials) \
-            .filter(Credentials.email == email) \
-            .first()
-        user = credentials.user if credentials is not None else None
-        db_session.refresh(user) if credentials is not None else None
+    # with db_session.begin():
+    credentials = db_session.query(Credentials) \
+        .filter(Credentials.email == email) \
+        .first()
+    user = credentials.user if credentials is not None else None
     return user.id if user is not None else None

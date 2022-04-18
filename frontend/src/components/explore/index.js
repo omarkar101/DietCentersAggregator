@@ -30,11 +30,11 @@ const Explore = () => {
       if (response.data.success) {
         dispatch({ type: 'get-all-service-providers', serviceProviders: response.data.service_providers })
       } else {
-        alert(response.data.message)
+        console.log(response.data.message)
       }
     })
     .catch((e) => {
-      alert(e)
+      console.log(e)
     })
   }, []);
 

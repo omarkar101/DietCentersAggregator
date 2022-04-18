@@ -6,7 +6,7 @@ from database.models.users import User
 from flask import current_app
 import jwt
 from jwt.exceptions import ExpiredSignatureError
-from database.orm import generate_db_session
+from database.orm import db_session
 from user import UserType, get_user_email_from_token
 
 """
@@ -21,19 +21,18 @@ def require_user(user_type: UserType):
             try:
                 # decoding the payload to fetch the stored details
                 email = get_user_email_from_token()
-                with generate_db_session() as db_session:
-                    credentials = db_session.query(Credentials) \
-                        .options(joinedload(Credentials.user)) \
-                        .filter(Credentials.email == email) \
-                        .first()
+                credentials = Credentials.query \
+                    .options(joinedload(Credentials.user)) \
+                    .filter(Credentials.email == email) \
+                    .first()
                 if credentials is None:
                     return jsonify(success=False, message='Invalid Authentication!', response_status=401)
                 if credentials.user.user_type != user_type:
                     return jsonify(success=False, message='Invalid Authentication', response_status=401)
             except ExpiredSignatureError:
-                return jsonify(success=False, message='Login session expired', response_status=440)
+                return jsonify(success=False, message='Login session expired', response_status=401)
             except:
-                return jsonify(success=False, message='Invalid Authentication')
+                return jsonify(success=False, message='Invalid Authentication', response_status=401)
             # returns the current logged in users contex to the routes
             return  f(*args, **kwargs)
         return decorated

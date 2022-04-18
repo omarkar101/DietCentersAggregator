@@ -1,11 +1,10 @@
 from flask import Flask
-from flask_cors import CORS, cross_origin
+from flask_cors import CORS
 from auth.api import auth_api
 from items.api import items_api
 from meal_plans.api import meal_plans_api
 from service_providers.api import service_providers_api
 from user.api import user_api
-from auth.decorators import require_user
 from database.models.meal_plans_items import MealPlanItem
 from database.models.credentials import Credentials
 from database.models.addresses import Address
@@ -33,9 +32,17 @@ app.register_blueprint(service_providers_api)
 app.register_blueprint(user_api)
 
 @app.route('/',methods = ['POST'])
-@require_user(UserType.CLIENT)
+# @require_user(UserType.CLIENT)
 def hello():
-    return 'hello'
+  # x1 = Credentials(email='email123@gmail.com')
+  # x1.password = '123456'
+  # l = db_session.query(Credentials).all()
+  # with db_session.begin():
+  #   db_session.add(x1)
+  # l = Credentials.query.all()
+  # db_session.commit()
+  # print(l)
+  return 'hello'
 
 if __name__ == '__main__':
     app.run(debug=True)
