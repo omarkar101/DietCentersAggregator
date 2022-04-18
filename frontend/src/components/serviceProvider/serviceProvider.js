@@ -7,14 +7,21 @@ import PackageModal from "./packageModal";
 import PackageCard from "./packageCard";
 import { useCallback, useReducer, useEffect } from "react";
 import ItemCard from "./itemCard";
-import { getMealPlansOfServiceProvider, getItemsOfServiceProvider, getItemsOfAMealPlanOfServiceProvider, getServiceProviderById } from "../../api/requests";
+import {
+  getMealPlansOfServiceProvider,
+  getItemsOfServiceProvider,
+  getItemsOfAMealPlanOfServiceProvider,
+  getServiceProviderById,
+} from "../../api/requests";
 import SubscribeModal from "./subscribeModal";
-import { subscribeClientToMealPlan } from "../../api/requests";
-
+import {
+  subscribeClientToMealPlan,
+  getClientMealPlan,
+} from "../../api/requests";
 
 const reducer = (state, action) => {
   switch (action.type) {
-    case 'get-service-provider-by-id':
+    case "get-service-provider-by-id":
       return { ...state, serviceProvider: action.serviceProvider };
     case "get-all-items":
       return { ...state, modalOpen: false, items: action.items };
@@ -29,19 +36,19 @@ const reducer = (state, action) => {
     case "close-package-modal":
       return { ...state, modalOpen: false };
     case "submit-subscribe-modal":
-      return{
+      return {
         ...state,
-        subscribeModalOpen: false
+        subscribeModalOpen: false,
       };
     case "open-subscribe-modal":
-      return{
+      return {
         ...state,
-        subscribeModalOpen: true
+        subscribeModalOpen: true,
       };
     case "close-subscribe-modal":
-      return{
+      return {
         ...state,
-        subscribeModalOpen: false
+        subscribeModalOpen: false,
       };
     default:
       throw new Error();
@@ -57,12 +64,12 @@ const ServiceProviderPage = () => {
     selectedPackageItems: [],
     items: [],
     mealPlans: [],
-    serviceProvider: null
+    serviceProvider: null,
   });
 
   const toggleOpenSubscribeModal = useCallback(() => {
     dispatch({
-      type: "open-subscribe-modal"
+      type: "open-subscribe-modal",
     });
   }, []);
 
@@ -70,7 +77,10 @@ const ServiceProviderPage = () => {
     getServiceProviderById(id)
       .then((response) => {
         if (response.data.success) {
-          dispatch({ type: 'get-service-provider-by-id', serviceProvider: response.data.service_provider});
+          dispatch({
+            type: "get-service-provider-by-id",
+            serviceProvider: response.data.service_provider,
+          });
         } else {
           alert(response.data.message);
         }
@@ -107,36 +117,56 @@ const ServiceProviderPage = () => {
       });
   }, [id]);
 
-  const toggleOpenModal = useCallback((meal_plan_id) => {
-    if (meal_plan_id == null){
-      return;
-    } else {
-      getItemsOfAMealPlanOfServiceProvider(id, meal_plan_id)
-        .then((response) => {
-          if (response.data.success) {
-            dispatch({ type: "open-package-modal", packageItems: response.data.meal_plan_items });
-          } else {
-            alert(response.data.message);
-          }
-        })
-        .catch((e) => {
-          alert(e);
-        });
-    }
-  },[id]);
+  const toggleOpenModal = useCallback(
+    (meal_plan_id) => {
+      if (meal_plan_id == null) {
+        return;
+      } else {
+        getItemsOfAMealPlanOfServiceProvider(id, meal_plan_id)
+          .then((response) => {
+            if (response.data.success) {
+              dispatch({
+                type: "open-package-modal",
+                packageItems: response.data.meal_plan_items,
+              });
+            } else {
+              alert(response.data.message);
+            }
+          })
+          .catch((e) => {
+            alert(e);
+          });
+      }
+    },
+    [id]
+  );
 
   const toggleSubscribeModalOnSubmit = useCallback((e) => {
-    subscribeClientToMealPlan(e)
-    .then((response) => {
-      if (response.data.success) {
-        dispatch({ type: 'submit-subscribe-modal'})
-      } else {
-        alert(response.data.message);
-      }
-    })
-    .catch((e) => {
-      alert(e);
-    });
+    getClientMealPlan()
+      .then((response) => {
+        if (response.data.success) {
+          if (response.data.meal_plan_id == null) {
+            alert("you are already subscribed in a meal plan");
+          } else {
+            subscribeClientToMealPlan(e)
+              .then((response) => {
+                if (response.data.success) {
+                  dispatch({ type: "submit-subscribe-modal" });
+                } else {
+                  alert(response.data.message);
+                }
+              })
+              .catch((e) => {
+                alert(e);
+              });
+          }
+        } else {
+          alert(response.data.message);
+        }
+      })
+      .catch((e) => {
+        alert(e);
+      });
   }, []);
 
   const toggleModalOnClose = useCallback(() => {
@@ -162,29 +192,45 @@ const ServiceProviderPage = () => {
         />
         {state.mealPlans?.map((plan) => (
           <ItemTextAndButtonWrapper>
-            <PackageCard key={plan.id} plan={plan} 
-            openModal={toggleOpenModal}
-             />
-             <SubscribeModal
-                mealPlanId={plan.id}
-                isOpen={state.subscribeModalOpen}
-                onClose={toggleSubscribeModalOnClose}
-                onSubmit={(e) => toggleSubscribeModalOnSubmit(plan.id)}
-              />
+            <PackageCard
+              key={plan.id}
+              plan={plan}
+              openModal={toggleOpenModal}
+            />
+            <SubscribeModal
+              mealPlanId={plan.id}
+              isOpen={state.subscribeModalOpen}
+              onClose={toggleSubscribeModalOnClose}
+              onSubmit={(e) => toggleSubscribeModalOnSubmit(plan.id)}
+            />
             {/* <ButtonContainer> */}
-              <Button variant="success" 
+            <Button
+              variant="success"
               onClick={toggleOpenSubscribeModal}
-              style={{backgroundColor: 'transparent', border: 'solid 1px #114f3cd9', height: '3.2rem', width: '3.2rem'}}
-                // data-mealplanname=''
-                // data-mealplandescription='' 
-                // onClick={addToCheckout}
-                >
-                {/* <AddSpanStyle>ADD</AddSpanStyle> */}
-                <svg xmlns="http://www.w3.org/2000/svg" fill="#114f3cd9" width="20" height="20" viewBox="0 0 20 20" aria-labelledby="icon-svg-title- icon-svg-desc-" role="img">
-              <path d="M15.5 9.42h-4.5v-4.5c0-0.56-0.44-1-1-1s-1 0.44-1 1v4.5h-4.5c-0.56 0-1 0.44-1 1s0.44 1 1 1h4.5v4.5c0 0.54 0.44 1 1 1s1-0.46 1-1v-4.5h4.5c0.56 0 1-0.46 1-1s-0.44-1-1-1z"></path>
+              style={{
+                backgroundColor: "transparent",
+                border: "solid 1px #114f3cd9",
+                height: "3.2rem",
+                width: "3.2rem",
+              }}
+              // data-mealplanname=''
+              // data-mealplandescription=''
+              // onClick={addToCheckout}
+            >
+              {/* <AddSpanStyle>ADD</AddSpanStyle> */}
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="#114f3cd9"
+                width="20"
+                height="20"
+                viewBox="0 0 20 20"
+                aria-labelledby="icon-svg-title- icon-svg-desc-"
+                role="img"
+              >
+                <path d="M15.5 9.42h-4.5v-4.5c0-0.56-0.44-1-1-1s-1 0.44-1 1v4.5h-4.5c-0.56 0-1 0.44-1 1s0.44 1 1 1h4.5v4.5c0 0.54 0.44 1 1 1s1-0.46 1-1v-4.5h4.5c0.56 0 1-0.46 1-1s-0.44-1-1-1z"></path>
               </svg>
-              </Button>
-              
+            </Button>
+
             {/* </ButtonContainer> */}
           </ItemTextAndButtonWrapper>
         ))}
@@ -199,7 +245,6 @@ const ServiceProviderPage = () => {
     </PageBase>
   );
 };
-
 
 const AddSpanStyle = styled.span`
   color: #114f3cd9;
