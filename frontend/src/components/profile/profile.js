@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Form, Button, Col, Row } from "react-bootstrap";
-import { Last } from "react-bootstrap/esm/PageItem";
 import styled from "styled-components";
-import { updateClientProfile } from "../../api/requests";
+import { getClientProfile, updateClientProfile } from "../../api/requests";
 
 const Profile = () => {
 
@@ -23,6 +22,18 @@ const Profile = () => {
   const [receiverFirstName, setreceiverFirstName] = useState(null);
   const [receiverLastName, setreceiverLastName] = useState(null);
   const [instructions, setinstructions] = useState(null);
+
+  useEffect(() => {
+    getClientProfile()
+      .then((response) => {
+        if(response.data.success) {
+          console.log('response.data.client_personal_info:', response.data.client_personal_info);
+        }
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();

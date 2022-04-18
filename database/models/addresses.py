@@ -102,7 +102,7 @@ class Address(Base):
     @instructions.setter
     def instructions(self, instructions):
         self._instructions = instructions
-    
+
     @hybrid_property
     def city(self):
         return self._city
