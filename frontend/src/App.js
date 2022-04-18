@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React from "react";
 import HomePage from "./pages/home";
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import SignUp from "./pages/signup";
@@ -16,7 +16,7 @@ import Search from "./components/search/search";
 
 const App = () => {
   API.interceptors.response.use((response) => {
-    if (response.data.response_status == 440) {
+    if (response.data.response_status == 401) {
       window.location.pathname = "/login";
     }
     return response;

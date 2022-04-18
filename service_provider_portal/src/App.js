@@ -12,7 +12,7 @@ import API from "./api/api";
 
 const App = () => {
   API.interceptors.response.use((response) => {
-    if (response.data.response_status === 440) {
+    if (response.data.response_status === 401) {
       window.location.pathname = "/login";
     }
     return response;

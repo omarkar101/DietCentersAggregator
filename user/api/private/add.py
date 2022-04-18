@@ -11,7 +11,7 @@ from sqlalchemy.orm import joinedload
 add_api = Blueprint('add_api', __name__, url_prefix='/private/add')
 
 @add_api.route('/meal_plan', methods=['POST'])
-# @require_user(UserType.CLIENT)
+@require_user(UserType.CLIENT)
 @cross_origin(origins='*', supports_credentials=True)
 def add_meal_plan_to_client():
   user_id = get_user_id()

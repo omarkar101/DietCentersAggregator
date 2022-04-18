@@ -33,7 +33,7 @@ def require_user(user_type: UserType):
             except ExpiredSignatureError:
                 return jsonify(success=False, message='Login session expired', response_status=440)
             except:
-                return jsonify(success=False, message='Invalid Authentication')
+                return jsonify(success=False, message='Invalid Authentication', response_status=401)
             # returns the current logged in users contex to the routes
             return  f(*args, **kwargs)
         return decorated

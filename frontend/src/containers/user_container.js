@@ -4,8 +4,6 @@ const KEY = 'user'
 
 const useUser = () => {
 
-  localStorage.setItem(KEY, JSON.stringify({'name': 'omar'}));
-
   const _getUser = () => JSON.parse(localStorage.getItem(KEY));
 
   const setUserName = (name) => {
