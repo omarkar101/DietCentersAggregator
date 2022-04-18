@@ -10,9 +10,10 @@ class Client(Base):
 
     _first_name = Column('first_name', Text, nullable=False)
     _last_name = Column('last_name', Text, nullable=False)
+    _subscription_counter = Column('subscription_counter', BigInteger, nullable=True)
 
     user_id = Column(ForeignKey('users.id', ondelete='CASCADE'), nullable=False, primary_key=True)
-
+    
     _meal_plan_id = Column('meal_plan_id', ForeignKey('service_providers_meal_plans.id', ondelete='CASCADE'), nullable=True)
 
     user = relationship(
@@ -54,3 +55,10 @@ class Client(Base):
     def as_dict(self):
         information = {c.name: getattr(self, c.name) for c in self.__table__.columns}
         return information
+    
+    @hybrid_property
+    def subscription_counter(self):
+        return self._subscription_counter
+    @subscription_counter.setter
+    def subscription_counter(self, subscription_counter):
+        self._subscription_counter = subscription_counter

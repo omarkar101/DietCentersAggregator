@@ -16,6 +16,7 @@ const PackageCard = (props) => {
             <ItemTextWrapper>
                 <ItemNameContanier>{plan.name}</ItemNameContanier>
                 <ItemPriceContainer>{plan.price}</ItemPriceContainer>
+                <ItemCounterContainer>{plan.meal_plan_uses}</ItemCounterContainer>
                 <ItemDescriptionParagraph>
                 {plan.description}
                 </ItemDescriptionParagraph>
@@ -56,6 +57,11 @@ const ItemNameContanier = styled.div`
 `;
 
 const ItemPriceContainer = styled.div`
+  margin: 0.7rem 0px;
+  fontsize: 1.4rem;
+  color: rgb(28, 28, 28);
+`;
+const ItemCounterContainer = styled.div`
   margin: 0.7rem 0px;
   fontsize: 1.4rem;
   color: rgb(28, 28, 28);

@@ -21,6 +21,7 @@ const reducer = (state, action) => {
         selectedMealPlanDescription: action.mealPlanDescription,
         selectedMealPlanName: action.mealPlanName,
         selectedMealPlanPrice: action.mealPlanPrice,
+        selectedMealPlanCounter: action.mealPlanCounter,
       };
     case "submit-add-meal-plan-modal":
       return {
@@ -29,6 +30,7 @@ const reducer = (state, action) => {
         selectedMealPlanDescription: "",
         selectedMealPlanName: "",
         selectedMealPlanPrice: 0,
+        selectedMealPlanCounter: 0,
         mealPlans: action.mealPlans,
       };
     case "delete-meal-plan":
@@ -41,6 +43,7 @@ const reducer = (state, action) => {
         selectedMealPlanDescription: action.mealPlanDescription,
         selectedMealPlanName: action.mealPlanName,
         selectedMealPlanPrice: action.mealPlanPrice,
+        selectedMealPlanCounter: action.mealPlanCounter,
       };
     case "submit-edit-meal-plan-modal":
       return {
@@ -50,6 +53,7 @@ const reducer = (state, action) => {
         selectedMealPlanDescription: "",
         selectedMealPlanName: "",
         selectedMealPlanPrice: 0,
+        selectedMealPlanCounter: 0,
         mealPlans: action.mealPlans,
       };
     case "close-meal-plan-modal":
@@ -60,6 +64,7 @@ const reducer = (state, action) => {
         selectedMealPlanDescription: "",
         selectedMealPlanName: "",
         selectedMealPlanPrice: 0,
+        selectedMealPlanCounter: 0,
       };
     default:
       throw new Error();
@@ -74,6 +79,7 @@ const MealPlans = (props) => {
     selectedMealPlanName: "",
     selectedMealPlanPrice: 0,
     selectedMealPlanImage: null,
+    selectedMealPlanCounter: 0,
     mealPlans: [],
   });
 
@@ -91,9 +97,9 @@ const MealPlans = (props) => {
     });
   }, []);
 
-  const toggleModalOnSubmit = (mealPlanName, mealPlanDescription, mealPlanPrice, mealPlanImage) => {
+  const toggleModalOnSubmit = (mealPlanName, mealPlanDescription, mealPlanPrice, mealPlanImage, mealPlanCounter) => {
     if (state.selectedMealPlanId == null) {
-      addOneMealPlan(mealPlanName, mealPlanDescription, mealPlanPrice)
+      addOneMealPlan(mealPlanName, mealPlanDescription, mealPlanPrice, mealPlanCounter)
       .then((response) => {
         if (response.data.success) {
           dispatch({ type: 'submit-add-meal-plan-modal', mealPlans: response.data.meal_plans })
@@ -105,7 +111,7 @@ const MealPlans = (props) => {
         console.log(e);
       });
     } else {
-      editOneMealPlan(state.selectedMealPlanId, mealPlanName, mealPlanDescription, mealPlanPrice, mealPlanImage)
+      editOneMealPlan(state.selectedMealPlanId, mealPlanName, mealPlanDescription, mealPlanPrice, mealPlanImage, mealPlanCounter)
       .then((response) => {
         if (response.data.success) {
           dispatch({ type: 'submit-edit-meal-plan-modal', mealPlans: response.data.meal_plans })
@@ -138,11 +144,13 @@ const MealPlans = (props) => {
     const mealPlanName = e.target.dataset.mealplanname;
     const mealPlanDescription = e.target.dataset.mealplandescription;
     const mealPlanPrice = e.target.dataset.mealplanprice;
+    const mealPlanCounter = e.target.dataset.mealplancounter;
     dispatch({
       type: "open-add-meal-plan-modal",
       mealPlanDescription: mealPlanDescription,
       mealPlanName: mealPlanName,
       mealPlanPrice: mealPlanPrice,
+      mealPlanCounter: mealPlanCounter,
     });
   }, []);
 
@@ -151,13 +159,14 @@ const MealPlans = (props) => {
     const mealPlanName = e.target.dataset.mealplanname;
     const mealPlanDescription = e.target.dataset.mealplandescription;
     const mealPlanPrice = e.target.dataset.mealplanprice;
-    console.log('MEALPLANID:', mealPlanId);
+    const mealPlanCounter = e.target.dataset.mealplancounter;
     dispatch({
       type: "open-edit-meal-plan-modal",
       mealPlanId: mealPlanId,
       mealPlanName: mealPlanName,
       mealPlanDescription: mealPlanDescription,
       mealPlanPrice: mealPlanPrice,
+      mealPlanCounter: mealPlanCounter,
     });
   }, []);
 
@@ -177,6 +186,7 @@ const MealPlans = (props) => {
           mealPlanDescription={state.selectedMealPlanDescription}
           mealPlanPrice={state.selectedMealPlanPrice}
           mealPlanImage={state.selectedMealPlanImage}
+          mealPlanCounter={state.selectedMealPlanCounter}
         />
         <Button variant="success" data-mealplanname=''
           data-mealplandescription='' data-mealplanprice='0' onClick={toggleOpenAddMealPlanModal}>
@@ -203,6 +213,7 @@ const MealPlans = (props) => {
                     data-mealplanname={mealPlan.name}
                     data-mealplandescription={mealPlan.description}
                     data-mealplanprice={mealPlan.price}
+                    data-mealplancounter={mealPlan.meal_plan_uses}
                     variant="primary"
                     size="sm"
                     onClick={toggleOpenEditMealPlanModal}

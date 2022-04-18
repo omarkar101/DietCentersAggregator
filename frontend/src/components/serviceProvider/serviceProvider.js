@@ -141,14 +141,12 @@ const ServiceProviderPage = () => {
     [id]
   );
 
-  const toggleSubscribeModalOnSubmit = useCallback((e) => {
+  const toggleSubscribeModalOnSubmit = useCallback((e,f) => {
     getClientMealPlan()
       .then((response) => {
         if (response.data.success) {
           if (response.data.meal_plan_id == null) {
-            console.log("you are already subscribed in a meal plan");
-          } else {
-            subscribeClientToMealPlan(e)
+            subscribeClientToMealPlan(e, f)
               .then((response) => {
                 if (response.data.success) {
                   dispatch({ type: "submit-subscribe-modal" });
@@ -159,6 +157,9 @@ const ServiceProviderPage = () => {
               .catch((e) => {
                 console.log(e);
               });
+          } else {
+            alert("you are already subscribed in a meal plan");
+            
           }
         } else {
           console.log(response.data.message);
@@ -201,7 +202,7 @@ const ServiceProviderPage = () => {
               mealPlanId={plan.id}
               isOpen={state.subscribeModalOpen}
               onClose={toggleSubscribeModalOnClose}
-              onSubmit={(e) => toggleSubscribeModalOnSubmit(plan.id)}
+              onSubmit={(e) => toggleSubscribeModalOnSubmit(plan.id, plan.meal_plan_uses)}
             />
             {/* <ButtonContainer> */}
             <Button

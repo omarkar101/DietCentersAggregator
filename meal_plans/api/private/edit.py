@@ -18,6 +18,7 @@ def edit_meal_plan():
   meal_plan_name = request.form.get('meal_plan_name')
   meal_plan_description = request.form.get('meal_plan_description')
   meal_plan_price = request.form.get('meal_plan_price')
+  meal_plan_uses = request.form.get('meal_plan_uses')
   meal_plan_image = request.files.get('meal_plan_image')
   meal_plan = db_session.query(ServiceProviderMealPlan) \
     .filter(and_(ServiceProviderMealPlan.user_id == user_id, ServiceProviderMealPlan.id == meal_plan_id)) \
@@ -29,6 +30,7 @@ def edit_meal_plan():
       meal_plan.set_image(meal_plan_image)
     meal_plan.name = meal_plan_name
     meal_plan.description = meal_plan_description
+    meal_plan.meal_plan_uses = meal_plan_uses
     for pricemodel in meal_plan.prices:
       if pricemodel.currency == 'USD':
         pricemodel.price = meal_plan_price
