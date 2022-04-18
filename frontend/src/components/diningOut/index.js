@@ -28,7 +28,7 @@ const DiningOut = () => {
             mealPlans: response.data.meal_plans,
           });
         } else {
-          alert(response.data.message);
+          console.log(response.data.message);
         }
       })
   }, []);

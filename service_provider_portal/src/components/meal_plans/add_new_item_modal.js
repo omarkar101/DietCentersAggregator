@@ -26,11 +26,11 @@ const AddNewItemModal = (props) => {
           if (response.data.success) {
             dispatch({ type: 'success-load-items', itemsNotInMealPlan: response.data.items });
           } else {
-            alert(response.data.message);
+            console.log(response.data.message);
           }
         })
         .catch((e) => {
-          alert(e)
+          console.log(e)
         })
     }
   }, [mealPlanId]);
@@ -42,11 +42,11 @@ const AddNewItemModal = (props) => {
           if (response.data.success) {
             dispatch({ type: 'success-load-items', itemsNotInMealPlan: response.data.items_not_in_meal_plan });
           } else {
-            alert(response.data.message);
+            console.log(response.data.message);
           }
         })
         .catch((e) => {
-          alert(e)
+          console.log(e)
         })
     }
   })

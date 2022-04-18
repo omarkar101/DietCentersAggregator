@@ -83,11 +83,11 @@ const MealPlans = (props) => {
       if (response.data.success) {
         dispatch({ type: 'get-all-meal-plans', mealPlans: response.data.meal_plans})
       } else {
-        alert(response.data.message);
+        console.log(response.data.message);
       }
     })
     .catch((e) => {
-      alert(e);
+      console.log(e);
     });
   }, []);
 
@@ -98,11 +98,11 @@ const MealPlans = (props) => {
         if (response.data.success) {
           dispatch({ type: 'submit-add-meal-plan-modal', mealPlans: response.data.meal_plans })
         } else {
-          alert(response.data.message);
+          console.log(response.data.message);
         }
       })
       .catch((e) => {
-        alert(e);
+        console.log(e);
       });
     } else {
       editOneMealPlan(state.selectedMealPlanId, mealPlanName, mealPlanDescription, mealPlanPrice, mealPlanImage)
@@ -110,11 +110,11 @@ const MealPlans = (props) => {
         if (response.data.success) {
           dispatch({ type: 'submit-edit-meal-plan-modal', mealPlans: response.data.meal_plans })
         } else {
-          alert(response.data.message)
+          console.log(response.data.message)
         }
       })
       .catch((e) => {
-        alert(e);
+        console.log(e);
       });
     }
   };
@@ -126,11 +126,11 @@ const MealPlans = (props) => {
         if (response.data.success) {
           dispatch({ type: "delete-meal-plan", mealPlans: response.data.meal_plans })
         } else {
-          alert(response.data.message);
+          console.log(response.data.message);
         }
       })
       .catch((e) => {
-        alert(e);
+        console.log(e);
       });
   }, []);
 
@@ -151,6 +151,7 @@ const MealPlans = (props) => {
     const mealPlanName = e.target.dataset.mealplanname;
     const mealPlanDescription = e.target.dataset.mealplandescription;
     const mealPlanPrice = e.target.dataset.mealplanprice;
+    console.log('MEALPLANID:', mealPlanId);
     dispatch({
       type: "open-edit-meal-plan-modal",
       mealPlanId: mealPlanId,

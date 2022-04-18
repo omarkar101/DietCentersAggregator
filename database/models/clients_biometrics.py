@@ -40,4 +40,8 @@ class ClientBiometrics(Base):
         return self._weight
     @weight.setter
     def weight(self, weight):
-        self._weight = weight        
+        self._weight = weight
+
+    def as_dict(self):
+        information = {c.name: getattr(self, c.name) for c in self.__table__.columns}
+        return information

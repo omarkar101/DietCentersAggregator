@@ -109,3 +109,7 @@ class Address(Base):
     @city.setter
     def city(self, city):
         self._city = city
+
+    def as_dict(self):
+        information = {c.name: getattr(self, c.name) for c in self.__table__.columns}
+        return information

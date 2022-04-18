@@ -19,11 +19,11 @@ const SignUp = (props) => {
         if (response.data.success) {
           navigate("/login");
         } else {
-          alert(response.data.message);
+          console.log(response.data.message);
         }
       })
       .catch((e) => {
-        alert(e);
+        console.log(e);
       });
   };
 

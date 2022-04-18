@@ -82,11 +82,11 @@ const ServiceProviderPage = () => {
             serviceProvider: response.data.service_provider,
           });
         } else {
-          alert(response.data.message);
+          console.log(response.data.message);
         }
       })
       .catch((e) => {
-        alert(e);
+        console.log(e);
       });
 
     getMealPlansOfServiceProvider(id)
@@ -97,11 +97,11 @@ const ServiceProviderPage = () => {
             mealPlans: response.data.meal_plans,
           });
         } else {
-          alert(response.data.message);
+          console.log(response.data.message);
         }
       })
       .catch((e) => {
-        alert(e);
+        console.log(e);
       });
 
     getItemsOfServiceProvider(id)
@@ -109,11 +109,11 @@ const ServiceProviderPage = () => {
         if (response.data.success) {
           dispatch({ type: "get-all-items", items: response.data.items });
         } else {
-          alert(response.data.message);
+          console.log(response.data.message);
         }
       })
       .catch((e) => {
-        alert(e);
+        console.log(e);
       });
   }, [id]);
 
@@ -130,11 +130,11 @@ const ServiceProviderPage = () => {
                 packageItems: response.data.meal_plan_items,
               });
             } else {
-              alert(response.data.message);
+              console.log(response.data.message);
             }
           })
           .catch((e) => {
-            alert(e);
+            console.log(e);
           });
       }
     },
@@ -146,26 +146,26 @@ const ServiceProviderPage = () => {
       .then((response) => {
         if (response.data.success) {
           if (response.data.meal_plan_id == null) {
-            alert("you are already subscribed in a meal plan");
+            console.log("you are already subscribed in a meal plan");
           } else {
             subscribeClientToMealPlan(e)
               .then((response) => {
                 if (response.data.success) {
                   dispatch({ type: "submit-subscribe-modal" });
                 } else {
-                  alert(response.data.message);
+                  console.log(response.data.message);
                 }
               })
               .catch((e) => {
-                alert(e);
+                console.log(e);
               });
           }
         } else {
-          alert(response.data.message);
+          console.log(response.data.message);
         }
       })
       .catch((e) => {
-        alert(e);
+        console.log(e);
       });
   }, []);
 

@@ -1,10 +1,9 @@
 from flask import current_app
 from sqlalchemy import Column, BigInteger, Text, ForeignKey, and_
 from sqlalchemy.orm import relationship
-from dataclasses import dataclass
 from sqlalchemy.ext.hybrid import hybrid_property
 from database.models.items import Item
-from database.orm import Base, generate_db_session
+from database.orm import Base, db_session
 from azure.storage.blob import BlockBlobService
 import uuid
 from user import UserType
@@ -13,14 +12,8 @@ blob_service = BlockBlobService(
   account_name='299storage',
   account_key='59A1sn1/V/JbS9fCQvtgWcJsP9WZYOJJMDnm+FZjCRFzsRtNYVce/NP7MZDHaf4VlhQgAlD16kRL+AStxRd4uQ==')
 metadata = Base.metadata
-@dataclass
 class ServiceProviderMealPlan(Base):
     __tablename__ = 'service_providers_meal_plans'
-
-    id: int
-    description: str
-    name: str
-    image: str
 
     id = Column(BigInteger, primary_key=True, autoincrement=True)
     _name = Column('name', Text, nullable=False)
@@ -67,11 +60,11 @@ class ServiceProviderMealPlan(Base):
     def get_items(self):
         return [x.item for x in self.items]
 
-    def get_items_not_in_meal_plan(self):
-        with generate_db_session() as db_session:
+    def get_items_not_in_meal_plan(self, user_id):
+        with db_session.begin():
             meal_plan_item_ids = [x.id for x in self.get_items()]
             items_not_in_meal_plan = db_session.query(Item) \
-                .filter(and_(Item.id.notin_(meal_plan_item_ids))) \
+                .filter(and_(Item.id.notin_(meal_plan_item_ids), Item.user_id == user_id)) \
                 .all()
         return items_not_in_meal_plan
 
@@ -92,4 +85,3 @@ class ServiceProviderMealPlan(Base):
             if pricemodel.currency == 'USD':
                 information['price'] = pricemodel.price
         return information
-        

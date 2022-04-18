@@ -1,20 +1,13 @@
 from sqlalchemy import Column, BigInteger, Text, ForeignKey
 from sqlalchemy.orm import relationship
-from dataclasses import dataclass
 from sqlalchemy.ext.hybrid import hybrid_property
 from database.orm import Base
 # from database.models.meal_plans_items import t_meal_plans_items
 
 metadata = Base.metadata
 
-@dataclass
 class Item(Base):
   __tablename__ = 'items'
-
-  id: int
-  description: str
-  category: str
-  name: str
 
   id = Column(BigInteger, primary_key=True, autoincrement=True)
   # category must be a foreign key
@@ -54,3 +47,7 @@ class Item(Base):
   @name.setter
   def name(self, name):
     self._name = name
+
+  def as_dict(self):
+    information = {c.name: getattr(self, c.name) for c in self.__table__.columns}
+    return information

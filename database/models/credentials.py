@@ -45,3 +45,7 @@ class Credentials(Base):
     @hybrid_property
     def password_salt(self):
         raise Exception('You can\'t access this field')
+    
+    def as_dict(self):
+        information = {c.name: getattr(self, c.name) for c in self.__table__.columns}
+        return information

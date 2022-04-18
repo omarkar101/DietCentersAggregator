@@ -40,11 +40,11 @@ const Package = () => {
         if (response.data.success) {
           dispatch({ type: 'get-meal-plan-by-id', mealPlan: response.data.meal_plan });
         } else {
-          alert(response.data.message);
+          console.log(response.data.message);
         }
       })
       .catch((e) => {
-        alert(e);
+        console.log(e);
       });
 
       getItemsOfAMealPlanOfServiceProvider(service_provider_id, id)
@@ -52,11 +52,11 @@ const Package = () => {
         if (response.data.success) {
           dispatch({ type: "get-items-of-meal-plan", itemsOfMealPlan: response.data.meal_plan_items });
         } else {
-          alert(response.data.message);
+          console.log(response.data.message);
         }
       })
       .catch((e) => {
-        alert(e);
+        console.log(e);
       });
   }, [id, service_provider_id]);
 

@@ -2,7 +2,7 @@
 # from auth.decorators import require_user
 # from database.models.clients import Client
 # from database.models.service_providers_meal_plans import ServiceProviderMealPlan
-# from database.orm import generate_db_session
+# from database.orm import db_session
 # from user import get_user_id, get_user_email_from_token
 
 # private_get_api = Blueprint('private_get_api', __name__, url_prefix='/private/get')
@@ -11,7 +11,7 @@
 # # @require_user(UserType.CLIENT)
 # def get_client_meal_plan_id():
 #   user_id = int(request.form.get('user_id'))
-#   with generate_db_session() as db_session:
+#   with db_session.begin():
 #     user = db_session.query(Client) \
 #       .filter(Client.user_id == user_id) \
 #       .first()

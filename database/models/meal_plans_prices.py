@@ -33,3 +33,7 @@ class MealPlanPrice(Base):
     @currency.setter
     def currency(self,currency):
         self._currency = currency
+
+    def as_dict(self):
+        information = {c.name: getattr(self, c.name) for c in self.__table__.columns}
+        return information

@@ -1,11 +1,9 @@
 from sqlalchemy import Column, Text, ForeignKey
 from sqlalchemy.orm import relationship
-from dataclasses import dataclass
 from sqlalchemy.ext.hybrid import hybrid_property
 from database.orm import Base
 
 metadata = Base.metadata
-@dataclass
 class ServiceProvider(Base):
     __tablename__ = 'service_providers'
 
@@ -39,5 +37,5 @@ class ServiceProvider(Base):
 
     def as_dict(self):
         information = {c.name: getattr(self, c.name) for c in self.__table__.columns}
-        information['phone_number'] = self.user.phone_number;
+        information['phone_number'] = self.user.phone_number
         return information

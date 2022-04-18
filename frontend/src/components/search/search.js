@@ -32,11 +32,11 @@ const Search = () => {
             serviceProviders: response.data.service_providers,
           });
         } else {
-          alert(response.data.message);
+          console.log(response.data.message);
         }
       })
       .catch((e) => {
-        alert(e);
+        console.log(e);
       });
   }, [location.state.serviceProviderName]);
 

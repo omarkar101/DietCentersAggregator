@@ -18,11 +18,11 @@ const Login = () => {
           auth.setToken(response.data.token);
           navigate('/');
         } else {
-          alert(response.data.message);
+          console.log(response.data.message);
         }
       })
       .catch((e) => {
-        alert(e);
+        console.log(e);
       });
   };
   return (

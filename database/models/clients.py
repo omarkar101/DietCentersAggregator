@@ -51,3 +51,6 @@ class Client(Base):
         self._meal_plan_id= meal_plan_id
     # def changeid(self , id_of_meal_plan):
     #     self.meal_plan_id = id_of_meal_plan
+    def as_dict(self):
+        information = {c.name: getattr(self, c.name) for c in self.__table__.columns}
+        return information

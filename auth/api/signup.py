@@ -4,7 +4,7 @@ from flask_cors import cross_origin
 import jwt
 from sqlalchemy.exc import IntegrityError
 from user import UserType
-from database.orm import generate_db_session
+from database.orm import db_session
 from database.models.credentials import Credentials
 from database.models.clients import Client
 from database.models.service_providers import ServiceProvider
@@ -22,7 +22,7 @@ def user():
     try:
         user_type = UserType(request.form.get('user_type'))
         # this must be done in ONE TRANSACTION
-        with generate_db_session() as db_session:
+        with db_session.begin():
             # First, we need to create credentials for the user
             credentials = Credentials(email=email)
             credentials.password = password

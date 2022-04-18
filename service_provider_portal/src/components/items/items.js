@@ -80,11 +80,11 @@ const Items = (props) => {
         if (response.data.success) {
           dispatch({ type: "get-all-items", items: response.data.items });
         } else {
-          alert(response.data.message);
+          console.log(response.data.message);
         }
       })
       .catch((e) => {
-        alert(e);
+        console.log(e);
       });
   }, []);
 
@@ -95,11 +95,11 @@ const Items = (props) => {
           if (response.data.success) {
             dispatch({ type: "submit-add-item-modal", items: response.data.items });
           } else {
-            alert(response.data.message);
+            console.log(response.data.message);
           }
         })
         .catch((e) => {
-          alert(e);
+          console.log(e);
         });
     } else {
       editOneItem(state.selectedItemId, itemName, itemDescription, itemCategory)
@@ -107,11 +107,11 @@ const Items = (props) => {
           if (response.data.success) {
             dispatch({ type: "submit-edit-item-modal", items: response.data.items });
           } else {
-            alert(response.data.message);
+            console.log(response.data.message);
           }
         })
         .catch((e) => {
-          alert(e);
+          console.log(e);
         });
     }
   };
@@ -123,11 +123,11 @@ const Items = (props) => {
         if (response.data.success) {
           dispatch({ type: "delete-item", items: response.data.items })
         } else {
-          alert(response.data.message);
+          console.log(response.data.message);
         }
       })
       .catch((e) => {
-        alert(e);
+        console.log(e);
       });
   }, []);
 

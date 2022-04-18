@@ -1,6 +1,6 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import declarative_base
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import sessionmaker, scoped_session
 from sqlalchemy.orm.session import Session
 
 # !!!!!!!!!!!!!!!!!!!!!!!!for deployment environment only!!!!!!!!!!!!!!!!!!!!!!!
@@ -10,12 +10,6 @@ from sqlalchemy.orm.session import Session
 engine = create_engine('postgresql://postgres:test-pass-123@localhost:3306/299')
 
 Base = declarative_base()
-Session = sessionmaker(engine, expire_on_commit=False)
-
-
-# To start doing things in the database, use:
-# with generate_db_session() as db_session:
-#     db_session.add(...)..
-# this will commit when the with closure ends
-def generate_db_session():
-    return Session.begin()
+Session = sessionmaker(engine, autocommit=True)
+db_session = scoped_session(Session)
+Base.query = db_session.query_property()
