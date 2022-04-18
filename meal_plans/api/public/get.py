@@ -55,3 +55,15 @@ def get_meal_plan_items():
       .first()
     items = [x.item for x in meal_plan.items]
   return jsonify(success=True, meal_plan_items=items)
+
+@public_get_api.route('items_of_meal_plan', methods=['POST'])
+@cross_origin(origins='*', supports_credentials=True)
+def get_items_of_meal_plan():
+  meal_plan_id = request.form.get('meal_plan_id')
+  with generate_db_session() as db_session:
+    meal_plan = db_session.query(ServiceProviderMealPlan) \
+      .filter(ServiceProviderMealPlan.id == meal_plan_id) \
+      .options(joinedload(ServiceProviderMealPlan.items)) \
+      .first()
+    items = [x.item for x in meal_plan.items]
+  return jsonify(success=True, meal_plan_items=items)

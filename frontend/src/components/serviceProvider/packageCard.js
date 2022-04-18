@@ -1,6 +1,7 @@
 import React from "react";
 import { useCallback, useReducer, useEffect } from "react";
 import styled from "styled-components";
+import { Button } from "react-bootstrap";
 
 const PackageCard = (props) => {
     const { plan, openModal } = props;
@@ -10,7 +11,7 @@ const PackageCard = (props) => {
     }, []);
 
     return (
-        <PackageCardWrapper onClick={onClickPackage}>
+        <PackageCardWrapper>
             {/* <ItemTextAndButtonWrapper> */}
             <ItemTextWrapper>
                 <ItemNameContanier>{plan.name}</ItemNameContanier>
@@ -26,6 +27,11 @@ const PackageCard = (props) => {
                 </svg>
             </ButtonContainer> */}
             {/* </ItemTextAndButtonWrapper> */}
+            <Button onClick={onClickPackage}
+            
+            style={{backgroundColor: 'transparent', border: 'solid 1px #114f3cd9', height: '3.2rem', color: "#114f3cd9"}}>
+              details
+            </Button>
         </PackageCardWrapper>
     );
 
@@ -38,6 +44,7 @@ const PackageCardWrapper = styled.div`
   flex-direction: row;
   cursor: pointer;
   width: 100%;
+  justify-content: space-between;
 `;
 
 const ItemNameContanier = styled.div`

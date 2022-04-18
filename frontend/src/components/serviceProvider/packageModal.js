@@ -22,9 +22,9 @@ const PackageModal = (props) => {
             <Card.Body>
               <Card.Title>{item.name}</Card.Title>
               <Card.Text>{item.description}</Card.Text>
-              <ListGroup className="flush">
+              {/* <ListGroup className="flush">
                 <ListGroupItem>Price: {item.price}</ListGroupItem>
-              </ListGroup>
+              </ListGroup> */}
             </Card.Body>
           </Card>
         ))}
