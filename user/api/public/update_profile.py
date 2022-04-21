@@ -1,6 +1,7 @@
 from flask import Blueprint, request, jsonify
+from auth.decorators import require_user
 from database.orm import db_session
-from user import get_user_id
+from user import UserType, get_user_id
 from database.models.users import User
 from database.models.clients_biometrics import ClientBiometrics
 from flask_cors import cross_origin
@@ -8,6 +9,7 @@ from flask_cors import cross_origin
 public_update_api = Blueprint('public_update_api', __name__, url_prefix='/public/update')
 
 @public_update_api.route('/personal_info', methods=['POST']) #add address info
+@require_user(UserType.CLIENT)
 @cross_origin(origins='*', supports_credentials=True)
 def update_user():
     user_id = get_user_id()

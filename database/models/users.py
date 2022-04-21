@@ -49,7 +49,7 @@ class User(Base):
     
     def set_address(self, address_name, address_first_name, address_last_name, address_email, address_phone_number,
                     country, street, building, floor, instructions, city):
-        self.addresses.clear()
+        Address.query.filter(Address.user_id == self.id).delete()
         address = Address(
             address_name=address_name,
             first_name=address_first_name,
@@ -61,7 +61,8 @@ class User(Base):
             building=building, 
             floor=floor, 
             instructions=instructions,
-            city=city)
+            city=city,
+            user_id=self.id)
         self.addresses.append(address)
 
     def as_dict(self):
@@ -69,6 +70,9 @@ class User(Base):
         information['email'] = self.credentials.email
         if information['user_type'] == UserType.CLIENT:
             information['address'] = self.addresses[0].as_dict() if len(self.addresses) > 0 else None
+            information['first_name'] = self.client.first_name
+            information['last_name'] = self.client.last_name
+            if self.client.biometrics is not None:
+                information['biometrics'] = self.client.biometrics.as_dict()
         del information['user_type']
-        print('information:', information)
         return information
