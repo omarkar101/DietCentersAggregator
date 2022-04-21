@@ -98,7 +98,7 @@ export const loginServiceProvider = (email, password) => {
 }
 
 export const getClientMealPlan = () => {
-  return Get('/user/private/get/meal_plan')
+  return Get('/user/public/get/meal_plan')
 }
 
 export const subscribeClientToMealPlan = (mealPlanId, mealPlanCounter) => {
@@ -106,4 +106,8 @@ export const subscribeClientToMealPlan = (mealPlanId, mealPlanCounter) => {
   data.append('meal_plan_id', mealPlanId);
   data.append('meal_plan_uses',mealPlanCounter);
   return Post('/user/private/add/meal_plan', data);
+}
+
+export const getClientProfile = () => {
+  return Post('/user/public/get/client_personal_info');
 }
