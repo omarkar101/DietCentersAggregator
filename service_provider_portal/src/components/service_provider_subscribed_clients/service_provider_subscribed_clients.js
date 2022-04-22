@@ -9,7 +9,7 @@ const reducer = (state, action) => {
       case 'get-all-meal-plans-for-subscribed-clients':
         return { ...state, mealPlans: action.mealPlans };
       case "cancel-subscribed-client":
-        return { ...state, subscribedClients: action.subscribedClients };
+        return { ...state, mealPlans: action.mealPlans };
       default:
         throw new Error();
     }
@@ -18,7 +18,6 @@ const reducer = (state, action) => {
 
 const ServiceProviderSubscribedClients = (props) => {
   const [state, dispatch] = useReducer(reducer, {
-    subscribedClients: [],
     mealPlans: []
   });
 
@@ -37,11 +36,11 @@ const ServiceProviderSubscribedClients = (props) => {
   }, []);
 
   const toggleCancelSubscribedClient = useCallback((e) => {
-    const orderId = e.target.id;
-    cancelSubscribedClient(orderId)
+    const clientId = e.target.id;
+    cancelSubscribedClient(clientId)
       .then((response) => {
         if (response.data.success) {
-          dispatch({ type: "cancel-subscribed-client", subscribedClients: response.data.subscribed_clients })
+          dispatch({ type: "cancel-subscribed-client", mealPlans: response.data.meal_plans })
         } else {
           console.log(response.data.message);
         }
@@ -79,7 +78,7 @@ const ServiceProviderSubscribedClients = (props) => {
                   <td>
                     <div className="mb-4">
                       <Button
-                        id={client.id}
+                        id={client.user_id}
                         variant="danger"
                         size="sm"
                         onClick={toggleCancelSubscribedClient}
