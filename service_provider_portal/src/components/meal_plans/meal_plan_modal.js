@@ -157,7 +157,7 @@ const MealPlanModal = (props) => {
             />
           </Form.Group>
           <Form.Group className="mb-3" controlId="formBasicCounter">
-            <Form.Label>Number of uses</Form.Label>
+            <Form.Label>Number of monthly subscription meals</Form.Label>
             <Form.Control
               type="number"
               placeholder="Enter number of uses"
