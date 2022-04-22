@@ -1,4 +1,6 @@
 from flask import Blueprint, jsonify, request
+from sqlalchemy import and_
+from sqlalchemy.orm import joinedload
 from auth.decorators import require_user
 from database.models.clients import Client
 from database.models.users import User
@@ -14,6 +16,16 @@ def get_service_provider_personal_info():
   user_id = get_user_id()
   user = User.query.filter(User.id == user_id).first()
   return jsonify(success=True, service_provider_personal_info=user.as_dict())
+
+@private_get_api.route('/all_subscribed_client', methods=['POST'])
+@require_user(UserType.SERVICE_PROVIDER)
+def get_service_provider_all_subscribed_client():
+  user_id = get_user_id()
+  meal_plans = ServiceProviderMealPlan.query \
+    .filter(and_(ServiceProviderMealPlan.user_id == user_id)) \
+    .options(joinedload(ServiceProviderMealPlan.clients)) \
+    .all()
+  return jsonify(success=True, meal_plans=[meal_plan.as_dict('service_provider') for meal_plan in meal_plans])
 
 # @private_get_api.route('/meal_plan', methods=['POST'])
 # # @require_user(UserType.CLIENT)

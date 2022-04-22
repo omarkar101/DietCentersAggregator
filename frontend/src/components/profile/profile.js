@@ -177,10 +177,7 @@ const Profile = () => {
               </Form.Group>
               <Form.Group as={Col} md="6" controlId="formGridCountry">
                 <Form.Label>Country</Form.Label>
-                <Form.Select required onChange={(e) => setcountry(e.target.value)} defaultValue="Choose...">
-                  <option value="Lebanon">Lebanon</option>
-                  <option>...</option>
-                </Form.Select>
+                <Form.Control value={country} required onChange={(e) => setcountry(e.target.value)} placeholder="Lebanon" />
               </Form.Group>
             </Row>
             <Row className="mb-3">

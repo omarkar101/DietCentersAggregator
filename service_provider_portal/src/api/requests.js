@@ -112,3 +112,13 @@ export const updateServiceProviderProfile = (name,  phoneNumber, emailAddress) =
   data.append('email_address', emailAddress);
   return Post('/user/update/personal_info', data);
 }
+
+export const getAllServiceProviderSubscribedClients = () => {
+  return Post('user/get/all_subscribed_client');
+}
+
+export const cancelSubscribedClient = (subscribedClientId) => {
+  const data = new FormData();
+  data.append('subscribed_client_id', subscribedClientId);
+  return Post('user/delete/subscribed_client', data);
+}

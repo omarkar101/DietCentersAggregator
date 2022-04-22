@@ -54,6 +54,10 @@ class Client(Base):
     #     self.meal_plan_id = id_of_meal_plan
     def as_dict(self):
         information = {c.name: getattr(self, c.name) for c in self.__table__.columns}
+        information['email'] = self.user.credentials.email
+        information['phone_number'] = self.user.phone_number
+        if len(self.user.addresses) > 0:
+            information['location'] = 'Country: ' + self.user.addresses[0].country + '\nCity: ' + self.user.addresses[0].city + '\nStreet: ' + self.user.addresses[0].street + '\nBuilding: ' + self.user.addresses[0].building + '\nFloor: ' + self.user.addresses[0].floor
         return information
     
     @hybrid_property
