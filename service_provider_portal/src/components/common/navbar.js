@@ -17,6 +17,9 @@ const AppNavbar = () => {
             <Nav.Link as={Link} to='/items'>
               My Items
             </Nav.Link>
+            <Nav.Link as={Link} to='/subscribed_clients'>
+              Subscribed Clients
+            </Nav.Link>
           </Nav>
           <Nav>
             <Nav.Link as={Link} to='/profile'>
