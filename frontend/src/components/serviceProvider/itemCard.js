@@ -6,7 +6,7 @@ const ItemCard = (props) => {
     return (
         <ItemWrapper>
           <ImageWrapper>
-            <ImageStyle src={item.image} alt='No Image' />
+            <ImageStyle src={item.image_url} alt='No Image' />
           </ImageWrapper>
           <ItemTextAndButtonWrapper>
             <ItemTextWrapper>
@@ -19,7 +19,6 @@ const ItemCard = (props) => {
           </ItemTextAndButtonWrapper>
         </ItemWrapper>
     );
-
 }
 
 const ItemWrapper = styled.div`
@@ -37,7 +36,7 @@ const ImageWrapper = styled.div`
   width: 9rem;
   position: relative;
   margin-right: 2rem;
-  margin-bottom: 0px,
+  margin-bottom: 0px;
   flex-shrink: 0px;
   border-radius: 0.8rem;
   visibility: visible;
@@ -45,7 +44,6 @@ const ImageWrapper = styled.div`
 `;
 
 const ImageStyle = styled.img`
-  loading: lazy;
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -67,7 +65,7 @@ const ItemNameContanier = styled.div`
 
 const ItemPriceContainer = styled.div`
   margin: 0.7rem 0px;
-  fontsize: 1.4rem;
+  font-size: 1.4rem;
   color: rgb(28, 28, 28);
 `;
 
@@ -75,38 +73,13 @@ const ItemDescriptionParagraph = styled.p`
   margin: 0.5rem 0px;
   font-size: 1.4rem;
   color: rgb(79, 79, 79);
-  max-width: 75%,
+  max-width: 75%;
   overflow-wrap: break-word;
-`;
-
-const AddSpanStyle = styled.span`
-  color: rgb(207, 207, 207);
-  font-size: 1.4rem;
-  margin: 0px 0.5rem;
-  font-weight: 600;
-`;
-
-const ButtonContainer = styled.div`
-  display: flex;
-  webkit-box-align: center;
-  align-items: center;
-  webkit-box-pack: center;
-  justify-content: center;
-  width: 8.2rem;
-  height: 3.2rem;
-  border: 0.5px solid rgb(232, 232, 232);
-  border-radius: 0.8rem;
-  overflow: hidden;
-  cursor: pointer;
-  user-select: none;
-  background: rgb(248, 248, 248);
-  position: relative;
 `;
 
 const ItemTextAndButtonWrapper = styled.div`
   width: 100%;
   display: flex;
-  webkit-box-pack: justify;
   justify-content: space-between;
 `;
 

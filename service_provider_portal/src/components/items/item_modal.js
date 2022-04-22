@@ -9,10 +9,11 @@ const ItemModal = (props) => {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [category, setCategory] = useState('');
+  const [image, setImage] = useState(null);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit(name, description, category);
+    onSubmit(name, description, category, image);
 
     setName('');
     setDescription('');
@@ -46,7 +47,7 @@ const ItemModal = (props) => {
           </Form.Group>
           <Form.Group className="mb-3" >
             <Form.Label>Item Image</Form.Label>
-            <UploadAndDisplayImage />
+            <UploadAndDisplayImage image={image} setImage={setImage} />
           </Form.Group>
         </Form>
       </Modal.Body>
