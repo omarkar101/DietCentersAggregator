@@ -1,9 +1,23 @@
 import React from "react";
+import { useCallback, useReducer, useState, useEffect } from "react";
+
 import NextArrow from "../../common/carousel/nextArrow";
 import PrevArrow from "../../common/carousel/prevArrow";
 import "./collections.css";
 import Item from "./item";
 import Slider from "react-slick";
+
+import { getAllItems } from '../../../api/requests';
+
+
+const reducer = (state, action) => {
+  switch (action.type) {
+    case "get-all-items":
+      return { ...state, items: action.items };
+    default:
+      throw new Error();
+  }
+}
 
 const deliveryItems = [
   {
@@ -67,6 +81,25 @@ const settings = {
   // dots: true,
 };
 const ExploreCollections = () => {
+
+  const [state, dispatch] = useReducer(reducer, {
+    items: []
+  });
+
+  useEffect(() => {
+    getAllItems()
+    .then((response) => {
+      if (response.data.success) {
+        dispatch({ type: 'get-all-items', items: response.data.items })
+      } else {
+        console.log(response.data.message)
+      }
+    })
+    .catch((e) => {
+      console.log(e)
+    })
+  }, []);
+
   return (
     <div className='collections' 
     style={{ borderBottomStyle: "solid", borderBottomWidth: 2, borderBottomColor: "#21ad83"}}
@@ -74,7 +107,7 @@ const ExploreCollections = () => {
       <div style={{ maxWidth: "1100px", margin: "0px auto" }}>
         <div className='title'>Eat right!</div>
         <Slider {...settings}>
-          {deliveryItems.map((item) => {
+          {state.items?.map((item) => {
             return <Item key={item.id} item={item} />;
           })}
         </Slider>

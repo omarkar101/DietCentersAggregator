@@ -9,6 +9,7 @@ import SignUp from "./components/signup/signup";
 import Authentication from "./containers/auth_container";
 import User from "./containers/user_container";
 import API from "./api/api";
+import ServiceProviderSubscribedClients from "./components/service_provider_subscribed_clients/service_provider_subscribed_clients";
 
 const App = () => {
   API.interceptors.response.use((response) => {
@@ -30,6 +31,7 @@ const App = () => {
               <Route path="/items" element={<Items />} />
               <Route path="/meal_plans" element={<MealPlans />} />
               <Route path="/profile" element={<Profile />} />
+              <Route path="/subscribed_clients" element={<ServiceProviderSubscribedClients />} />
             </Routes>
           </BrowserRouter>
         </User.Provider>
