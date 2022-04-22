@@ -50,7 +50,6 @@ const ServiceProviderSubscribedClients = (props) => {
       });
   }, []);
 
-  console.log(state.mealPlans);
   return (
     <>
       <Container>
