@@ -74,7 +74,7 @@ const ServiceProviderSubscribedClients = (props) => {
                   <td>{client.last_name}</td>
                   <td>{client.email}</td>
                   <td>{client.phone_number}</td>
-                  <td>{client.location}</td>
+                  <td style={{whiteSpace: 'pre-line'}}>{client.location}</td>
                   <td>{client.date_ordered}</td>
                   <td>
                     <div className="mb-4">
