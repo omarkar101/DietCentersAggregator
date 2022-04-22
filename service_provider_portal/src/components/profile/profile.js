@@ -1,18 +1,42 @@
 import React, { useEffect, useReducer, useState } from "react";
 import { Form, Button, Col, Row } from "react-bootstrap";
 import styled from "styled-components";
+import { getServiceProviderProfile, updateServiceProviderProfile } from '../../api/requests';
 
 const Profile = () => {
 
-  const [firstName, setFirstName] = useState('');
-  const [LastName, setLastName] = useState('');
+  const [Name, setName] = useState('');
   const [PhoneNumber, setPhoneNumber] = useState('');
   const [Description, setDescription] = useState('');
-  const [addressEmail, setaddressEmail] = useState('');
+  const [emailAddress, setemailAddress] = useState('');
+
+  useEffect(() => {
+    getServiceProviderProfile()
+      .then((response) => {
+        if(response.data.success) {
+          const serviceProviderPersonalInfo = response.data.service_provider_personal_info;
+          setName(serviceProviderPersonalInfo.name);
+          setPhoneNumber(serviceProviderPersonalInfo.phone_number);
+          // setDescription(serviceProviderPersonalInfo.description);
+          setemailAddress(serviceProviderPersonalInfo.email);
+        }
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log();
+    updateServiceProviderProfile(Name, PhoneNumber, emailAddress)
+      .then((response) => {
+        if(response.data.success) {
+          // service_provider_personal_info
+        }
+      })
+      .catch((e) => {
+        console.log(e);
+      });
   };
   return (
     <Container>
@@ -41,14 +65,10 @@ const Profile = () => {
                 </Form.Group>
               </Row>
 
-              <Row>
-                <Form.Group as={Col} md="6" controlId="formGridfirst">
-                  <Form.Label>First Name</Form.Label>
-                  <Form.Control value={firstName} required onChange={(e) => setFirstName(e.target.value)} type="text" placeholder="First Name" />
-                </Form.Group>
-                <Form.Group as={Col} md="6" controlId="formGridlast">
-                  <Form.Label>Last Name</Form.Label>
-                  <Form.Control value={LastName} required onChange={(e) => setLastName(e.target.value)} type="text" placeholder="Last Name" />
+              <Row className="mb-5">
+                <Form.Group controlId="formGridfirst">
+                  <Form.Label>Name</Form.Label>
+                  <Form.Control value={Name} required onChange={(e) => setName(e.target.value)} type="text" placeholder="Name" />
                 </Form.Group>
               </Row>
             </div>
@@ -78,7 +98,7 @@ const Profile = () => {
             <Row className="mb-5">
               <Form.Group className="mb-1" controlId="formGridEmailAddress">
                 <Form.Label>Email address</Form.Label>
-                <Form.Control value={addressEmail} required onChange={(e) => setaddressEmail(e.target.value)} type="email" placeholder="xyz@example.com" />
+                <Form.Control value={emailAddress} required onChange={(e) => setemailAddress(e.target.value)} type="email" placeholder="xyz@example.com" />
               </Form.Group>
             </Row>
           </Col>

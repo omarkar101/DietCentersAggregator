@@ -100,3 +100,15 @@ export const addItemToMealPlan = (mealPlanId, itemId) => {
   data.append('item_id', itemId);
   return Post('/meal_plans/add/item', data);
 }
+
+export const getServiceProviderProfile = () => {
+  return Post('/user/get/service_provider_personal_info');
+}
+
+export const updateServiceProviderProfile = (name,  phoneNumber, emailAddress) => {
+  const data = new FormData();
+  data.append('name', name);
+  data.append('phone_number', phoneNumber);
+  data.append('email_address', emailAddress);
+  return Post('/user/update/personal_info', data);
+}

@@ -74,5 +74,7 @@ class User(Base):
             information['last_name'] = self.client.last_name
             if self.client.biometrics is not None:
                 information['biometrics'] = self.client.biometrics.as_dict()
+        if information['user_type'] == UserType.SERVICE_PROVIDER:
+            information['name'] = self.service_provider.name
         del information['user_type']
         return information
