@@ -53,7 +53,8 @@ const ServiceProviderSubscribedClients = (props) => {
   return (
     <>
       <Container>
-        {state.mealPlans?.map((mealPlan) => (
+        {state.mealPlans == null || state.mealPlans.length === 0 ? <h1>You don't have any available meal plans.</h1>
+        : state.mealPlans?.map((mealPlan) => (
           <div>
             <h2>{mealPlan.name}</h2>
             <Table striped bordered hover>
