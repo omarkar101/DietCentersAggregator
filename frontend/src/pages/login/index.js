@@ -4,7 +4,7 @@ import HomePage from "../home";
 import styled from "styled-components";
 import { loginServiceProvider } from "../../api/requests";
 import Authentication from "../../containers/auth_container";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [email, setEmail] = useState(null);
@@ -86,6 +86,12 @@ const Login = () => {
                 >
                   Login
                 </Button>
+                <div>
+                  <Link to={`/signup`} style={{ fontSize: '13px',color: 'inherit' }}>Don't have an account? Create One!</Link>
+                </div>
+                <div>
+                  <Link to={`/`} style={{ fontSize: '13px',color: 'inherit' }}>Forget Password?</Link>
+                </div>
               </Form>
             </Col>
           </Row>
