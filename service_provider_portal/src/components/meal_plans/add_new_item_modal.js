@@ -49,7 +49,7 @@ const AddNewItemModal = (props) => {
           console.log(e)
         })
     }
-  })
+  }, [mealPlanId]);
 
   return (
     <Modal
