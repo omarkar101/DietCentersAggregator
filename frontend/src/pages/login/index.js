@@ -58,7 +58,7 @@ const Login = () => {
                   />
                 </Form.Group>
 
-                <Form.Group className="mb-2" controlId="formBasicPassword">
+                <Form.Group className="mb-1" controlId="formBasicPassword">
                   <Form.Label>Password</Form.Label>
                   <Form.Control
                     required
@@ -66,15 +66,9 @@ const Login = () => {
                     placeholder="Password"
                     onChange={(e) => setPassword(e.target.value)}
                   />
-                  <Form.Text className="text-muted" style={{fontSize: 12}}>
-                    Minimum eight characters, at least one uppercase letter, one
-                    lowercase letter and one number.
-                  </Form.Text>
                 </Form.Group>
-
-
                 <Button
-                  className="mt-5"
+                  className="mt-1"
                   style={{
                     color: "white",
                     backgroundColor: "#21ad83",
@@ -87,10 +81,10 @@ const Login = () => {
                   Login
                 </Button>
                 <div>
-                  <Link to={`/signup`} style={{ fontSize: '13px',color: 'inherit' }}>Don't have an account? Create One!</Link>
+                  <Link to={`/signup`} style={{ fontSize: '13px' }}>Don't have an account? Create One!</Link>
                 </div>
                 <div>
-                  <Link to={`/`} style={{ fontSize: '13px',color: 'inherit' }}>Forget Password?</Link>
+                  <Link to={`/`} style={{ fontSize: '13px' }}>Forget Password?</Link>
                 </div>
               </Form>
             </Col>
