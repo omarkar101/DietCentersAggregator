@@ -76,6 +76,5 @@ class User(Base):
                 information['biometrics'] = self.client.biometrics.as_dict()
         if information['user_type'] == UserType.SERVICE_PROVIDER:
             information['name'] = self.service_provider.name
-            information['address'] = self.addresses[0].as_dict() if len(self.addresses) > 0 else None
         del information['user_type']
         return information
