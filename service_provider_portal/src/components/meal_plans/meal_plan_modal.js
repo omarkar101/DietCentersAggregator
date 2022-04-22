@@ -168,8 +168,8 @@ const MealPlanModal = (props) => {
           <Form.Group className="mb-3">
             <Form.Label>Meal Plan Image</Form.Label>
             <UploadAndDisplayImage
-              mealPlanImage={planImage}
-              setMealPlanImage={setPlanImage}
+              image={planImage}
+              setImage={setPlanImage}
             />
           </Form.Group>
           <Container>

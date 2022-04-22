@@ -31,12 +31,13 @@ export const deleteOneItem = (itemId) => {
   return Post('/items/delete/one', data);
 }
 
-export const editOneItem = (itemId, item_name, item_description, item_category) => {
+export const editOneItem = (itemId, item_name, item_description, item_category, image) => {
   const data = new FormData();
   data.append('item_id', itemId);
   data.append('item_name', item_name);
   data.append('item_description', item_description);
   data.append('item_category', item_category);
+  data.append('item_image', image);
   return Post('/items/edit/one', data);
 }
 

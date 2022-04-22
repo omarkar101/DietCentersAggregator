@@ -193,6 +193,7 @@ const ServiceProviderPage = () => {
         />
         {state.mealPlans?.map((plan) => (
           <ItemTextAndButtonWrapper>
+            <img src={plan.image} alt="image" width="300px" height="100%" />
             <PackageCard
               key={plan.id}
               plan={plan}
@@ -204,7 +205,6 @@ const ServiceProviderPage = () => {
               onClose={toggleSubscribeModalOnClose}
               onSubmit={(e) => toggleSubscribeModalOnSubmit(plan.id, plan.meal_plan_uses)}
             />
-            {/* <ButtonContainer> */}
             <Button
               variant="success"
               onClick={toggleOpenSubscribeModal}
@@ -214,11 +214,7 @@ const ServiceProviderPage = () => {
                 height: "3.2rem",
                 width: "3.2rem",
               }}
-              // data-mealplanname=''
-              // data-mealplandescription=''
-              // onClick={addToCheckout}
             >
-              {/* <AddSpanStyle>ADD</AddSpanStyle> */}
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="#114f3cd9"
@@ -231,8 +227,6 @@ const ServiceProviderPage = () => {
                 <path d="M15.5 9.42h-4.5v-4.5c0-0.56-0.44-1-1-1s-1 0.44-1 1v4.5h-4.5c-0.56 0-1 0.44-1 1s0.44 1 1 1h4.5v4.5c0 0.54 0.44 1 1 1s1-0.46 1-1v-4.5h4.5c0.56 0 1-0.46 1-1s-0.44-1-1-1z"></path>
               </svg>
             </Button>
-
-            {/* </ButtonContainer> */}
           </ItemTextAndButtonWrapper>
         ))}
 
@@ -247,38 +241,9 @@ const ServiceProviderPage = () => {
   );
 };
 
-const AddSpanStyle = styled.span`
-  color: #114f3cd9;
-  font-size: 1.4rem;
-  margin: 0px 0.5rem;
-  font-weight: 600;
-`;
-
-const ButtonContainer = styled.div`
-  display: flex;
-  webkit-box-align: center;
-  align-items: center;
-  webkit-box-pack: center;
-  justify-content: center;
-  width: 3.2rem;
-  height: 3.2rem;
-  border-radius: 0.8rem;
-  overflow: hidden;
-  cursor: pointer;
-  user-select: none;
-  margin-top: auto;
-  margin-bottom: auto;
-  border: 1px solid #114f3cd9;
-  background: transparent;
-  &:hover {
-    background-color: #d9fffa9d;
-  }
-`;
-
 const ItemTextAndButtonWrapper = styled.div`
   width: 100%;
   display: flex;
-  webkit-box-pack: justify;
   justify-content: space-between;
   padding: 20px 10px 20px 10px;
   border-bottom: 1px solid rgb(232, 232, 232);

@@ -19,6 +19,7 @@ def edit_item():
   item_name = request.form.get('item_name')
   item_description = request.form.get('item_description')
   item_category = request.form.get('item_category')
+  item_image = request.files.get('item_image')
   item = db_session.query(Item).filter(and_(Item.user_id == user_id, Item.id == item_id)).first()
   if item is None:
     return jsonify(success=False, message='Item does not exist')
@@ -26,5 +27,7 @@ def edit_item():
     item.name = item_name
     item.description = item_description
     item.category = item_category
+    if item_image is not None:
+      item.set_image(item_image)
   items = Item.query.filter(Item.user_id == user_id).order_by(asc(Item.id)).all()
   return jsonify(success=True, items=[item.as_dict() for item in items])

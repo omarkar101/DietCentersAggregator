@@ -1,5 +1,5 @@
 import React from "react";
-import { useCallback, useReducer, useEffect } from "react";
+import { useCallback } from "react";
 import styled from "styled-components";
 import { Button } from "react-bootstrap";
 
@@ -58,12 +58,12 @@ const ItemNameContanier = styled.div`
 
 const ItemPriceContainer = styled.div`
   margin: 0.7rem 0px;
-  fontsize: 1.4rem;
+  font-size: 1.4rem;
   color: rgb(28, 28, 28);
 `;
 const ItemCounterContainer = styled.div`
   margin: 0.7rem 0px;
-  fontsize: 1.4rem;
+  font-size: 1.4rem;
   color: rgb(28, 28, 28);
 `;
 
@@ -71,7 +71,7 @@ const ItemDescriptionParagraph = styled.p`
   margin: 0.5rem 0px;
   font-size: 1.4rem;
   color: rgb(79, 79, 79);
-  max-width: 75%,
+  max-width: 75%;
   overflow-wrap: break-word;
 `;
 
@@ -84,9 +84,9 @@ const AddSpanStyle = styled.span`
 
 const ButtonContainer = styled.div`
   display: flex;
-  webkit-box-align: center;
+  -webkit-box-align: center;
   align-items: center;
-  webkit-box-pack: center;
+  -webkit-box-pack: center;
   justify-content: center;
   width: 8.2rem;
   height: 3.2rem;
@@ -102,7 +102,7 @@ const ButtonContainer = styled.div`
 const ItemTextAndButtonWrapper = styled.div`
   width: 100%;
   display: flex;
-  webkit-box-pack: justify;
+  -webkit-box-pack: justify;
   justify-content: space-between;
 `;
 

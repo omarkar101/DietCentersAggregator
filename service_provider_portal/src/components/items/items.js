@@ -71,6 +71,7 @@ const Items = (props) => {
     selectedItemDescription: "",
     selectedItemCategory: "",
     selectedItemName: "",
+    selectedItemImgUrl: "",
     items: [],
   });
 
@@ -88,7 +89,7 @@ const Items = (props) => {
       });
   }, []);
 
-  const toggleModalOnSubmit = (itemName, itemDescription, itemCategory) => {
+  const toggleModalOnSubmit = (itemName, itemDescription, itemCategory, image) => {
     if (state.selectedItemId == null) {
       addOneItem(itemName, itemDescription, itemCategory)
         .then((response) => {
@@ -102,7 +103,7 @@ const Items = (props) => {
           console.log(e);
         });
     } else {
-      editOneItem(state.selectedItemId, itemName, itemDescription, itemCategory)
+      editOneItem(state.selectedItemId, itemName, itemDescription, itemCategory, image)
         .then((response) => {
           if (response.data.success) {
             dispatch({ type: "submit-edit-item-modal", items: response.data.items });
@@ -172,6 +173,7 @@ const Items = (props) => {
           itemName={state.selectedItemName}
           itemDescription={state.selectedItemDescription}
           itemCategory={state.selectedItemCategory}
+          itemImgUrl={state.selectedItemImgUrl}
         />
         <Button
           variant='success'
@@ -184,6 +186,7 @@ const Items = (props) => {
         <Table striped bordered hover>
           <thead>
             <tr>
+              <th>Image</th>
               <th>Name</th>
               <th>Category</th>
               <th>Description</th>
@@ -193,6 +196,9 @@ const Items = (props) => {
           <tbody>
             {state.items?.map((item) => (
               <tr>
+                <td>
+                  <img src={item.image_url} alt="item img" width={"100px"} height={"100px"} />
+                </td>
                 <td>{item.name}</td>
                 <td>{item.category}</td>
                 <td>{item.description}</td>
