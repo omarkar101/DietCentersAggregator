@@ -22,6 +22,6 @@ def update_user():
     with db_session.begin():
         user.service_provider.name = user_name
         user.phone_number = user_phone_number
-        user.email = user_email_address
+        user.credentials.email = user_email_address
     return jsonify(success=True, service_provider_personal_info=user.as_dict())
 
