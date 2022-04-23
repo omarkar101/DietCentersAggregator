@@ -1,17 +1,8 @@
 import React from "react";
 import styled from "styled-components";
+import profile from '../../images/blank-profile-picture.png';
 
 const description="American, Italian, Salad, Burger, Sandwich, Pizza";
-// const stars="4.2";
-// const reviews="1123";
-const images=[
-  "https://images.immediate.co.uk/production/volatile/sites/30/2020/08/chorizo-mozarella-gnocchi-bake-cropped-9ab73a3.jpg?quality=90&resize=556,505",
-  "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8Mnx8fGVufDB8fHx8&w=1000&q=80",
-  "https://www.acouplecooks.com/wp-content/uploads/2020/01/Sheet-Pan-Dinner-019.jpg",
-  "https://www.dinneratthezoo.com/wp-content/uploads/2017/12/meal-prep-burrito-bowls.jpg",
-  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSoYnNqiQs_UfkEiQrBrcb5ZLZ4Zgsoz-D6PQ&usqp=CAU",
-  "https://www.freshnlean.com/wp-content/uploads/2021/03/Meal-Plan-plate-protein.png",
-];
 
 const ImagesSection = (props) => {
   const { service_provider } = props;
@@ -75,20 +66,7 @@ const ImagesSection = (props) => {
           </MainServiceProviderDetailsMainSection>
         </BigImageContainer>
         <SmallImagesSection>
-          <SmallImageContainer>
-            <SmallImage src={images[1]} />
-          </SmallImageContainer>
-          <SmallImageContainer>
-            <SmallImage src={images[2]} />
-          </SmallImageContainer>
-        </SmallImagesSection>
-        <SmallImagesSection>
-          <SmallImageContainer>
-            <SmallImage src={images[3]} />
-          </SmallImageContainer>
-          <SmallImageContainer>
-            <SmallImage src={images[4]} />
-          </SmallImageContainer>
+          <SmallImage src={service_provider?.img_url || profile} alt={"img"} />
         </SmallImagesSection>
       </ImagesContainer>
     </section>
