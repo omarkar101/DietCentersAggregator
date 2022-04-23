@@ -4,8 +4,6 @@ import { signUpClient } from "../../api/requests";
 import Login from "../login";
 import styled from "styled-components";
 
-// do a modal instead of a container
-
 const SignUp = (props) => {
   const [firstName, setFirstName] = useState(null);
   const [lastName, setLastName] = useState(null);
@@ -112,11 +110,6 @@ const SignUp = (props) => {
                     lowercase letter and one number.
                   </Form.Text>
                 </Form.Group>
-
-                <Form.Group className="w-75 text-center m-auto">
-
-                </Form.Group>
-
                 <Button
                   className="mt-5"
                   style={{
@@ -134,7 +127,7 @@ const SignUp = (props) => {
             </Col>
           </Row>
           <h6 className="mt-5 p-5 text-center text-secondary ">
-            Copyright © 2022 Ali Srour. All Rights Reserved.
+            Copyright © 2022 JARO. All Rights Reserved.
           </h6>
         </Container>
       )}
