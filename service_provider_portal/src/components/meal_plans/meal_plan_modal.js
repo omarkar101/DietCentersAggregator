@@ -51,9 +51,6 @@ const MealPlanModal = (props) => {
     modalOpen: false,
     selectedMealPlanItems: [],
   });
-  useEffect(() => {
-    console.log('CHANGED MEAL PLAN ID:', mealPlanId);
-  }, [mealPlanId])
 
   useEffect(() => {
     if (mealPlanId != null) {
@@ -165,53 +162,57 @@ const MealPlanModal = (props) => {
               onChange={(e) => setPlanCounter(e.target.value)}
             />
           </Form.Group>
-          <Form.Group className="mb-3">
-            <Form.Label>Meal Plan Image</Form.Label>
-            <UploadAndDisplayImage
-              image={planImage}
-              setImage={setPlanImage}
-            />
-          </Form.Group>
-          <Container>
-            <AddNewItemModal
-              isOpen={state.modalOpen}
-              onClose={toggleModalOnClose}
-              onSubmit={toggleModalOnSubmit}
-              mealPlanId={mealPlanId}
-            />
-            <h2>
-              These are the items in this meal plan{" "}
-              <Button variant="success" onClick={toggleOpenModal}>
-                Add new item
-              </Button>
-            </h2>
+          {!mealPlanId && <h3>To add items and image for this meal plan, please edit it after adding it.</h3>}
+          {mealPlanId &&
+            <>
+              <Form.Group className="mb-3">
+                <Form.Label>Meal Plan Image</Form.Label>
+                <UploadAndDisplayImage
+                  image={planImage}
+                  setImage={setPlanImage}
+                />
+              </Form.Group>
+              <Container>
+                <AddNewItemModal
+                  isOpen={state.modalOpen}
+                  onClose={toggleModalOnClose}
+                  onSubmit={toggleModalOnSubmit}
+                  mealPlanId={mealPlanId}
+                />
+                <h2>
+                  These are the items in this meal plan{" "}
+                  <Button variant="success" onClick={toggleOpenModal}>
+                    Add new item
+                  </Button>
+                </h2>
 
-            <Table striped bordered hover>
-              <tr>
-                <th>Name</th>
-                <th>Category</th>
-                <th>Actions</th>
-              </tr>
-              {state.selectedMealPlanItems.map((item) => (
-                <tr>
-                  <td>{item.name}</td>
-                  <td>{item.description}</td>
-                  <td>
-                    <div className="mb-2">
-                      <Button
-                        id={item.id}
-                        variant="danger"
-                        size="sm"
-                        onClick={toggleDeleteItem}
-                      >
-                        Delete
-                      </Button>
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </Table>
-          </Container>
+                <Table striped bordered hover>
+                  <tr>
+                    <th>Name</th>
+                    <th>Category</th>
+                    <th>Actions</th>
+                  </tr>
+                  {state.selectedMealPlanItems.map((item) => (
+                    <tr>
+                      <td>{item.name}</td>
+                      <td>{item.description}</td>
+                      <td>
+                        <div className="mb-2">
+                          <Button
+                            id={item.id}
+                            variant="danger"
+                            size="sm"
+                            onClick={toggleDeleteItem}
+                          >
+                            Delete
+                          </Button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </Table>
+              </Container>
+            </>}
         </Form>
       </Modal.Body>
       <Modal.Footer>

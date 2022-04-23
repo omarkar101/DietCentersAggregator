@@ -4,6 +4,7 @@ from auth.api import auth_api
 from items.api import items_api
 from meal_plans.api import meal_plans_api
 from service_providers.api import service_providers_api
+from orders.api import orders_api
 from user.api import user_api
 from database.models.meal_plans_items import MealPlanItem
 from database.models.credentials import Credentials
@@ -16,6 +17,7 @@ from database.models.service_providers_meal_plans import ServiceProviderMealPlan
 from database.models.meal_plans_prices import MealPlanPrice
 from database.models.items import Item
 from database.models.categories import Category
+from database.models.orders import Order
 from azure.storage.blob import BlockBlobService
 from user import UserType
 
@@ -30,6 +32,7 @@ app.register_blueprint(items_api)
 app.register_blueprint(meal_plans_api)
 app.register_blueprint(service_providers_api)
 app.register_blueprint(user_api)
+app.register_blueprint(orders_api)
 
 @app.route('/',methods = ['POST'])
 # @require_user(UserType.CLIENT)

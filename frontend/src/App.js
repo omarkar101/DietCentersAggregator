@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import HomePage from "./pages/home";
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import SignUp from "./pages/signup";
@@ -14,19 +14,34 @@ import Authentication from "./containers/auth_container";
 import API from "./api/api";
 import Search from "./components/search/search";
 import ForgetPasswordModal from "./pages/login/forget_passwod_modal";
+import { getClientProfile } from "./api/requests";
 
 const App = () => {
   API.interceptors.response.use((response) => {
-    if (response.data.response_status == 401) {
+    if (response.data.response_status == 401 && window.location.pathname != '/login') {
       window.location.pathname = "/login";
     }
     return response;
   });
+  const [user, setUser] = useState(null);
+  useEffect(() => {
+    if (user == null) {
+      getClientProfile()
+        .then((response) => {
+          if (response.data.success) {
+            setUser(response.data.client_personal_info);
+          }
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    }
+  }, [user]);
   return (
     <Authentication.Provider>
       <BrowserRouter>
         <>
-          <AppNavbar />
+          <AppNavbar user={user} />
           <div>
             <Routes>
               <Route path="/signup" element={<SignUp />} />

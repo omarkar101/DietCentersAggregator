@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Text, ForeignKey
+from sqlalchemy import Column, Text, ForeignKey, text
 from sqlalchemy.orm import relationship
 from sqlalchemy.ext.hybrid import hybrid_property
 from database.orm import Base
@@ -17,7 +17,7 @@ class ServiceProvider(Base):
     
     _name = Column('name', Text, nullable=False, unique=True)
     description = Column(Text, nullable=True)
-    img_url = Column(Text, nullable=True)
+    img_url = Column(Text, nullable=True, server_default=text("'https://299storage.blob.core.windows.net/container/blank-profile-picture.png'"))
 
     user_id = Column(ForeignKey('users.id', ondelete='CASCADE'), primary_key=True, nullable=False)
 
