@@ -1,5 +1,5 @@
 import uuid
-from sqlalchemy import Column, BigInteger, Text, ForeignKey
+from sqlalchemy import Column, BigInteger, Text, ForeignKey, text
 from sqlalchemy.orm import relationship
 from sqlalchemy.ext.hybrid import hybrid_property
 from database.orm import Base
@@ -18,7 +18,7 @@ class Item(Base):
   _category = Column('category', Text, nullable=False)
   _description = Column('description', Text, nullable=False)
   _name = Column('name', Text, nullable=False)
-  image_url = Column(Text, nullable=True)
+  image_url = Column(Text, nullable=True, server_default=text("'https://299storage.blob.core.windows.net/container/meals_default.svg'"))
 
   user_id = Column(ForeignKey('service_providers.user_id', ondelete='CASCADE'), nullable=False)
 
