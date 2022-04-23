@@ -1,6 +1,7 @@
 import React, { useCallback } from "react";
 import { Link } from "react-router-dom";
 import "./exploreCard.css";
+import profile from '../../../../images/blank-profile-picture.png';
 
 const ExploreCard = ({restaurant}) => {
     // const name = restaurant?.info?.name ?? "";
@@ -16,7 +17,7 @@ const ExploreCard = ({restaurant}) => {
     // const discount = offers.length > 1 ? offers[1].text : offers.length === 1 ? offers[0].text : null;
     const id = restaurant.user_id;
     const name = restaurant.name;
-    const coverImg = restaurant.image;
+    const coverImg = restaurant.image || profile;
     const deliveryTime = "31min";
     const rating = "4.2";
     const approxPrice = "39 USD";

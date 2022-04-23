@@ -4,6 +4,7 @@ import NextArrow from "../carousel/nextArrow";
 import PrevArrow from "../carousel/prevArrow";
 import Slider from "react-slick";
 import { Link } from "react-router-dom";
+import meal_plan_default from '../../../images/meal-plan-default.jpeg';
 
 const settings = {
   infinite: false,
@@ -54,7 +55,7 @@ const Item = ({ item }) => {
         style={{ color: "inherit", textDecoration: "inherit" }}
       >
         <div className="collection-cover">
-          <img src={item.image} className="collection-image" alt={item.name} />
+          <img src={item.image || meal_plan_default} className="collection-image" alt={item.name} />
           <div className="gradient-bg"></div>
           <div className="collection-card-title">{item.name}</div>
           <div className="collection-card-subtitle">
