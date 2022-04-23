@@ -111,3 +111,13 @@ export const subscribeClientToMealPlan = (mealPlanId, mealPlanCounter) => {
 export const getClientProfile = () => {
   return Post('/user/public/get/client_personal_info');
 }
+
+export const setClientPreferredMeal = (mealPlanId) => {
+  const data = new FormData();
+  data.append('preferred_meal_id', mealPlanId);
+  return Post('/user/private/add/add_preferred_meal', data);
+}
+
+export const getClientOrderHistory = () => {
+  return Get('/orders/get/get_orders');
+}

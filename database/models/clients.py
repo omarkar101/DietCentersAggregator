@@ -11,7 +11,8 @@ class Client(Base):
     _first_name = Column('first_name', Text, nullable=False)
     _last_name = Column('last_name', Text, nullable=False)
     _subscription_counter = Column('subscription_counter', BigInteger, nullable=True)
-
+    _preferred_meal = Column('preferred_meal',BigInteger, nullable=True)
+    
     user_id = Column(ForeignKey('users.id', ondelete='CASCADE'), nullable=False, primary_key=True)
     
     _meal_plan_id = Column('meal_plan_id', ForeignKey('service_providers_meal_plans.id', ondelete='CASCADE'), nullable=True)
@@ -43,6 +44,13 @@ class Client(Base):
     @last_name.setter
     def last_name(self, last_name):
         self._last_name = last_name
+
+    @hybrid_property
+    def preferred_meal(self):
+        return self._preferred_meal
+    @preferred_meal.setter
+    def preferred_meal(self, preferred_meal):
+        self._preferred_meal = preferred_meal
 
     @hybrid_property
     def meal_plan_id(self):

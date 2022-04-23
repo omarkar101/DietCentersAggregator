@@ -34,6 +34,12 @@ class Item(Base):
     uselist=True,
     back_populates='item')
 
+  orders = relationship(
+        'Order',
+        uselist=True,
+        back_populates='item'  
+    )
+
   @hybrid_property
   def category(self):
     return self._category
