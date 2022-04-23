@@ -9,6 +9,7 @@ const SignUp = (props) => {
   const [phoneNumber, setPhoneNumber] = useState(null);
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
@@ -16,18 +17,26 @@ const SignUp = (props) => {
     signUpServiceProvider(email, password, name, phoneNumber)
       .then((response) => {
         if (response.data.success) {
+          setError(null);
           navigate("/login");
         } else {
           console.log(response.data.message);
+          setError(response.data.message);
         }
       })
       .catch((e) => {
         console.log(e);
+        setError(e);
       });
   };
 
   return (
     <>
+      {error != null && (
+        <div class="alert alert-danger" role="alert">
+          {error}
+        </div>
+      )}
       <Container>
         <h1 className="text-black-50 p-3 text-center rounded">Sign-Up</h1>
 

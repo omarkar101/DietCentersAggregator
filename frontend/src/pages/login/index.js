@@ -30,6 +30,7 @@ const Login = () => {
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
   const [redirectToHome, setRedirectToHome] = useState(false);
+  const [error, setError] = useState(null);
   const auth = Authentication.useContainer();
   const navigate = useNavigate();
 
@@ -38,14 +39,17 @@ const Login = () => {
     loginServiceProvider(email, password)
       .then((response) => {
         if (response.data.success) {
+          setError(null);
           auth.setToken(response.data.token);
           navigate("/");
         } else {
           console.log(response.data.message);
+          setError(response.data.message);
         }
       })
       .catch((e) => {
         console.log(e);
+        setError(e);
       });
   };
 
@@ -59,6 +63,11 @@ const Login = () => {
 
   return (
     <>
+      {error != null && (
+        <div class="alert alert-danger" role="alert">
+          {error}
+        </div>
+      )}
       {redirectToHome && <HomePage />}
       {!redirectToHome && (
         <Container>

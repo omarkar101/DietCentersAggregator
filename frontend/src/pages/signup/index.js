@@ -12,24 +12,33 @@ const SignUp = (props) => {
   const [password, setPassword] = useState(null);
   const [redirectToLogin, setRedirectToLogin] = useState(false);
   const [validated, setValidated] = useState(false);
+  const [error, setError] = useState(null);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     signUpClient(email, password, firstName, lastName, phoneNumber)
       .then((response) => {
         if (response.data.success) {
+          setError(null);
           setRedirectToLogin(true);
         } else {
           console.log(response.data.message);
+          setError(response.data.message);
         }
       })
       .catch((e) => {
         console.log(e);
+        setError(e);
       });
   };
 
   return (
     <>
+      {error != null && (
+        <div class="alert alert-danger" role="alert">
+          {error}
+        </div>
+      )}
       {redirectToLogin && <Login />}
       {!redirectToLogin && (
         <Container>
@@ -105,7 +114,7 @@ const SignUp = (props) => {
                     pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$"
                     onChange={(e) => setPassword(e.target.value)}
                   />
-                  <Form.Text className="text-muted" style={{fontSize: 12}}>
+                  <Form.Text className="text-muted" style={{ fontSize: 12 }}>
                     Minimum eight characters, at least one uppercase letter, one
                     lowercase letter and one number.
                   </Form.Text>
