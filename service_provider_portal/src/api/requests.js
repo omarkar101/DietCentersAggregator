@@ -41,6 +41,12 @@ export const editOneItem = (itemId, item_name, item_description, item_category, 
   return Post('/items/edit/one', data);
 }
 
+export const getClientPreferredMeal = (clientId) => {
+  const data = new FormData()
+  data.append('user_id', clientId)
+  return Post('/items/get/client_preferred_meal', data)
+}
+
 export const getAllItems = () => {
   return Get('/items/get/all');
 }
@@ -122,4 +128,11 @@ export const cancelSubscribedClient = (subscribedClientId) => {
   const data = new FormData();
   data.append('subscribed_client_id', subscribedClientId);
   return Post('user/delete/subscribed_client', data);
+}
+
+export const sendMealToClient = (user_id, item_id) => {
+  const data = new FormData();
+  data.append('user_id', user_id);
+  data.append('item_id', item_id);
+  return Post('orders/add/send_meal', data);
 }

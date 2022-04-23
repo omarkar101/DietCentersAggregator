@@ -32,6 +32,11 @@ class User(Base):
         'ServiceProvider',
         uselist=False,
         back_populates='user')
+    orders = relationship(
+        'Order',
+        uselist=True,
+        back_populates='user'  
+    )
 
     @hybrid_property
     def phone_number(self):

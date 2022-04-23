@@ -1,5 +1,6 @@
 from flask import Blueprint, jsonify, request
 from flask_cors import cross_origin
+from sqlalchemy import true
 from auth.decorators import require_user
 from database.models.service_providers_meal_plans import ServiceProviderMealPlan
 from database.models.clients import Client
@@ -26,4 +27,17 @@ def add_meal_plan_to_client():
     client.meal_plan_id = meal_plan_id
     client.subscription_counter = meal_plan_uses
     # db_session.refresh(client)
+  return jsonify(success=True)
+
+@add_api.route('/add_preferred_meal', methods=['POST'])
+@require_user(UserType.CLIENT)
+@cross_origin(origins='*', supports_credentials=True)
+def add_preferred_meal_plan_to_client():
+  user_id = get_user_id()
+  preferred_meal_id = request.form.get('preferred_meal_id')
+  with db_session.begin():
+    client = db_session.query(Client) \
+        .filter(Client.user_id == user_id) \
+        .first()
+    client.preferred_meal = preferred_meal_id
   return jsonify(success=True)

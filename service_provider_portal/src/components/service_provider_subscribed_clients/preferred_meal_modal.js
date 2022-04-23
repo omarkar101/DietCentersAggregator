@@ -1,0 +1,121 @@
+import React, { useReducer, useEffect, useCallback } from "react";
+import { Button, Form, Modal, Table, Col, Row } from "react-bootstrap";
+import styled from "styled-components";
+import { subscribeClientToMealPlan } from "../../api/requests";
+import { getItemsOfAMealPlan, getMealPlanById, getClientMealPlan, getMealPlanItems, getClientPreferredMeal, sendMealToClient } from "../../api/requests";
+// import ItemCard from "./itemCard";
+
+const reducer = (state, action) => {
+  switch (action.type) {
+    case "get-meal-plan-by-id":
+      return { ...state, mealPlan: action.mealPlan };
+    case "get-items-of-meal-plan":
+      return { ...state, itemsOfMealPlan: action.itemsOfMealPlan };
+    default:
+      throw new Error();
+  }
+};
+
+const PreferredMealModal = (props) => {
+  const { isOpen, onClose, client, mealPlan } = props;
+
+  const [state, dispatch] = useReducer(reducer, {
+    mealPlan: null,
+    itemsOfMealPlan: [],
+    mealPlanItems: [],
+    preferredMeal: null
+  });
+
+const sendMeal = useCallback((e) => {
+  const itemId = e.target.id
+  sendMealToClient(client.user_id, itemId)
+    .then((response) => {
+      if (response.data.success) {
+        return;
+      } else {
+        console.log(response.data.message);
+      }
+    })
+    .catch((e) => {
+      console.log(e);
+    });
+}, []);
+
+//   const handleSubmit = (e) => {
+//     e.preventDefault();
+//     onSubmit();
+//   };
+
+  useEffect(() => {
+    getMealPlanItems(mealPlan.id)
+      .then((response) => {
+        if (response.data.success) {
+          state.mealPlanItems = response.data.meal_plan_items
+        } else {
+          console.log(response.data.message);
+        }
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+
+    getClientPreferredMeal(client.user_id)
+      .then((response) => {
+        if (response.data.success) {
+          state.preferredMeal = response.data.preferred_item
+        } else {
+          console.log(response.data.message);
+        }
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }, [state.mealPlanItems]);
+
+  return (
+    <Modal size="lg" show={isOpen} onHide={onClose} onClose={onClose}>
+      {/* {console.log(state.mealPlanItems)} */}
+      <Modal.Header closeButton>
+        <Modal.Title>prefered</Modal.Title>
+      </Modal.Header>
+      <div>
+        this user prefers the meal: 
+        {(state.preferredMeal==null)
+          ? `This user has no preferred meal yet`
+          : <div>
+          
+          {state.preferredMeal.name}
+        <Button onClick={sendMeal} id={state.preferredMeal.id} class="btn btn-success">send</Button>
+        </div>
+          }
+
+      </div>
+
+      <hr/>
+      other items in this meal plan:
+      
+      <Modal.Body>
+        {state.mealPlanItems?.map((item) => (
+          <div>
+            <div>item name: {item.name}</div>
+            <div>description: {item.description}</div>
+            <Button id={item.id} onClick={sendMeal} class="btn btn-success">send</Button>
+            <hr/>
+          </div>
+          
+        ))}
+        
+      </Modal.Body>
+      <Modal.Footer>
+        <Button variant="secondary" onClick={onClose}>
+          Close
+        </Button>
+        {/* <Button variant="primary" onClick={handleSubmit}>
+          Subscribe
+        </Button> */}
+      </Modal.Footer>
+    </Modal>
+  );
+};
+
+export default PreferredMealModal;

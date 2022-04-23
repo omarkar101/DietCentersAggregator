@@ -1,7 +1,8 @@
 import React, { useCallback, useEffect, useReducer, useState } from "react";
 import { Button, Table } from "react-bootstrap";
 import styled from "styled-components";
-import { getAllServiceProviderSubscribedClients, cancelSubscribedClient, getAllMealPlans } from '../../api/requests';
+import { getAllServiceProviderSubscribedClients, cancelSubscribedClient, getAllMealPlans, getClientPreferredMeal } from '../../api/requests';
+import PreferredMealModal from './preferred_meal_modal';
 
 
 const reducer = (state, action) => {
@@ -10,6 +11,10 @@ const reducer = (state, action) => {
         return { ...state, mealPlans: action.mealPlans };
       case "cancel-subscribed-client":
         return { ...state, mealPlans: action.mealPlans };
+      case "open-client-preferred-meal-modal":
+        return {...state, modalOpen: true };
+      case "close-client-preferred-meal-modal":
+        return {...state, modalOpen: false};
       default:
         throw new Error();
     }
@@ -18,7 +23,9 @@ const reducer = (state, action) => {
 
 const ServiceProviderSubscribedClients = (props) => {
   const [state, dispatch] = useReducer(reducer, {
-    mealPlans: []
+    mealPlans: [],
+    modalOpen: false,
+
   });
 
   useEffect(() => {
@@ -50,6 +57,26 @@ const ServiceProviderSubscribedClients = (props) => {
       });
   }, []);
 
+  const toggleViewClientPreferredMealModal = useCallback((e) => {
+    const clientId = e.target.id;
+    console.log(clientId);
+    getClientPreferredMeal(clientId)
+      .then((response) => {
+        if (response.data.success) {
+          dispatch({ type: "open-client-preferred-meal-modal" })
+        } else {
+          console.log(response.data.message);
+        }
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }, []);
+
+  const toggleClosePreferredMealModal = useCallback(() => {
+    dispatch({type:"close-client-preferred-meal-modal"})
+  }, [] );
+
   return (
     <>
       <Container>
@@ -69,6 +96,12 @@ const ServiceProviderSubscribedClients = (props) => {
               </tr>
               {mealPlan.clients?.map((client) => (
                 <tr>
+                  <PreferredMealModal
+                  isOpen={state.modalOpen}
+                  onClose={toggleClosePreferredMealModal}
+                  client= {client}
+                  mealPlan={mealPlan}
+                  />
                   <td>{client.first_name}</td>
                   <td>{client.last_name}</td>
                   <td>{client.email}</td>
@@ -84,6 +117,14 @@ const ServiceProviderSubscribedClients = (props) => {
                         onClick={toggleCancelSubscribedClient}
                       >
                         Cancel
+                      </Button>
+                      <Button
+                        id={client.user_id}
+                        variant="primary"
+                        size="sm"
+                        onClick={toggleViewClientPreferredMealModal}
+                      >
+                        Preferred Meal
                       </Button>
                     </div>
                   </td>
