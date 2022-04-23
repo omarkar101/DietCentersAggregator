@@ -15,7 +15,7 @@ private_get_api = Blueprint('private_get_api', __name__, url_prefix='/get')
 def get_service_provider_personal_info():
   user_id = get_user_id()
   user = User.query.filter(User.id == user_id).first()
-  return jsonify(success=True, service_provider_personal_info=user.as_dict())
+  return jsonify(success=True, service_provider_personal_info=user.as_dict() if user is not None else None)
 
 @private_get_api.route('/all_subscribed_client', methods=['POST'])
 @require_user(UserType.SERVICE_PROVIDER)

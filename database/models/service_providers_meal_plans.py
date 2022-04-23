@@ -1,5 +1,5 @@
 from flask import current_app
-from sqlalchemy import Column, BigInteger, Text, ForeignKey, and_
+from sqlalchemy import Column, BigInteger, Text, ForeignKey, and_, text
 from sqlalchemy.orm import relationship
 from sqlalchemy.ext.hybrid import hybrid_property
 from database.models.items import Item
@@ -19,7 +19,7 @@ class ServiceProviderMealPlan(Base):
     _name = Column('name', Text, nullable=False)
     _description = Column('description', Text, nullable=False)
     _meal_plan_uses = Column('meal_plan_uses', BigInteger, nullable = False)
-    image = Column(Text, nullable=True)
+    image = Column(Text, nullable=True, server_default=text("'https://299storage.blob.core.windows.net/container/meal-plan-default.jpeg'"))
 
     user_id = Column(ForeignKey('service_providers.user_id', ondelete='CASCADE'), nullable=False)
 

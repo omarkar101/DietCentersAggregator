@@ -3,7 +3,7 @@ import { Container, Form, Nav, Navbar, Button } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import PlaceDropDown from "./placeDropDown";
 
-const AppNavbar = () => {
+const AppNavbar = ({user}) => {
   const [searchName, setSearchName] = useState(null);
   const navigate = useNavigate();
 
@@ -15,17 +15,18 @@ const AppNavbar = () => {
     <Navbar collapseOnSelect expand='lg' bg='dark' variant='dark'>
       <Container>
         <Navbar.Brand as={Link} to='/'>
-          JARO
+          {user == null && <span>JARO</span>}{user!=null && <span>Welcome {user?.first_name}</span>}
         </Navbar.Brand>
         <Navbar.Toggle aria-controls='responsive-navbar-nav' />
         <Navbar.Collapse id='responsive-navbar-nav'>
           <Nav className='me-auto'>
+            {user != null &&
             <Nav.Link as={Link} to='/ordershistory'>
               Orders history
-            </Nav.Link>
-            <Nav.Link as={Link} to='/checkout'>
+            </Nav.Link>}
+            {/* <Nav.Link as={Link} to='/checkout'>
               Checkout
-            </Nav.Link>
+            </Nav.Link> */}
           </Nav>
           {/* <PlaceDropDown /> */}
           <Form className='d-flex' onSubmit={handleSubmit}>
@@ -38,12 +39,14 @@ const AppNavbar = () => {
             </Button>
           </Form>
           <Nav>
-            <Nav.Link as={Link} to='/profile'>
-              Profile
-            </Nav.Link>
-            <Nav.Link as={Link} to='/signup'>
-              Signup
-            </Nav.Link>
+            {user != null && 
+              <Nav.Link as={Link} to='/profile'>
+                Profile
+              </Nav.Link>}
+            {user == null && 
+              <Nav.Link as={Link} to='/signup'>
+                Signup
+              </Nav.Link>}
           </Nav>
         </Navbar.Collapse>
       </Container>

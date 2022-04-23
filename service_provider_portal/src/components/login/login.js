@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { loginServiceProvider } from "../../api/requests";
 import Authentication from "../../containers/auth_container";
 
-const Login = () => {
+const Login = ({setUser}) => {
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
   const auth = Authentication.useContainer()
