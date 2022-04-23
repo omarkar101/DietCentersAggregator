@@ -21,12 +21,22 @@ const SignUp = (props) => {
           navigate("/login");
         } else {
           console.log(response.data.message);
-          setError(response.data.message);
+          setError('This email is already registered. Please login with your credentials.');
+          window.scrollTo({
+            top: 0,
+            left: 0,
+            behavior: "smooth"
+          });
         }
       })
       .catch((e) => {
         console.log(e);
-        setError(e);
+        setError('This email is already registered. Please login with your credentials.');
+        window.scrollTo({
+          top: 0,
+          left: 0,
+          behavior: "smooth"
+        });
       });
   };
 

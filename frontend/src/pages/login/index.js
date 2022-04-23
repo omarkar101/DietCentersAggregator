@@ -44,12 +44,22 @@ const Login = () => {
           navigate("/");
         } else {
           console.log(response.data.message);
-          setError(response.data.message);
+          setError('Incorrect email or password');
+          window.scrollTo({
+            top: 0,
+            left: 0,
+            behavior: "smooth"
+          });
         }
       })
       .catch((e) => {
         console.log(e);
-        setError(e);
+        setError('Incorrect email or password');
+        window.scrollTo({
+          top: 0,
+          left: 0,
+          behavior: "smooth"
+        });
       });
   };
 
