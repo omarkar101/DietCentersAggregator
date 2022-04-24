@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Modal, Button, Col, Form, Row } from "react-bootstrap";
 import styled from "styled-components";
+import { forgetPassword, updatePassword } from "../../api/requests";
 
 const ForgetPasswordModal = (props) => {
   const { isOpen, onClose } = props;
@@ -12,12 +13,56 @@ const ForgetPasswordModal = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if(password === confirmPassword) {
+      console.log('HDFWQFEA');
+      updatePassword(email, password, pin)
+        .then((response) => {
+          if (response.data.success) {
+            console.log('success');
+            // setDisabled(false);
+            // setError(null);
+          } else {
+            // console.log(response.data.message);
+            // setError('Incorrect email or password');
+            // window.scrollTo({
+            //   top: 0,
+            //   left: 0,
+            //   behavior: "smooth"
+            // });
+          }
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    }
   };
 
   const sendEmail = (e) => {
     e.preventDefault();
-
-    setDisabled(false);
+    forgetPassword(email)
+      .then((response) => {
+        if (response.data.success) {
+          setDisabled(false);
+          // setError(null);
+        } else {
+          // console.log(response.data.message);
+          // setError('Incorrect email or password');
+          window.scrollTo({
+            top: 0,
+            left: 0,
+            behavior: "smooth"
+          });
+        }
+      })
+      .catch((e) => {
+        console.log(e);
+        // setError('Incorrect email or password');
+        window.scrollTo({
+          top: 0,
+          left: 0,
+          behavior: "smooth"
+        });
+      });
   };
   return (
     <ForgetPasswordContainer>

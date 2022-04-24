@@ -14,3 +14,4 @@ def sendEmail(emailAddress, message):
   # terminating the session
   s.quit()
 
+# sendEmail('yamout.samer101@gmail.com', 'hellooooo')
