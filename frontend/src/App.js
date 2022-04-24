@@ -13,6 +13,7 @@ import Package from "./components/mealPackages/package";
 import Authentication from "./containers/auth_container";
 import API from "./api/api";
 import Search from "./components/search/search";
+import ForgetPasswordModal from "./pages/login/forget_passwod_modal";
 import { getClientProfile } from "./api/requests";
 
 const App = () => {
@@ -49,6 +50,7 @@ const App = () => {
               <Route path="/ordershistory" element={<OrdersHistory />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/login" element={<Login />} />
+              <Route path='/forget_password' element={<ForgetPasswordModal />} />
               <Route path="/package/:id/:service_provider_id" element={<Package />} />
               <Route path="/search" element={<Search />} />
               <Route

@@ -1,16 +1,37 @@
 import React, { useState } from "react";
-import { Button, Col, Form, Row } from "react-bootstrap";
+import { useCallback, useReducer, useEffect } from "react";
+import { Modal, Button, Col, Form, Row } from "react-bootstrap";
 import HomePage from "../home";
 import styled from "styled-components";
 import { loginServiceProvider } from "../../api/requests";
 import Authentication from "../../containers/auth_container";
 import { Link, useNavigate } from "react-router-dom";
+import ForgetPasswordModal from "./forget_passwod_modal";
+
+const reducer = (state, action) => {
+  switch (action.type) {
+    case "open-forget-password-modal":
+      return {
+        ...state,
+        modalOpen: true,
+      };
+    case "close-forget-password-modal":
+      return { ...state, modalOpen: false };
+    default:
+      throw new Error();
+  }
+};
 
 const Login = () => {
+  const [state, dispatch] = useReducer(reducer, {
+    modalOpen: false,
+  });
+
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
   const [redirectToHome, setRedirectToHome] = useState(false);
-  const auth = Authentication.useContainer()
+  const [error, setError] = useState(null);
+  const auth = Authentication.useContainer();
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
@@ -18,18 +39,45 @@ const Login = () => {
     loginServiceProvider(email, password)
       .then((response) => {
         if (response.data.success) {
+          setError(null);
           auth.setToken(response.data.token);
-          navigate('/');
+          navigate("/");
         } else {
           console.log(response.data.message);
+          setError('Incorrect email or password');
+          window.scrollTo({
+            top: 0,
+            left: 0,
+            behavior: "smooth"
+          });
         }
       })
       .catch((e) => {
         console.log(e);
+        setError('Incorrect email or password');
+        window.scrollTo({
+          top: 0,
+          left: 0,
+          behavior: "smooth"
+        });
       });
   };
+
+  const toggleOpenModal = useCallback(() => {
+    dispatch({ type: "open-forget-password-modal" });
+  }, []);
+
+  const toggleModalOnClose = useCallback(() => {
+    dispatch({ type: "close-forget-password-modal" });
+  }, []);
+
   return (
     <>
+      {error != null && (
+        <div class="alert alert-danger" role="alert">
+          {error}
+        </div>
+      )}
       {redirectToHome && <HomePage />}
       {!redirectToHome && (
         <Container>
@@ -81,16 +129,28 @@ const Login = () => {
                   Login
                 </Button>
                 <div>
-                  <Link to={`/signup`} style={{ fontSize: '13px' }}>Don't have an account? Create One!</Link>
+                  <Link to={`/signup`} style={{ fontSize: "13px" }}>
+                    Don't have an account? Create One!
+                  </Link>
                 </div>
                 <div>
-                  <Link to={`/`} style={{ fontSize: '13px' }}>Forget Password?</Link>
+                  <ForgetPasswordModal
+                    isOpen={state.modalOpen}
+                    onClose={toggleModalOnClose}
+                  />
+                  <LinkToForgetPassword
+                    style={{ fontSize: "13px" }}
+                    onClick={toggleOpenModal}
+                  >
+                    Forget Password?
+                  </LinkToForgetPassword>
+                  {/* <Link to={`/forget_password`} style={{ fontSize: '13px' }}>Forget Password?</Link> */}
                 </div>
               </Form>
             </Col>
           </Row>
           <h6 className="mt-5 p-5 text-center text-secondary ">
-            Copyright © 2022 Ali Srour. All Rights Reserved.
+            Copyright © 2022 JARO. All Rights Reserved.
           </h6>
         </Container>
       )}
@@ -98,6 +158,11 @@ const Login = () => {
   );
 };
 
+const LinkToForgetPassword = styled.a`
+  &:hover {
+    cursor: pointer;
+  }
+`;
 const Container = styled.div`
   position: relative;
   align-self: center;

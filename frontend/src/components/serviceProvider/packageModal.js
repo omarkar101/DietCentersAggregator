@@ -5,7 +5,7 @@ const PackageModal = (props) => {
   const { isOpen, onClose, packageItems } = props;
 
   return (
-    <Modal show={isOpen} onHide={onClose}>
+    <Modal show={isOpen} onHide={onClose} onClose={onClose}>
       <Modal.Header closeButton>
         <Modal.Title>Package Summary</Modal.Title>
       </Modal.Header>

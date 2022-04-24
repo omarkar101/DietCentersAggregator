@@ -15,34 +15,48 @@ const reducer = (state, action) => {
     default:
       throw new Error();
   }
-}
-
+};
 
 const Explore = () => {
+  const [error, setError] = useState(null);
 
   const [state, dispatch] = useReducer(reducer, {
-    serviceProviders: []
+    serviceProviders: [],
   });
 
   useEffect(() => {
     getAllServiceProviders()
-    .then((response) => {
-      if (response.data.success) {
-        dispatch({ type: 'get-all-service-providers', serviceProviders: response.data.service_providers })
-      } else {
-        console.log(response.data.message)
-      }
-    })
-    .catch((e) => {
-      console.log(e)
-    })
+      .then((response) => {
+        if (response.data.success) {
+          setError(null);
+          dispatch({
+            type: "get-all-service-providers",
+            serviceProviders: response.data.service_providers,
+          });
+        } else {
+          console.log(response.data.message);
+          setError(response.data.message);
+        }
+      })
+      .catch((e) => {
+        console.log(e);
+        setError(e);
+      });
   }, []);
 
   return (
     <>
+      {error != null && (
+        <div class="alert alert-danger" role="alert">
+          {error}
+        </div>
+      )}
       <ExploreCollections />
       {/* <TopBrands /> */}
-      <ExploreSection list={state.serviceProviders ? state.serviceProviders : []} collectionName='Explore Service Providers in your area' />
+      <ExploreSection
+        list={state.serviceProviders ? state.serviceProviders : []}
+        collectionName="Explore Service Providers in your area"
+      />
     </>
   );
 };
