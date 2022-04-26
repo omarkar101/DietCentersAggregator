@@ -11,6 +11,10 @@ const reducer = (state, action) => {
       return { ...state, mealPlan: action.mealPlan };
     case "get-items-of-meal-plan":
       return { ...state, itemsOfMealPlan: action.itemsOfMealPlan };
+    case "success-load-items": 
+      return {...state, mealPlanItems: action.items}
+    case "success-load-preferred-meal":
+      return {...state, preferredMeal: action.preferredMeal}
     default:
       throw new Error();
   }
@@ -24,7 +28,7 @@ const PreferredMealModal = (props) => {
     itemsOfMealPlan: [],
     mealPlanItems: [],
     preferredMeal: null
-  });
+  }); 
 
 const sendMeal = useCallback((e) => {
   const itemId = e.target.id
@@ -47,35 +51,38 @@ const sendMeal = useCallback((e) => {
 //   };
 
   useEffect(() => {
-    getMealPlanItems(mealPlan.id)
-      .then((response) => {
-        if (response.data.success) {
-          state.mealPlanItems = response.data.meal_plan_items
-        } else {
-          console.log(response.data.message);
-        }
-      })
-      .catch((e) => {
-        console.log(e);
-      });
+    if (mealPlan != null) {
+      getMealPlanItems(mealPlan.id)
+        .then((response) => {
+          if (response.data.success) {
+            dispatch({ type: "success-load-items", items: response.data.meal_plan_items})
+          } else {
+            console.log(response.data.message);
+          }
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    }
 
-    getClientPreferredMeal(client.user_id)
-      .then((response) => {
-        if (response.data.success) {
-          state.preferredMeal = response.data.preferred_item
-        } else {
-          console.log(response.data.message);
-        }
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-  }, [state.mealPlanItems]);
+    if (client != null){
+      getClientPreferredMeal(client.user_id)
+        .then((response) => {
+          if (response.data.success) {
+            dispatch({ type: "success-load-preferred-meal", preferredMeal: response.data.preferred_item})
+          } else {
+            console.log(response.data.message);
+          }
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    }
+  }, [mealPlan, client]);
 
   return (
     <Modal size="lg" show={isOpen} onHide={onClose} onClose={onClose}>
-      {/* {console.log(state.mealPlanItems)} */}
-      <Modal.Header closeButton>
+      <Modal.Header closeButton> 
         <Modal.Title>prefered</Modal.Title>
       </Modal.Header>
       <div>
