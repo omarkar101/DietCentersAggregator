@@ -26,24 +26,26 @@ const SubscribeModal = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit();
+    onSubmit(mealPlanId, state.mealPlan.meal_plan_uses);
   };
 
   useEffect(() => {
-    getMealPlanById(mealPlanId)
-      .then((response) => {
-        if (response.data.success) {
-          dispatch({
-            type: "get-meal-plan-by-id",
-            mealPlan: response.data.meal_plan,
-          });
-        } else {
-          console.log(response.data.message);
-        }
-      })
-      .catch((e) => {
-        console.log(e);
-      });
+    if(mealPlanId != null) {
+      getMealPlanById(mealPlanId)
+        .then((response) => {
+          if (response.data.success) {
+            dispatch({
+              type: "get-meal-plan-by-id",
+              mealPlan: response.data.meal_plan,
+            });
+          } else {
+            console.log(response.data.message);
+          }
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    }
 
     if (state.selectedMealPlanId == null) {
       return;

@@ -44,11 +44,13 @@ const reducer = (state, action) => {
       return {
         ...state,
         subscribeModalOpen: true,
+        selectedMealPlanId: action.mealPlanId
       };
     case "close-subscribe-modal":
       return {
         ...state,
         subscribeModalOpen: false,
+        // selectedMealPlanId: null
       };
     default:
       throw new Error();
@@ -65,11 +67,15 @@ const ServiceProviderPage = () => {
     items: [],
     mealPlans: [],
     serviceProvider: null,
+    selectedMealPlanId: null
   });
 
-  const toggleOpenSubscribeModal = useCallback(() => {
+  const toggleOpenSubscribeModal = useCallback((e) => {
+    const mealPlanId = e.target.id
+    console.log(state.mealPlans);
+    console.log('NOW ID: ', e.target.id)
     dispatch({
-      type: "open-subscribe-modal",
+      type: "open-subscribe-modal", mealPlanId: mealPlanId
     });
   }, []);
 
@@ -141,12 +147,12 @@ const ServiceProviderPage = () => {
     [id]
   );
 
-  const toggleSubscribeModalOnSubmit = useCallback((e,f) => {
+  const toggleSubscribeModalOnSubmit = (planId, planUses) => {
     getClientMealPlan()
       .then((response) => {
         if (response.data.success) {
           if (response.data.meal_plan_id == null) {
-            subscribeClientToMealPlan(e, f)
+            subscribeClientToMealPlan(planId, planUses)
               .then((response) => {
                 if (response.data.success) {
                   dispatch({ type: "submit-subscribe-modal" });
@@ -168,7 +174,7 @@ const ServiceProviderPage = () => {
       .catch((e) => {
         console.log(e);
       });
-  }, []);
+  };
 
   const toggleModalOnClose = useCallback(() => {
     dispatch({ type: "close-package-modal" });
@@ -180,6 +186,14 @@ const ServiceProviderPage = () => {
 
   return (
     <PageBase>
+
+      <SubscribeModal
+        mealPlanId={state.selectedMealPlanId}
+        isOpen={state.subscribeModalOpen}
+        onClose={toggleSubscribeModalOnClose}
+        onSubmit={toggleSubscribeModalOnSubmit}
+      />
+
       <ImagesSection service_provider={state.serviceProvider} />
 
       <MenuItemsContainer className="mt-5">
@@ -199,14 +213,10 @@ const ServiceProviderPage = () => {
               plan={plan}
               openModal={toggleOpenModal}
             />
-            <SubscribeModal
-              mealPlanId={plan.id}
-              isOpen={state.subscribeModalOpen}
-              onClose={toggleSubscribeModalOnClose}
-              onSubmit={(e) => toggleSubscribeModalOnSubmit(plan.id, plan.meal_plan_uses)}
-            />
+            
             <Button
               variant="success"
+              id={plan.id}
               onClick={toggleOpenSubscribeModal}
               style={{
                 backgroundColor: "transparent",
