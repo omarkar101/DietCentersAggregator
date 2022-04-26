@@ -7,6 +7,12 @@ const reducer = (state, action) => {
   switch (action.type) {
     case "get-list-of-meal-plans":
       return { ...state, mealPlans: action.mealPlans };
+    case "set-subscribed-meal-plan-id":
+      return { ...state, subscribedMealPlanId: action.mealPlanId }
+    case "set-subscribed-meal-plan":
+      return { ...state, subscribedMealPlan: action.mealPlan }
+    case "set-items":
+      return { ...state, items: action.items }
     default:
       throw new Error();
   }
@@ -43,7 +49,7 @@ const Profile = () => {
       .then((response) => {
         if(response.data.success) {
           const clientPersonalInfo = response.data.client_personal_info;
-          console.log('response.data.client_personal_info:', clientPersonalInfo);
+          // console.log('response.data.client_personal_info:', clientPersonalInfo);
           setFirstName(clientPersonalInfo.first_name);
           setLastName(clientPersonalInfo.last_name);
           setPhoneNumber(clientPersonalInfo.phone_number);
@@ -66,15 +72,31 @@ const Profile = () => {
       .catch((e) => {
         console.log(e);
       });
+    }, []);
 
+  useEffect(() => {
     getClientMealPlan()
       .then((response) => {
         if(response.data.success) {
-          state.subscribedMealPlanId = response.data.meal_plan_id;
-          getMealPlanById(state.subscribedMealPlanId)
+          dispatch({ type: "set-subscribed-meal-plan-id", mealPlanId: response.data.meal_plan_id });
+          getMealPlanById(response.data.meal_plan_id) 
             .then((response) => {
               if(response.data.success) {
-                state.subscribedMealPlan = response.data.meal_plan;
+                dispatch({ type: "set-subscribed-meal-plan", mealPlan: response.data.meal_plan });
+                if (response.data.meal_plan.id==null){
+                  return;
+                }
+                else{
+                  getItemsOfAMealPlan(response.data.meal_plan.id)
+                  .then((response) => {
+                    if(response.data.success) {
+                      dispatch({ type: "set-items", items: response.data.meal_plan_items });
+                    }
+                  })
+                  .catch((e) => {
+                    console.log(e);
+                  });
+                }
               }
             })
             .catch((e) => {
@@ -85,23 +107,7 @@ const Profile = () => {
       .catch((e) => {
         console.log(e);
       });
-
-    if (state.subscribedMealPlanId==null){
-      return;
-    }
-    else{
-      getItemsOfAMealPlan(state.subscribedMealPlanId)
-      .then((response) => {
-        if(response.data.success) {
-          state.items = response.data.meal_plan_items;
-        }
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-    }
-  
-  }, [state.subscribedMealPlanId, state.items]);
+  }, []);
 
   const choosePreferredMeal= useCallback((e) => {
     var mealId = e.target.id
@@ -128,7 +134,6 @@ const Profile = () => {
       <h1 className="text-black-50 p-3 text-center rounded">My Account</h1>
 
       You are subscribed to the meal plan:
-      {console.log(state.subscribedMealPlan)}  
       {(state.subscribedMealPlan==null)?
         <div>no plan lol</div>
       : <p>{state.subscribedMealPlan.name}</p>}
