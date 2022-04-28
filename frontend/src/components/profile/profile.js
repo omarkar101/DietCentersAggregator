@@ -14,11 +14,15 @@ const reducer = (state, action) => {
 
 const Profile = () => {
 
-  const [state, dispatch] = useReducer(reducer, {
-    subscribedMealPlanId: null,
-    subscribedMealPlan: null,
-    items: []
-  });
+  // const [state, dispatch] = useReducer(reducer, {
+  //   subscribedMealPlanId: null,
+  //   subscribedMealPlan: null,
+  //   items: []
+  // });
+
+  const [subscribedMealPlanId, setSubscribedMealPlanId]= useState(null);
+  const [subscribedMealPlan, setSubscribedMealPlan]= useState(null);
+  const [items, setItems]= useState([]);
 
   const [firstName, setFirstName] = useState('');
   const [LastName, setLastName] = useState('');
@@ -37,6 +41,50 @@ const Profile = () => {
   const [receiverFirstName, setreceiverFirstName] = useState('');
   const [receiverLastName, setreceiverLastName] = useState('');
   const [instructions, setinstructions] = useState('');
+
+  useEffect(() => {
+    getClientMealPlan()
+    .then((response) => {
+      if(response.data.success) {
+        setSubscribedMealPlanId(response.data.meal_plan_id);
+        if (subscribedMealPlanId==null){
+          return;
+        }
+        else {
+
+          getMealPlanById(subscribedMealPlanId)
+          .then((response) => {
+            if(response.data.success) {
+              setSubscribedMealPlan(response.data.meal_plan);
+            }
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+        }
+      }
+      })
+    .catch((e) => {
+      console.log(e);
+    });
+  }, []); 
+
+  useEffect(() => {
+    if (subscribedMealPlanId==null){
+      return;
+    }
+    else{
+      getItemsOfAMealPlan(subscribedMealPlanId)
+      .then((response) => {
+        if(response.data.success) {
+          setItems(response.data.meal_plan_items);
+        }
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+    }
+  }, []);
 
   useEffect(() => {
     getClientProfile()
@@ -66,42 +114,8 @@ const Profile = () => {
       .catch((e) => {
         console.log(e);
       });
-
-    getClientMealPlan()
-      .then((response) => {
-        if(response.data.success) {
-          state.subscribedMealPlanId = response.data.meal_plan_id;
-          getMealPlanById(state.subscribedMealPlanId)
-            .then((response) => {
-              if(response.data.success) {
-                state.subscribedMealPlan = response.data.meal_plan;
-              }
-            })
-            .catch((e) => {
-              console.log(e);
-            });
-        }
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-
-    if (state.subscribedMealPlanId==null){
-      return;
-    }
-    else{
-      getItemsOfAMealPlan(state.subscribedMealPlanId)
-      .then((response) => {
-        if(response.data.success) {
-          state.items = response.data.meal_plan_items;
-        }
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-    }
   
-  }, [state.subscribedMealPlanId, state.items]);
+  }, []);
 
   const choosePreferredMeal= useCallback((e) => {
     var mealId = e.target.id
@@ -128,15 +142,15 @@ const Profile = () => {
       <h1 className="text-black-50 p-3 text-center rounded">My Account</h1>
 
       You are subscribed to the meal plan:
-      {console.log(state.subscribedMealPlan)}  
-      {(state.subscribedMealPlan==null)?
+      {/* {console.log(state.subscribedMealPlan)}   */}
+      {(subscribedMealPlan==null)?
         <div>no plan lol</div>
-      : <p>{state.subscribedMealPlan.name}</p>}
+      : <p>{subscribedMealPlan.name}</p>}
 
       <hr/>
 
       <p>choose your preferred meal from this plan:</p>
-      {state.items?.map((item) => (
+      {items?.map((item) => (
           <div>
             <div>item name: {item.name}</div>
             <div>description: {item.description}</div>
