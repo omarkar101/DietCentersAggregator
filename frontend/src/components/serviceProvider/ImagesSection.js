@@ -1,17 +1,8 @@
 import React from "react";
 import styled from "styled-components";
+import profile from '../../images/blank-profile-picture.png';
 
 const description="American, Italian, Salad, Burger, Sandwich, Pizza";
-// const stars="4.2";
-// const reviews="1123";
-const images=[
-  "https://images.immediate.co.uk/production/volatile/sites/30/2020/08/chorizo-mozarella-gnocchi-bake-cropped-9ab73a3.jpg?quality=90&resize=556,505",
-  "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8Mnx8fGVufDB8fHx8&w=1000&q=80",
-  "https://www.acouplecooks.com/wp-content/uploads/2020/01/Sheet-Pan-Dinner-019.jpg",
-  "https://www.dinneratthezoo.com/wp-content/uploads/2017/12/meal-prep-burrito-bowls.jpg",
-  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSoYnNqiQs_UfkEiQrBrcb5ZLZ4Zgsoz-D6PQ&usqp=CAU",
-  "https://www.freshnlean.com/wp-content/uploads/2021/03/Meal-Plan-plate-protein.png",
-];
 
 const ImagesSection = (props) => {
   const { service_provider } = props;
@@ -32,63 +23,10 @@ const ImagesSection = (props) => {
               <div>Contact Info of the Service Provider</div>
               <div>{service_provider?.phone_number}</div>
             </RestaurantTitleDescription>
-
-            {/* <div style={{ position: "absolute", bottom: 0 }}>
-              <RatingSection>
-                <RatingBoxDiv>
-                  <div style={{ display: "block" }}>
-                    <RatingBoxSubDiv>
-                      <RatingNumber>{stars}</RatingNumber>
-                    </RatingBoxSubDiv>
-                  </div>
-                </RatingBoxDiv>
-                <ReviewView>
-                  <NumberReviews>{reviews}</NumberReviews>
-                  <ReviewsText>Reviews</ReviewsText>
-                </ReviewView>
-              </RatingSection>
-
-              <AddReviewSection>
-                <AddReviewSubSection>
-                  <AddAReviewButton>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="black"
-                      width="15"
-                      height="15"
-                      viewBox="0 0 20 20"
-                      aria-labelledby="icon-svg-title- icon-svg-desc-"
-                      role="img"
-                      style={{
-                        backgrounddisplay: "inline-block",
-                        verticalAlign: "middle",
-                        lineHeight: 1,
-                      }}
-                    >
-                      <path d="M10 3.28l1.9 4.12 0.32 0.7 0.76 0.1 4.5 0.68-3.3 3.38-0.46 0.54 0.1 0.7 0.78 4.66-3.9-2.14-0.7-0.36-0.7 0.38-3.88 2.1 0.76-4.66 0.1-0.68-0.5-0.52-3.3-3.38 5.26-0.8 0.32-0.7 1.94-4.12zM6.76 6.8l-6.38 0.96c-0.22 0.040-0.38 0.22-0.38 0.44 0 0.12 0.040 0.24 0.12 0.32v0l4.64 4.76-1.1 6.66c0 0.020 0 0.040 0 0.080 0 0.24 0.2 0.44 0.44 0.44 0.1 0 0.16-0.020 0.24-0.060v0l5.7-3.12 5.68 3.12c0.060 0.040 0.14 0.060 0.22 0.060 0.24 0 0.44-0.2 0.44-0.44 0-0.040 0-0.060 0-0.080v0l-1.1-6.66 4.64-4.76c0.080-0.080 0.12-0.2 0.12-0.32 0-0.22-0.16-0.4-0.36-0.44h-0.020l-6.38-0.96-2.96-6.18c-0.060-0.12-0.18-0.2-0.32-0.2s-0.26 0.080-0.32 0.2v0z"></path>
-                    </svg>
-                    <AddReviewText>Add Review</AddReviewText>
-                  </AddAReviewButton>
-                </AddReviewSubSection>
-              </AddReviewSection>
-            </div> */}
           </MainServiceProviderDetailsMainSection>
         </BigImageContainer>
         <SmallImagesSection>
-          <SmallImageContainer>
-            <SmallImage src={images[1]} />
-          </SmallImageContainer>
-          <SmallImageContainer>
-            <SmallImage src={images[2]} />
-          </SmallImageContainer>
-        </SmallImagesSection>
-        <SmallImagesSection>
-          <SmallImageContainer>
-            <SmallImage src={images[3]} />
-          </SmallImageContainer>
-          <SmallImageContainer>
-            <SmallImage src={images[4]} />
-          </SmallImageContainer>
+          <SmallImage src={service_provider?.img_url || profile} alt={"img"} />
         </SmallImagesSection>
       </ImagesContainer>
     </section>

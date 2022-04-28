@@ -1,9 +1,14 @@
-from sqlalchemy import Column, Text, ForeignKey
+from sqlalchemy import Column, Text, ForeignKey, text
 from sqlalchemy.orm import relationship
 from sqlalchemy.ext.hybrid import hybrid_property
 from database.orm import Base
+from azure.storage.blob import BlockBlobService
+import uuid
 
 metadata = Base.metadata
+blob_service = BlockBlobService(
+  account_name='299storage',
+  account_key='59A1sn1/V/JbS9fCQvtgWcJsP9WZYOJJMDnm+FZjCRFzsRtNYVce/NP7MZDHaf4VlhQgAlD16kRL+AStxRd4uQ==')
 class ServiceProvider(Base):
     __tablename__ = 'service_providers'
 
@@ -11,6 +16,8 @@ class ServiceProvider(Base):
     user_id: int
     
     _name = Column('name', Text, nullable=False, unique=True)
+    description = Column(Text, nullable=True)
+    img_url = Column(Text, nullable=True, server_default=text("'https://299storage.blob.core.windows.net/container/blank-profile-picture.png'"))
 
     user_id = Column(ForeignKey('users.id', ondelete='CASCADE'), primary_key=True, nullable=False)
 
@@ -34,6 +41,12 @@ class ServiceProvider(Base):
     @name.setter
     def name(self, name):
         self._name = name
+
+    def set_image(self, image_file):
+        uid = uuid.uuid4()
+        filename = f'{self.name}_{uid.hex}_{image_file.filename}'
+        blob_service.create_blob_from_stream('container', filename, image_file)
+        self.image_url = f'https://299storage.blob.core.windows.net/container/{filename}'
 
     def as_dict(self):
         information = {c.name: getattr(self, c.name) for c in self.__table__.columns}

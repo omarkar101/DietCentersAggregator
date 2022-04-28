@@ -19,6 +19,12 @@ export const getAllMealPlans = () => {
   return Get('/meal_plans/public/get/all');
 }
 
+export const getItemById = (itemId) => {
+  const data = new FormData();
+  data.append('item_id', itemId);
+  return Post('/items/public/get/by_id', data);
+}
+
 export const getMealPlanById = (mealPlanId) => {
   const data = new FormData();
   data.append('meal_plan_id', mealPlanId);
@@ -116,6 +122,10 @@ export const setClientPreferredMeal = (mealPlanId) => {
   const data = new FormData();
   data.append('preferred_meal_id', mealPlanId);
   return Post('/user/private/add/add_preferred_meal', data);
+}
+
+export const getClientPreferredMealPlan = () => {
+  return Get('/user/public/get/preferred_meal');
 }
 
 export const getClientOrderHistory = () => {
