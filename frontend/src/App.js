@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Checkout from "./components/checkout/checkout";
 import OrdersHistory from "./components/ordersHistory/ordersHistory";
 import Profile from "./components/profile/profile";
+import EditProfile from "./components/profile/edit_profile";
 import AppNavbar from "./components/common/header/appNavbar";
 import Login from "./pages/login";
 import ServiceProviderPage from "./components/serviceProvider/serviceProvider";
@@ -53,6 +54,7 @@ const App = () => {
               <Route path='/forget_password' element={<ForgetPasswordModal />} />
               <Route path="/package/:id/:service_provider_id" element={<Package />} />
               <Route path="/search" element={<Search />} />
+              <Route path="/edit_profile" element={<EditProfile/>} />
               <Route
                 path="/serviceProvider/:id"
                 element={
