@@ -31,5 +31,7 @@ class Order(Base):
 
 	def as_dict(self):
 		information = {c.name: getattr(self, c.name) for c in self.__table__.columns}
+		name = self.item.name
+		information['name'] = name
 		return information
     

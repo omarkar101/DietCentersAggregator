@@ -7,7 +7,11 @@ import {getClientOrderHistory} from "../../api/requests"
 
 const OrdersHistory = () => {
   const [orders, setOrders] = useState([]);
-
+  const formatDate = (inputdate) => {
+    let date = new Date(inputdate);
+    let formattedDate = ((date.getMonth() > 8) ? (date.getMonth() + 1) : ('0' + (date.getMonth() + 1))) + '/' + ((date.getDate() > 9) ? date.getDate() : ('0' + date.getDate())) + '/' + date.getFullYear()
+    return formattedDate;
+  }
   console.log('aaaaa')
   useEffect(() => {
     getClientOrderHistory()
@@ -28,7 +32,8 @@ const OrdersHistory = () => {
         {orders?.map((order) => (
           <Col key={order.id} className="orders-card">
             <OrderCard orderid={order.id} text={"empty for now"} 
-            // serviceprovider={"service " + idx} footer={idx+1 + " mins ago."}
+            datesent={formatDate(order._date_sent)}
+            ordername={order.name}
             />
           </Col>
         ))}

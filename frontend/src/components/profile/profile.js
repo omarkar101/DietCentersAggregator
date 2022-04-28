@@ -48,6 +48,50 @@ const Profile = () => {
   const [instructions, setinstructions] = useState('');
 
   useEffect(() => {
+    getClientMealPlan()
+    .then((response) => {
+      if(response.data.success) {
+        setSubscribedMealPlanId(response.data.meal_plan_id);
+        if (subscribedMealPlanId==null){
+          return;
+        }
+        else {
+
+          getMealPlanById(subscribedMealPlanId)
+          .then((response) => {
+            if(response.data.success) {
+              setSubscribedMealPlan(response.data.meal_plan);
+            }
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+        }
+      }
+      })
+    .catch((e) => {
+      console.log(e);
+    });
+  }, []); 
+
+  useEffect(() => {
+    if (subscribedMealPlanId==null){
+      return;
+    }
+    else{
+      getItemsOfAMealPlan(subscribedMealPlanId)
+      .then((response) => {
+        if(response.data.success) {
+          setItems(response.data.meal_plan_items);
+        }
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+    }
+  }, []);
+
+  useEffect(() => {
     getClientProfile()
       .then((response) => {
         if(response.data.success) {
@@ -75,60 +119,7 @@ const Profile = () => {
       .catch((e) => {
         console.log(e);
       });
-    }, []);
-
-  useEffect(() => {
-    getClientMealPlan()
-      .then((response) => {
-        if(response.data.success) {
-          dispatch({ type: "set-subscribed-meal-plan-id", mealPlanId: response.data.meal_plan_id });
-          if (response.data.meal_plan_id!=null){
-            getMealPlanById(response.data.meal_plan_id) 
-              .then((response) => {
-                if(response.data.success) {
-                  dispatch({ type: "set-subscribed-meal-plan", mealPlan: response.data.meal_plan });
-                  if (response.data.meal_plan.id==null){
-                    return;
-                  }
-                  else{
-                    getItemsOfAMealPlan(response.data.meal_plan.id)
-                      .then((response) => {
-                        if(response.data.success) {
-                          dispatch({ type: "set-items", items: response.data.meal_plan_items });
-                        }
-                      })
-                      .catch((e) => {
-                        console.log(e);
-                      });
-                  }
-                }
-              })
-            .catch((e) => {
-              console.log(e);
-            });
-            getClientPreferredMealPlan()
-              .then((response) => {
-                if(response.data.success && response.data.client_preferred_meal != null){
-                    getItemById(response.data.client_preferred_meal)
-                      .then((response) => {
-                        if(response.data.success) {
-                          dispatch({ type: "success-preferred-meal", preferred_meal: response.data.item });
-                        }
-                      })
-                      .catch((e) => {
-                        console.log(e);
-                      });
-                  }
-              })
-              .catch((e) => {
-                console.log(e);
-              });
-          }
-        }
-      })
-      .catch((e) => {
-        console.log(e);
-      });
+  
   }, []);
 
   const choosePreferredMeal= useCallback((e) => {
