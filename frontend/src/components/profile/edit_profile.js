@@ -125,16 +125,16 @@ const EditProfile = () => {
               <Row className="mb-5">
                 <Form.Group as={Col} md="4" controlId="formGridWeight">
                   <Form.Label>Weight</Form.Label>
-                  <Form.Control value={Weight} onChange={(e) => setWeight(e.target.value)} placeholder="Weight in Kg" />
+                  <Form.Control required value={Weight} onChange={(e) => setWeight(e.target.value)} placeholder="Weight in Kg" />
                 </Form.Group>
 
                 <Form.Group as={Col} md="4" controlId="formGridWeight">
                   <Form.Label>Height</Form.Label>
-                  <Form.Control value={Height} onChange={(e) => setHeight(e.target.value)} placeholder="Height in cm" />
+                  <Form.Control required value={Height} onChange={(e) => setHeight(e.target.value)} placeholder="Height in cm" />
                 </Form.Group>
                 <Form.Group as={Col} md="4" controlId="formGridWeight">
                   <Form.Label>Age</Form.Label>
-                  <Form.Control value={Age} onChange={(e) => setAge(e.target.value)} placeholder="Age" />
+                  <Form.Control required value={Age} onChange={(e) => setAge(e.target.value)} placeholder="Age" />
                 </Form.Group>
               </Row>
             </div>
