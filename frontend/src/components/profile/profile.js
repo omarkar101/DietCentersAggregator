@@ -133,8 +133,15 @@ const Profile = () => {
 
   const choosePreferredMeal= useCallback((e) => {
     var mealId = e.target.id
-    setClientPreferredMeal(mealId);
-    window.location.reload(); 
+    setClientPreferredMeal(mealId)
+      .then((response) => {
+        if(response.data.success){
+          window.location.reload();
+          }
+      })
+      .catch((e) => {
+        console.log(e);
+      });
   })
 
   return (
@@ -218,7 +225,13 @@ const Profile = () => {
                 <Col key={item.id} className="w-100">
                   <ItemCard item={item} />
                 </Col>
-                  <Button style={{margin: "auto", color: "white", backgroundColor: "#21ad83", borderColor: "#21ad83"}} id={item.id} onClick={choosePreferredMeal}>choose</Button>
+                <Button
+                  style={{margin: "auto", color: "white", backgroundColor: "#21ad83", borderColor: "#21ad83"}}
+                  id={item.id}
+                  onClick={choosePreferredMeal}
+                >
+                  choose
+                </Button>
               </ItemTextAndButtonWrapper>
               ))}
             </div>

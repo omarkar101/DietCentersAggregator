@@ -27,22 +27,25 @@ const PreferredMealModal = (props) => {
     mealPlan: null,
     itemsOfMealPlan: [],
     mealPlanItems: [],
-    preferredMeal: null
+    preferredMeal: null,
+    mostRecentMealOrdered: null
   }); 
 
 const sendMeal = useCallback((e) => {
   const itemId = e.target.id
-  sendMealToClient(client.user_id, itemId)
-    .then((response) => {
-      if (response.data.success) {
-        return;
-      } else {
-        console.log(response.data.message);
-      }
-    })
-    .catch((e) => {
-      console.log(e);
-    });
+  if (client != null){
+    sendMealToClient(client.user_id, itemId)
+      .then((response) => {
+        if (response.data.success) {
+          onClose()
+        } else {
+          console.log(response.data.message);
+        }
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }
 }, []);
 
 //   const handleSubmit = (e) => {
