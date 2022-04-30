@@ -28,7 +28,9 @@ const AppNavbar = ({ user }) => {
           <Nav>
             {user != null && (
               <Nav.Link as={Link} to='/profile'>
-                Profile
+                <span class="material-symbols-outlined">
+account_circle_full
+</span>
               </Nav.Link>
             )}
             {user == null && (
