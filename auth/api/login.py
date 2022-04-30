@@ -26,7 +26,8 @@ def forget_password():
     with db_session.begin():
         pin = credentials.generate_forget_password_pin()
     print(email, pin)
-    sendEmail(email, f'this is the pin:{pin}')
+    # sendEmail(email, f'this is the pin:{pin}')
+    sendEmail(email, f'this is the pin:{pin}', 'Forget Password Pin')
     return jsonify(success=True)
 
 @login_api.route('/update_password', methods=['POST'])

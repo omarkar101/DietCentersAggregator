@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const AppNavbar = ({ user }) => {
   return (
-    <Navbar collapseOnSelect expand='lg' bg='dark' variant='dark'>
+    <Navbar className="sticky-top" collapseOnSelect expand='lg' bg='light' variant='light'>
       <Container>
         <Navbar.Brand as={Link} to='/meal_plans'>
           Welcome {user?.name}
@@ -28,7 +28,9 @@ const AppNavbar = ({ user }) => {
           <Nav>
             {user != null && (
               <Nav.Link as={Link} to='/profile'>
-                Profile
+                <span class="material-symbols-outlined">
+account_circle_full
+</span>
               </Nav.Link>
             )}
             {user == null && (
