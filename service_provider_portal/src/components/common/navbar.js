@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const AppNavbar = ({ user }) => {
   return (
-    <Navbar collapseOnSelect expand='lg' bg='dark' variant='dark'>
+    <Navbar className="sticky-top" collapseOnSelect expand='lg' bg='light' variant='light'>
       <Container>
         <Navbar.Brand as={Link} to='/meal_plans'>
           Welcome {user?.name}

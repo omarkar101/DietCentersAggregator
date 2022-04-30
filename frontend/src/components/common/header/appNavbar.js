@@ -12,7 +12,7 @@ const AppNavbar = ({user}) => {
     navigate('/search', {state:{serviceProviderName:searchName}});
   };
   return (
-    <Navbar collapseOnSelect expand='lg' bg='dark' variant='dark'>
+    <Navbar className="sticky-top" collapseOnSelect expand='lg' bg='light' variant='light'>
       <Container>
         <Navbar.Brand as={Link} to='/'>
           {user == null && <span>JARO</span>}{user!=null && <span>Welcome {user?.first_name}</span>}
