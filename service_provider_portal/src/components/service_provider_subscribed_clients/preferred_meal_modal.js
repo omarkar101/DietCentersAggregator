@@ -32,19 +32,21 @@ const PreferredMealModal = (props) => {
   }); 
 
 const sendMeal = useCallback((e) => {
-  const itemId = e.target.id
+  // console.log(itemId)
   if (client != null){
-    sendMealToClient(client.user_id, itemId)
-      .then((response) => {
-        if (response.data.success) {
-          onClose()
-        } else {
-          console.log(response.data.message);
-        }
-      })
-      .catch((e) => {
-        console.log(e);
-      });
+    if (e.target.id!=null){
+      sendMealToClient(client.user_id, e.target.id)
+        .then((response) => {
+          if (response.data.success) {
+            onClose()
+          } else {
+            console.log(response.data.message);
+          }
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    }
   }
 }, []);
 
@@ -109,7 +111,7 @@ const sendMeal = useCallback((e) => {
           <div>
             <div>item name: {item.name}</div>
             <div>description: {item.description}</div>
-            <Button id={item.id} onClick={sendMeal} class="btn btn-success">send</Button>
+              <Button id={item.id} onClick={sendMeal} class="btn btn-success">send</Button>
             <hr/>
           </div>
           
@@ -120,9 +122,6 @@ const sendMeal = useCallback((e) => {
         <Button variant="secondary" onClick={onClose}>
           Close
         </Button>
-        {/* <Button variant="primary" onClick={handleSubmit}>
-          Subscribe
-        </Button> */}
       </Modal.Footer>
     </Modal>
   );

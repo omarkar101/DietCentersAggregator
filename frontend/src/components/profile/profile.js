@@ -220,6 +220,8 @@ const Profile = () => {
             <ItemCard item={state.preferredMealPlan} />
           </Col>
           You can modify this by selecting one of the options below.
+            </div>
+            }   
             {state.items?.map((item) => (
               <ItemTextAndButtonWrapper>
                 <Col key={item.id} className="w-100">
@@ -234,8 +236,6 @@ const Profile = () => {
                 </Button>
               </ItemTextAndButtonWrapper>
               ))}
-            </div>
-            }   
           </>
         }
     </Container>
