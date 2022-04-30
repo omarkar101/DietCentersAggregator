@@ -68,7 +68,7 @@ const SignUp = (props) => {
                 <Form.Control
                   type="text"
                   placeholder="Name"
-                  pattern="[a-z]+"
+                  pattern="[a-zA-Z]+"
                   onChange={(e) => setName(e.target.value)}
                 />
               </Form.Group>
@@ -78,7 +78,7 @@ const SignUp = (props) => {
                 <Form.Control
                   type="text"
                   placeholder="Phone Number"
-                  pattern="[0-9]+"
+                  pattern="\+[0-9]+"
                   onChange={(e) => setPhoneNumber(e.target.value)}
                 />
               </Form.Group>
@@ -97,7 +97,7 @@ const SignUp = (props) => {
                 <Form.Label>Password</Form.Label>
                 <Form.Control
                   type="password"
-                  pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$"
+                  pattern="^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$"
                   placeholder="Password"
                   onChange={(e) => setPassword(e.target.value)}
                 />
