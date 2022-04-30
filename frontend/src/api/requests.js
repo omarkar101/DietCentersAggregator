@@ -118,6 +118,19 @@ export const getClientProfile = () => {
   return Post('/user/public/get/client_personal_info');
 }
 
+export const forgetPassword = (email) => {
+  const data = new FormData();
+  data.append('email', email);
+  return Post('/auth/login/forget_password', data);
+}
+export const updatePassword = (email, password, pin) => {
+  const data = new FormData();
+  data.append('email', email);
+  data.append('password', password);
+  data.append('pin', pin);
+  return Post('/auth/login/update_password', data);
+}
+
 export const setClientPreferredMeal = (mealPlanId) => {
   const data = new FormData();
   data.append('preferred_meal_id', mealPlanId);

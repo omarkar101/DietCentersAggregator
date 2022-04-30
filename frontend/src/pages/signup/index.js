@@ -72,7 +72,7 @@ const SignUp = (props) => {
                   required
                   type="text"
                   placeholder="First Name"
-                  pattern="[a-z]+"
+                  pattern="[a-zA-Z]+"
                   onChange={(e) => setFirstName(e.target.value)}
                 />
               </Form.Group>
@@ -83,7 +83,7 @@ const SignUp = (props) => {
                   required
                   type="text"
                   placeholder="Last Name"
-                  pattern="[a-z]+"
+                  pattern="[a-zA-Z]+"
                   onChange={(e) => setLastName(e.target.value)}
                 />
               </Form.Group>
@@ -94,7 +94,7 @@ const SignUp = (props) => {
                   required
                   type="text"
                   placeholder="Phone Number"
-                  pattern="[0-9]+"
+                  pattern="\+[0-9]+"
                   onChange={(e) => setPhoneNumber(e.target.value)}
                 />
               </Form.Group>
