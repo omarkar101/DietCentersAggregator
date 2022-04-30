@@ -12,7 +12,7 @@ const reducer = (state, action) => {
       case "cancel-subscribed-client":
         return { ...state, mealPlans: action.mealPlans };
       case "open-client-preferred-meal-modal":
-        return {...state, modalOpen: true };
+        return {...state, modalOpen: true, selectedClient: action.client, selectedMealPlan: action.mealPlan };
       case "close-client-preferred-meal-modal":
         return {...state, modalOpen: false};
       default:
@@ -25,7 +25,8 @@ const ServiceProviderSubscribedClients = (props) => {
   const [state, dispatch] = useReducer(reducer, {
     mealPlans: [],
     modalOpen: false,
-
+    selectedClient: null,
+    selectedMealPlan: null
   });
 
   useEffect(() => {
@@ -57,20 +58,10 @@ const ServiceProviderSubscribedClients = (props) => {
       });
   }, []);
 
-  const toggleViewClientPreferredMealModal = useCallback((e) => {
-    const clientId = e.target.id;
-    console.log(clientId);
-    getClientPreferredMeal(clientId)
-      .then((response) => {
-        if (response.data.success) {
-          dispatch({ type: "open-client-preferred-meal-modal" })
-        } else {
-          console.log(response.data.message);
-        }
-      })
-      .catch((e) => {
-        console.log(e);
-      });
+  const toggleViewClientPreferredMealModal = useCallback((e, f) => {
+    const client = e;
+    const mealPlan = f
+    dispatch({ type: "open-client-preferred-meal-modal", client: client, mealPlan: mealPlan })
   }, []);
 
   const toggleClosePreferredMealModal = useCallback(() => {
@@ -80,6 +71,12 @@ const ServiceProviderSubscribedClients = (props) => {
   return (
     <>
       <Container>
+        <PreferredMealModal
+        isOpen={state.modalOpen}
+        onClose={toggleClosePreferredMealModal}
+        client= {state.selectedClient}
+        mealPlan={state.selectedMealPlan}
+        />
         {state.mealPlans == null || state.mealPlans.length === 0 ? <h1>You don't have any available meal plans.</h1>
         : state.mealPlans?.map((mealPlan) => (
           <div>
@@ -96,12 +93,12 @@ const ServiceProviderSubscribedClients = (props) => {
               </tr>
               {mealPlan.clients?.map((client) => (
                 <tr>
-                  <PreferredMealModal
+                  {/* <PreferredMealModal
                   isOpen={state.modalOpen}
                   onClose={toggleClosePreferredMealModal}
                   client= {client}
                   mealPlan={mealPlan}
-                  />
+                  /> */}
                   <td>{client.first_name}</td>
                   <td>{client.last_name}</td>
                   <td>{client.email}</td>
@@ -119,10 +116,9 @@ const ServiceProviderSubscribedClients = (props) => {
                         Cancel
                       </Button>
                       <Button
-                        id={client.user_id}
                         variant="primary"
                         size="sm"
-                        onClick={toggleViewClientPreferredMealModal}
+                        onClick={() => toggleViewClientPreferredMealModal(client, mealPlan)}
                       >
                         Preferred Meal
                       </Button>

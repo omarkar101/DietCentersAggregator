@@ -18,3 +18,11 @@ def get_items_of_service_provider():
     .filter(Item.user_id == service_provider_id) \
     .all()
   return jsonify(success=True, items=[item.as_dict() for item in items])
+
+@public_get_api.route('/by_id', methods=['Post'])
+def get_item_by_id():
+  item_id = request.form.get('item_id')
+  item = Item.query \
+    .filter(Item.id == item_id) \
+    .first()
+  return jsonify(success=True, item=item.as_dict())

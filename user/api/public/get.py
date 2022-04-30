@@ -24,3 +24,12 @@ def get_client_personal_info():
   user_id = get_user_id()
   user = User.query.filter(User.id == user_id).first()
   return jsonify(success=True, client_personal_info=user.as_dict())
+
+@public_get_api.route('/preferred_meal', methods=['Get'])
+@require_user(UserType.CLIENT)
+def get_client_preferred_meal():
+  user_id = get_user_id()
+  user = User.query.filter(User.id == user_id).first()
+  with db_session.begin():
+    client_preferred_meal = user.client.preferred_meal
+  return jsonify(success=True, client_preferred_meal=client_preferred_meal)
