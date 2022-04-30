@@ -14,6 +14,7 @@ class Credentials(Base):
     _email = Column('email' , Text, nullable=False, index=True, unique=True)
     _password_hash = Column('password_hash', Text, nullable=False)
     _password_salt = Column('password_salt', Text, nullable=False)
+    forget_password_pin = Column(Text, nullable=True)
 
     user = relationship(
         'User',
@@ -45,7 +46,10 @@ class Credentials(Base):
     @hybrid_property
     def password_salt(self):
         raise Exception('You can\'t access this field')
-    
+    def generate_forget_password_pin(self):
+        self.forget_password_pin = generate_password_salt()
+        return self.forget_password_pin
+
     def as_dict(self):
         information = {c.name: getattr(self, c.name) for c in self.__table__.columns}
         return information

@@ -17,6 +17,19 @@ export const loginServiceProvider = (email, password) => {
   return Post('/auth/login/user', data);
 }
 
+export const forgetPassword = (email) => {
+  const data = new FormData();
+  data.append('email', email);
+  return Post('/auth/login/forget_password', data);
+}
+export const updatePassword = (email, password, pin) => {
+  const data = new FormData();
+  data.append('email', email);
+  data.append('password', password);
+  data.append('pin', pin);
+  return Post('/auth/login/update_password', data);
+}
+
 export const addOneItem = (item_name, item_description, item_category) => {
   const data = new FormData();
   data.append('item_name', item_name);

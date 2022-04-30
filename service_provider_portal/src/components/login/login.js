@@ -127,20 +127,20 @@ const Login = () => {
                   Don't have an account? Create One!
                 </Link>
               </div>
-              <div>
-                <ForgetPasswordModal
-                  isOpen={state.modalOpen}
-                  onClose={toggleModalOnClose}
-                />
-                <LinkToForgetPassword
-                  style={{ fontSize: "13px" }}
-                  onClick={toggleOpenModal}
-                >
-                  Forget Password?
-                </LinkToForgetPassword>
-                {/* <Link to={`/forget_password`} style={{ fontSize: '13px' }}>Forget Password?</Link> */}
-              </div>
             </Form>
+            <div>
+              <ForgetPasswordModal
+                isOpen={state.modalOpen}
+                onClose={toggleModalOnClose}
+              />
+              {/* <Link to={`/forget_password`} style={{ fontSize: '13px' }}>Forget Password?</Link> */}
+            </div>
+            <LinkToForgetPassword
+              style={{ fontSize: "13px" }}
+              onClick={toggleOpenModal}
+            >
+              Forget Password?
+            </LinkToForgetPassword>
           </Col>
         </Row>
         <h6 className="mt-5 p-5 text-center text-secondary ">
