@@ -29,6 +29,12 @@ const ServiceProviderSubscribedClients = (props) => {
     selectedMealPlan: null
   });
 
+  const formatDate = (inputdate) => {
+    let date = new Date(inputdate);
+    let formattedDate = ((date.getMonth() > 8) ? (date.getMonth() + 1) : ('0' + (date.getMonth() + 1))) + '/' + ((date.getDate() > 9) ? date.getDate() : ('0' + date.getDate())) + '/' + date.getFullYear()
+    return formattedDate;
+  }
+
   useEffect(() => {
     getAllServiceProviderSubscribedClients()
     .then((response) => {
@@ -72,10 +78,10 @@ const ServiceProviderSubscribedClients = (props) => {
     <>
       <Container>
         <PreferredMealModal
-        isOpen={state.modalOpen}
-        onClose={toggleClosePreferredMealModal}
-        client= {state.selectedClient}
-        mealPlan={state.selectedMealPlan}
+          isOpen={state.modalOpen}
+          onClose={toggleClosePreferredMealModal}
+          client= {state.selectedClient}
+          mealPlan={state.selectedMealPlan}
         />
         {state.mealPlans == null || state.mealPlans.length === 0 ? <h1>You don't have any available meal plans.</h1>
         : state.mealPlans?.map((mealPlan) => (
@@ -88,23 +94,17 @@ const ServiceProviderSubscribedClients = (props) => {
                 <th>Email Address</th>
                 <th>Phone Number</th>
                 <th>Location</th>
-                <th>Date Ordered</th>
+                <th>Most Recent Order Date</th>
                 <th>Actions</th>
               </tr>
               {mealPlan.clients?.map((client) => (
                 <tr>
-                  {/* <PreferredMealModal
-                  isOpen={state.modalOpen}
-                  onClose={toggleClosePreferredMealModal}
-                  client= {client}
-                  mealPlan={mealPlan}
-                  /> */}
                   <td>{client.first_name}</td>
                   <td>{client.last_name}</td>
                   <td>{client.email}</td>
                   <td>{client.phone_number}</td>
                   <td style={{whiteSpace: 'pre-line'}}>{client.location}</td>
-                  <td>{client.date_ordered}</td>
+                  <td>{client._date_ordered}</td>
                   <td>
                     <div className="mb-4">
                       <Button
