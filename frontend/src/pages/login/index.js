@@ -34,8 +34,25 @@ const Login = () => {
   const auth = Authentication.useContainer();
   const navigate = useNavigate();
 
+  const loadError = (message) => {
+    setError(message);
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: "smooth"
+    });
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (!email) {
+      loadError('Please enter an email')
+      return;
+    }
+    if (!password) {
+      loadError('Please enter a password')
+      return;
+    }
     loginServiceProvider(email, password)
       .then((response) => {
         if (response.data.success) {
@@ -44,22 +61,12 @@ const Login = () => {
           navigate("/");
         } else {
           console.log(response.data.message);
-          setError('Incorrect email or password');
-          window.scrollTo({
-            top: 0,
-            left: 0,
-            behavior: "smooth"
-          });
+          loadError('Incorrect email or password');
         }
       })
       .catch((e) => {
         console.log(e);
-        setError('Incorrect email or password');
-        window.scrollTo({
-          top: 0,
-          left: 0,
-          behavior: "smooth"
-        });
+        loadError('Incorrect email or password');
       });
   };
 
@@ -73,14 +80,14 @@ const Login = () => {
 
   return (
     <>
-      {error != null && (
-        <div class="alert alert-danger" role="alert">
-          {error}
-        </div>
-      )}
       {redirectToHome && <HomePage />}
       {!redirectToHome && (
         <Container>
+    {error != null && (
+            <div style={{color: '#D70040', textAlign: 'center', fontSize: 20}}>
+              {error}
+            </div>
+          )}
           <h1 className="text-black-50 p-3 text-center rounded">Login</h1>
           <Row style={{'display': 'flex', 'justify-content': 'center'}} className="m-2">
             <div className="w-50">
@@ -88,7 +95,6 @@ const Login = () => {
                   <Form.Group className="mb-2" controlId="formBasicEmail">
                     <Form.Label>Email Address</Form.Label>
                     <Form.Control
-                      required
                       type="email"
                       placeholder="Enter email"
                       pattern="^\S+@\S+\.\S+$"

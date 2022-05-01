@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Button, Col, Form, Row } from "react-bootstrap";
 import { signUpClient } from "../../api/requests";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import Login from "../login";
 import styled from "styled-components";
 
@@ -11,13 +11,51 @@ const SignUp = (props) => {
   const [phoneNumber, setPhoneNumber] = useState(null);
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
+  const [confirmPassword, setConfirmPassword] = useState(null);
   // const [redirectToLogin, setRedirectToLogin] = useState(false);
   // const [validated, setValidated] = useState(false);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
+  const loadError = (message) => {
+    setError(message);
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: "smooth"
+    });
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (!firstName) {
+      loadError('Please enter a first name')
+      return;
+    }
+    if (!lastName) {
+      loadError('Please enter a last name')
+      return;
+    }
+    if (!phoneNumber) {
+      loadError('Please enter a phone number')
+      return;
+    }
+    if (!email) {
+      loadError('Please enter an email')
+      return;
+    }
+    if (!password) {
+      loadError('Please enter a password')
+      return;
+    }
+    if (!confirmPassword) {
+      loadError('Please confirm password')
+      return;
+    }
+    if (password != confirmPassword) {
+      loadError('Passwords do not match!')
+    }
+    else {
     signUpClient(email, password, firstName, lastName, phoneNumber)
       .then((response) => {
         if (response.data.success) {
@@ -25,40 +63,30 @@ const SignUp = (props) => {
           navigate("/login");
         } else {
           console.log(response.data.message);
-          setError('This email is already registered. Please login with your credentials.');
-          window.scrollTo({
-            top: 0,
-            left: 0,
-            behavior: "smooth"
-          });
+          loadError('This email is already registered. Please register with different email.');
         }
       })
       .catch((e) => {
         console.log(e);
-        setError('This email is already registered. Please login with your credentials.');
-        window.scrollTo({
-          top: 0,
-          left: 0,
-          behavior: "smooth"
-        });
+        loadError('This email is already registered. Please register with different email.');
       });
+    }
   };
 
   return (
     <>
-      {error != null && (
-        <div class="alert alert-danger" role="alert">
-          {error}
-        </div>
-      )}
       <Container>
         <h1 className="text-black-50 p-3 text-center rounded">Sign-Up</h1>
+        {error != null && (
+            <div style={{color: '#D70040', textAlign: 'center', fontSize: 20}}>
+              {error}
+            </div>
+          )}
         <Row style={{'display': 'flex', 'justify-content': 'center'}} className="m-2">
             <Form onSubmit={handleSubmit} className="w-50">
               <Form.Group className="mb-2" controlId="formBasicFirstName">
                 <Form.Label>First Name</Form.Label>
                 <Form.Control
-                  required
                   type="text"
                   placeholder="First Name"
                   pattern="[a-zA-Z]+"
@@ -69,7 +97,6 @@ const SignUp = (props) => {
               <Form.Group className="mb-2" controlId="formBasicLastName">
                 <Form.Label>Last Name</Form.Label>
                 <Form.Control
-                  required
                   type="text"
                   placeholder="Last Name"
                   pattern="[a-zA-Z]+"
@@ -80,10 +107,9 @@ const SignUp = (props) => {
               <Form.Group className="mb-2" controlId="formBasicPhoneNumber">
                 <Form.Label>Phone Number</Form.Label>
                 <Form.Control
-                  required
                   type="text"
                   placeholder="Phone Number"
-                  pattern="\+[0-9]+"
+                  pattern="\+?[0-9]+"
                   onChange={(e) => setPhoneNumber(e.target.value)}
                 />
               </Form.Group>
@@ -91,7 +117,6 @@ const SignUp = (props) => {
               <Form.Group className="mb-2" controlId="formBasicEmail">
                 <Form.Label>Email Address</Form.Label>
                 <Form.Control
-                  required
                   type="email"
                   placeholder="Enter email"
                   pattern="^\S+@\S+\.\S+$"
@@ -102,16 +127,24 @@ const SignUp = (props) => {
               <Form.Group className="mb-2" controlId="formBasicPassword">
                 <Form.Label>Password</Form.Label>
                 <Form.Control
-                  required
                   type="password"
                   placeholder="Password"
-                  pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$"
+                  pattern="^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$"
                   onChange={(e) => setPassword(e.target.value)}
                 />
                 <Form.Text className="text-muted" style={{ fontSize: 12 }}>
-                  Minimum eight characters, at least one uppercase letter, one
-                  lowercase letter and one number.
+                  Your password should have a minimum of eight characters, at least one uppercase letter, one
+                  lowercase letter, one number, and a symbol.
                 </Form.Text>
+              </Form.Group>
+              <Form.Group className="mb-2" controlId="formBasicConfirmPassword">
+                <Form.Label>Confirm Password</Form.Label>
+                <Form.Control
+                  type="password"
+                  placeholder="Confirm Password"
+                  pattern="^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$"
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                />
               </Form.Group>
               <Button
                 className="mt-1"
@@ -126,6 +159,11 @@ const SignUp = (props) => {
               >
                 Sign-up
               </Button>
+              <div>
+                <Link to={`/login`} style={{ fontSize: "13px" }}>
+                  Already have an account? Login!
+                </Link>
+              </div>
             </Form>
         </Row>
         <h6 className="mt-5 p-5 text-center text-secondary ">
