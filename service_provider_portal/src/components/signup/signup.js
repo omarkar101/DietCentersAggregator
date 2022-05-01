@@ -96,7 +96,7 @@ const SignUp = (props) => {
                 </Form.Text>
               </Form.Group>
               <Button
-                className="mt-5"
+                className="mt-1"
                 style={{
                   color: "white",
                   backgroundColor: "#21ad83",
