@@ -2,7 +2,7 @@ import React, { useReducer, useEffect } from "react";
 import { Button, Form, Modal, Table, Col, Row } from "react-bootstrap";
 import styled from "styled-components";
 import { subscribeClientToMealPlan } from "../../api/requests";
-import { getItemsOfAMealPlan, getMealPlanById, getClientMealPlan } from "../../api/requests";
+import { getItemsOfAMealPlan, getClientMealPlan } from "../../api/requests";
 import ItemCard from "./itemCard";
 
 const reducer = (state, action) => {
@@ -17,7 +17,7 @@ const reducer = (state, action) => {
 };
 
 const SubscribeModal = (props) => {
-  const { isOpen, onClose, onSubmit, mealPlanId } = props;
+  const { isOpen, onClose, onSubmit, mealPlan } = props;
 
   const [state, dispatch] = useReducer(reducer, {
     mealPlan: null,
@@ -26,29 +26,12 @@ const SubscribeModal = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit();
+    onSubmit(mealPlan);
   };
 
   useEffect(() => {
-    getMealPlanById(mealPlanId)
-      .then((response) => {
-        if (response.data.success) {
-          dispatch({
-            type: "get-meal-plan-by-id",
-            mealPlan: response.data.meal_plan,
-          });
-        } else {
-          console.log(response.data.message);
-        }
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-
-    if (state.selectedMealPlanId == null) {
-      return;
-    } else {
-      getItemsOfAMealPlan(mealPlanId)
+    if (mealPlan != null) {
+      getItemsOfAMealPlan(mealPlan.id)
         .then((response) => {
           if (response.data.success) {
             dispatch({
@@ -63,7 +46,7 @@ const SubscribeModal = (props) => {
           console.log(e);
         });
     }
-  }, [mealPlanId]);
+  }, [mealPlan]);
 
   return (
     <Modal size="lg" show={isOpen} onHide={onClose} onClose={onClose}>

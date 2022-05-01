@@ -44,11 +44,12 @@ const reducer = (state, action) => {
       return {
         ...state,
         subscribeModalOpen: true,
+        selectedMealPlan: action.mealPlan
       };
     case "close-subscribe-modal":
       return {
         ...state,
-        subscribeModalOpen: false,
+        subscribeModalOpen: false
       };
     default:
       throw new Error();
@@ -65,11 +66,14 @@ const ServiceProviderPage = () => {
     items: [],
     mealPlans: [],
     serviceProvider: null,
+    selectedMealPlan: null
   });
 
-  const toggleOpenSubscribeModal = useCallback(() => {
+  const toggleOpenSubscribeModal = useCallback((e) => {
+    const plan = e
     dispatch({
       type: "open-subscribe-modal",
+      mealPlan: plan
     });
   }, []);
 
@@ -141,12 +145,13 @@ const ServiceProviderPage = () => {
     [id]
   );
 
-  const toggleSubscribeModalOnSubmit = useCallback((e,f) => {
+  const toggleSubscribeModalOnSubmit = useCallback((e) => {
     getClientMealPlan()
       .then((response) => {
         if (response.data.success) {
           if (response.data.meal_plan_id == null) {
-            subscribeClientToMealPlan(e, f)
+            if (e !=null){
+            subscribeClientToMealPlan(e.id, e.meal_plan_uses)
               .then((response) => {
                 if (response.data.success) {
                   dispatch({ type: "submit-subscribe-modal" });
@@ -157,9 +162,9 @@ const ServiceProviderPage = () => {
               .catch((e) => {
                 console.log(e);
               });
+            }
           } else {
-            alert("you are already subscribed in a meal plan");
-            
+            alert("you are already subscribed in a meal plan");  
           }
         } else {
           console.log(response.data.message);
@@ -181,6 +186,12 @@ const ServiceProviderPage = () => {
   return (
     <PageBase>
       <ImagesSection service_provider={state.serviceProvider} />
+      <SubscribeModal
+        isOpen={state.subscribeModalOpen}
+        onClose={toggleSubscribeModalOnClose}
+        onSubmit={toggleSubscribeModalOnSubmit}
+        mealPlan={state.selectedMealPlan}
+      />
 
       <MenuItemsContainer className="mt-5">
         <StyledSection>
@@ -199,15 +210,9 @@ const ServiceProviderPage = () => {
               plan={plan}
               openModal={toggleOpenModal}
             />
-            <SubscribeModal
-              mealPlanId={plan.id}
-              isOpen={state.subscribeModalOpen}
-              onClose={toggleSubscribeModalOnClose}
-              onSubmit={(e) => toggleSubscribeModalOnSubmit(plan.id, plan.meal_plan_uses)}
-            />
             <Button
               variant="success"
-              onClick={toggleOpenSubscribeModal}
+              onClick={() => toggleOpenSubscribeModal(plan)}
               style={{
                 backgroundColor: "transparent",
                 border: "solid 1px #114f3cd9",
