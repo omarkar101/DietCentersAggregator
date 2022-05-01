@@ -17,7 +17,7 @@ const Profile = () => {
           const serviceProviderPersonalInfo = response.data.service_provider_personal_info;
           setName(serviceProviderPersonalInfo.name);
           setPhoneNumber(serviceProviderPersonalInfo.phone_number);
-          // setDescription(serviceProviderPersonalInfo.description);
+          setDescription(serviceProviderPersonalInfo.description);
           setemailAddress(serviceProviderPersonalInfo.email);
         }
       })
@@ -28,7 +28,7 @@ const Profile = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    updateServiceProviderProfile(Name, PhoneNumber, emailAddress)
+    updateServiceProviderProfile(Name, PhoneNumber, emailAddress, Description)
       .then((response) => {
         if(response.data.success) {
           // service_provider_personal_info
