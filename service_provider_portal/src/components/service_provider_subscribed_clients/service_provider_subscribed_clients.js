@@ -34,7 +34,23 @@ const ServiceProviderSubscribedClients = (props) => {
     let formattedDate = ((date.getMonth() > 8) ? (date.getMonth() + 1) : ('0' + (date.getMonth() + 1))) + '/' + ((date.getDate() > 9) ? date.getDate() : ('0' + date.getDate())) + '/' + date.getFullYear()
     return formattedDate;
   }
+  const formatLastOrderedDate = (inputDate) => {
+    if( inputDate == null){
+      return 'No Orders yet';
+    }
+    if (isToday(inputDate)){
+      return 'Today';
+    }
+    return formatDate(inputDate);
+  }
 
+  const isToday = (someDate) => {
+    const today = new Date()
+    let date = new Date(someDate);
+    return date.getDate() == today.getDate() &&
+      date.getMonth() == today.getMonth() &&
+      date.getFullYear() == today.getFullYear()
+  }
   useEffect(() => {
     getAllServiceProviderSubscribedClients()
     .then((response) => {
@@ -122,7 +138,7 @@ const ServiceProviderSubscribedClients = (props) => {
                   <td>{client.email}</td>
                   <td>{client.phone_number}</td>
                   <td style={{whiteSpace: 'pre-line'}}>{client.location}</td>
-                  <td>{client._date_ordered}</td>
+                  <td>{formatLastOrderedDate(client.last_ordered_meal_date)}</td>
                   <td>
                     <div className="mb-4">
                       <Button

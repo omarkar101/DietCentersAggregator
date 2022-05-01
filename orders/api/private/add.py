@@ -17,7 +17,6 @@ def send_meal_to_client():
     with db_session.begin():
         order = Order(user_id=user_id, item_id=item_id)
         db_session.add(order)
-        db_session.refresh()
         client = db_session.query(Client) \
         .filter(Client.user_id == user_id) \
         .first()
