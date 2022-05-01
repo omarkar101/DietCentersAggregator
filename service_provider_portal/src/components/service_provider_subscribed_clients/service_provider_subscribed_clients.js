@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useReducer, useState } from "react";
 import { Button, Table } from "react-bootstrap";
 import styled from "styled-components";
-import { getAllServiceProviderSubscribedClients, cancelSubscribedClient, getAllMealPlans, getClientPreferredMeal } from '../../api/requests';
+import { getAllServiceProviderSubscribedClients, cancelSubscribedClient, getAllMealPlans, getClientPreferredMeal, sendMealToClient } from '../../api/requests';
 import PreferredMealModal from './preferred_meal_modal';
 
 
@@ -64,6 +64,23 @@ const ServiceProviderSubscribedClients = (props) => {
       });
   }, []);
 
+  const sendMeal = useCallback((e,f) => {
+    if (e != null){
+      if (f!=null){
+        sendMealToClient(e, f)
+          .then((response) => {
+            if (response.data.success) {
+            } else {
+              console.log(response.data.message);
+            }
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      }
+    }
+  }, []);
+
   const toggleViewClientPreferredMealModal = useCallback((e, f) => {
     const client = e;
     const mealPlan = f
@@ -80,6 +97,7 @@ const ServiceProviderSubscribedClients = (props) => {
         <PreferredMealModal
           isOpen={state.modalOpen}
           onClose={toggleClosePreferredMealModal}
+          onSubmit={sendMeal}
           client= {state.selectedClient}
           mealPlan={state.selectedMealPlan}
         />

@@ -2,7 +2,7 @@ import React, { useReducer, useEffect, useCallback } from "react";
 import { Button, Form, Modal, Table, Col, Row } from "react-bootstrap";
 import styled from "styled-components";
 import { subscribeClientToMealPlan } from "../../api/requests";
-import { getItemsOfAMealPlan, getMealPlanById, getClientMealPlan, getMealPlanItems, getClientPreferredMeal, sendMealToClient } from "../../api/requests";
+import { getItemsOfAMealPlan, getMealPlanById, getClientMealPlan, getMealPlanItems, getClientPreferredMeal } from "../../api/requests";
 // import ItemCard from "./itemCard";
 
 const reducer = (state, action) => {
@@ -21,7 +21,7 @@ const reducer = (state, action) => {
 };
 
 const PreferredMealModal = (props) => {
-  const { isOpen, onClose, client, mealPlan } = props;
+  const { isOpen, onClose, client, mealPlan, onSubmit } = props;
 
   const [state, dispatch] = useReducer(reducer, {
     mealPlan: null,
@@ -31,29 +31,13 @@ const PreferredMealModal = (props) => {
     mostRecentMealOrdered: null
   }); 
 
-const sendMeal = useCallback((e) => {
-  // console.log(itemId)
-  if (client != null){
-    if (e.target.id!=null){
-      sendMealToClient(client.user_id, e.target.id)
-        .then((response) => {
-          if (response.data.success) {
-            onClose()
-          } else {
-            console.log(response.data.message);
-          }
-        })
-        .catch((e) => {
-          console.log(e);
-        });
-    }
-  }
-}, []);
 
-//   const handleSubmit = (e) => {
-//     e.preventDefault();
-//     onSubmit();
-//   };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    onSubmit(client.user_id, e.target.id);
+    onClose();
+  };
 
   useEffect(() => {
     if (mealPlan != null) {
@@ -97,7 +81,7 @@ const sendMeal = useCallback((e) => {
           : <div>
           
           {state.preferredMeal.name}
-        <Button onClick={sendMeal} id={state.preferredMeal.id} class="btn btn-success">send</Button>
+        <Button onClick={handleSubmit} id={state.preferredMeal.id} class="btn btn-success">send</Button>
         </div>
           }
 
@@ -111,7 +95,7 @@ const sendMeal = useCallback((e) => {
           <div>
             <div>item name: {item.name}</div>
             <div>description: {item.description}</div>
-              <Button id={item.id} onClick={sendMeal} class="btn btn-success">send</Button>
+              <Button onClick={handleSubmit} id={item.id} class="btn btn-success">send</Button>
             <hr/>
           </div>
           
@@ -120,7 +104,7 @@ const sendMeal = useCallback((e) => {
       </Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={onClose}>
-          Close
+          Cancel
         </Button>
       </Modal.Footer>
     </Modal>
