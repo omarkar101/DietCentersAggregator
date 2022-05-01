@@ -1,7 +1,7 @@
 from sqlalchemy import Column, Text, ForeignKey, text
 from sqlalchemy.orm import relationship
 from sqlalchemy.ext.hybrid import hybrid_property
-from database.orm import Base
+from database.orm import Base, db_session
 from azure.storage.blob import BlockBlobService
 import uuid
 
@@ -18,6 +18,7 @@ class ServiceProvider(Base):
     _name = Column('name', Text, nullable=False, unique=True)
     description = Column(Text, nullable=True)
     img_url = Column(Text, nullable=True, server_default=text("'https://299storage.blob.core.windows.net/container/blank-profile-picture.png'"))
+    address = Column(Text, nullable=True)
 
     user_id = Column(ForeignKey('users.id', ondelete='CASCADE'), primary_key=True, nullable=False)
 
@@ -46,7 +47,7 @@ class ServiceProvider(Base):
         uid = uuid.uuid4()
         filename = f'{self.name}_{uid.hex}_{image_file.filename}'
         blob_service.create_blob_from_stream('container', filename, image_file)
-        self.image_url = f'https://299storage.blob.core.windows.net/container/{filename}'
+        self.img_url = f'https://299storage.blob.core.windows.net/container/{filename}'
 
     def as_dict(self):
         information = {c.name: getattr(self, c.name) for c in self.__table__.columns}

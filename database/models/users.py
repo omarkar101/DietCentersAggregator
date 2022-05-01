@@ -82,5 +82,7 @@ class User(Base):
         if information['user_type'] == UserType.SERVICE_PROVIDER:
             information['name'] = self.service_provider.name
             information['description'] = self.service_provider.description
+            information['img_url'] = self.service_provider.img_url
+            information['address'] = self.service_provider.address
         del information['user_type']
         return information
