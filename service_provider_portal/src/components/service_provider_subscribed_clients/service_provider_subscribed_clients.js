@@ -29,6 +29,8 @@ const ServiceProviderSubscribedClients = (props) => {
     selectedMealPlan: null
   });
 
+  const [success, setSuccess] = useState(null);
+
   const formatDate = (inputdate) => {
     let date = new Date(inputdate);
     let formattedDate = ((date.getMonth() > 8) ? (date.getMonth() + 1) : ('0' + (date.getMonth() + 1))) + '/' + ((date.getDate() > 9) ? date.getDate() : ('0' + date.getDate())) + '/' + date.getFullYear()
@@ -86,6 +88,13 @@ const ServiceProviderSubscribedClients = (props) => {
         sendMealToClient(e, f)
           .then((response) => {
             if (response.data.success) {
+              setSuccess('Meal successfully sent to client');
+              setTimeout(() => { setSuccess(null)}, 5000);
+              window.scrollTo({
+                top: 0,
+                left: 0,
+                behavior: "smooth"
+              });
             } else {
               console.log(response.data.message);
             }
@@ -109,6 +118,11 @@ const ServiceProviderSubscribedClients = (props) => {
 
   return (
     <>
+    {success != null && (
+        <div class="alert alert-success" role="alert">
+          {success}
+        </div>
+      )}
       <Container>
         <PreferredMealModal
           isOpen={state.modalOpen}

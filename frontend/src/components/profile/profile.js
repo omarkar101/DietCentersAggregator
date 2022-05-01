@@ -46,6 +46,7 @@ const Profile = () => {
   const [receiverFirstName, setreceiverFirstName] = useState('');
   const [receiverLastName, setreceiverLastName] = useState('');
   const [instructions, setinstructions] = useState('');
+  const [success, setSuccess] = useState(null);
 
   useEffect(() => {
     getClientProfile()
@@ -136,7 +137,14 @@ const Profile = () => {
     setClientPreferredMeal(mealId)
       .then((response) => {
         if(response.data.success){
-          window.location.reload();
+          setSuccess('Successfully set your preferred meal, reloading page now');
+          window.scrollTo({
+            top: 0,
+            left: 0,
+            behavior: "smooth"
+          });
+          setTimeout(() => { window.location.reload();}, 1500);
+          
           }
       })
       .catch((e) => {
@@ -145,6 +153,12 @@ const Profile = () => {
   })
 
   return (
+    <>
+    {success != null && (
+        <div class="alert alert-success" role="alert">
+          {success}
+        </div>
+      )}
     <Container>
       <Row style={{borderStyle: "solid", borderWidth: 2, borderColor: "#21ad83"}} className="rounded p-5 m-auto shadow-sm rounded-lg mt-5">
         <h3 className="text-black-50 p-3 text-center mb-5">
@@ -239,6 +253,7 @@ const Profile = () => {
           </>
         }
     </Container>
+    </>
   );
 };
 
