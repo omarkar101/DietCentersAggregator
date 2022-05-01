@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useReducer, useState } from "react";
 import { Button, Table } from "react-bootstrap";
 import styled from "styled-components";
-import { getAllServiceProviderSubscribedClients, cancelSubscribedClient, getAllMealPlans, getClientPreferredMeal } from '../../api/requests';
+import { getAllServiceProviderSubscribedClients, cancelSubscribedClient, getAllMealPlans, getClientPreferredMeal, sendMealToClient } from '../../api/requests';
 import PreferredMealModal from './preferred_meal_modal';
 
 
@@ -29,12 +29,30 @@ const ServiceProviderSubscribedClients = (props) => {
     selectedMealPlan: null
   });
 
+  const [success, setSuccess] = useState(null);
+
   const formatDate = (inputdate) => {
     let date = new Date(inputdate);
     let formattedDate = ((date.getMonth() > 8) ? (date.getMonth() + 1) : ('0' + (date.getMonth() + 1))) + '/' + ((date.getDate() > 9) ? date.getDate() : ('0' + date.getDate())) + '/' + date.getFullYear()
     return formattedDate;
   }
+  const formatLastOrderedDate = (inputDate) => {
+    if( inputDate == null){
+      return 'No Orders yet';
+    }
+    if (isToday(inputDate)){
+      return 'Today';
+    }
+    return formatDate(inputDate);
+  }
 
+  const isToday = (someDate) => {
+    const today = new Date()
+    let date = new Date(someDate);
+    return date.getDate() == today.getDate() &&
+      date.getMonth() == today.getMonth() &&
+      date.getFullYear() == today.getFullYear()
+  }
   useEffect(() => {
     getAllServiceProviderSubscribedClients()
     .then((response) => {
@@ -64,6 +82,30 @@ const ServiceProviderSubscribedClients = (props) => {
       });
   }, []);
 
+  const sendMeal = useCallback((e,f) => {
+    if (e != null){
+      if (f!=null){
+        sendMealToClient(e, f)
+          .then((response) => {
+            if (response.data.success) {
+              setSuccess('Meal successfully sent to client');
+              setTimeout(() => { setSuccess(null)}, 5000);
+              window.scrollTo({
+                top: 0,
+                left: 0,
+                behavior: "smooth"
+              });
+            } else {
+              console.log(response.data.message);
+            }
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      }
+    }
+  }, []);
+
   const toggleViewClientPreferredMealModal = useCallback((e, f) => {
     const client = e;
     const mealPlan = f
@@ -76,10 +118,16 @@ const ServiceProviderSubscribedClients = (props) => {
 
   return (
     <>
+    {success != null && (
+        <div class="alert alert-success" role="alert">
+          {success}
+        </div>
+      )}
       <Container>
         <PreferredMealModal
           isOpen={state.modalOpen}
           onClose={toggleClosePreferredMealModal}
+          onSubmit={sendMeal}
           client= {state.selectedClient}
           mealPlan={state.selectedMealPlan}
         />
@@ -104,7 +152,7 @@ const ServiceProviderSubscribedClients = (props) => {
                   <td>{client.email}</td>
                   <td>{client.phone_number}</td>
                   <td style={{whiteSpace: 'pre-line'}}>{client.location}</td>
-                  <td>{client._date_ordered}</td>
+                  <td>{formatLastOrderedDate(client.last_ordered_meal_date)}</td>
                   <td>
                     <div className="mb-4">
                       <Button
