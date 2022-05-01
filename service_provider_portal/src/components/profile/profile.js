@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { getServiceProviderProfile, updateServiceProviderImage, updateServiceProviderProfile } from "../../api/requests";
+import Authentication from "../../containers/auth_container";
 
 const Profile = () => {
   const [Name, setName] = useState("");
@@ -9,6 +10,8 @@ const Profile = () => {
   const [address, setAddress] = useState('');
   const [emailAddress, setemailAddress] = useState("");
   const [image, setImage] = useState(null);
+  const auth = Authentication.useContainer();
+
 
   useEffect(() => {
     getServiceProviderProfile()
@@ -57,6 +60,11 @@ const Profile = () => {
       });
   }
 
+  const logout = (e) => {
+    auth.setToken(null);
+    window.location.reload();
+  }
+
   return (
     <Container>
       <div className='row m-2'>
@@ -77,6 +85,9 @@ const Profile = () => {
               <button className='btn btn-primary' type='button' onClick={choosePhoto}>
                 Upload new image
               </button>
+              <div className="mt-3">
+                <a onClick={logout} href="">Logout</a>
+              </div>
             </div>
           </div>
         </div>

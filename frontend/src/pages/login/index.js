@@ -83,78 +83,69 @@ const Login = () => {
       {redirectToHome && <HomePage />}
       {!redirectToHome && (
         <Container>
-          <h1 className="text-black-50 p-3 text-center rounded mb-5">Login</h1>
-          {error != null && (
+    {error != null && (
             <div style={{color: '#D70040', textAlign: 'center', fontSize: 20}}>
               {error}
             </div>
           )}
-          <Row className="mt-5">
-            <Col
-              lg={4}
-              md={6}
-              sm={12}
-              style={{
-                borderStyle: "solid",
-                borderWidth: 2,
-                borderColor: "#21ad83",
-              }}
-              className="rounded p-5 m-auto shadow-sm rounded-lg"
-            >
-              <Form onSubmit={handleSubmit}>
-                <Form.Group className="mb-3" controlId="formBasicEmail">
-                  <Form.Label>Email Address</Form.Label>
-                  <Form.Control
-                    type="email"
-                    placeholder="Enter email"
-                    pattern="^\S+@\S+\.\S+$"
-                    onChange={(e) => setEmail(e.target.value)}
-                  />
-                </Form.Group>
+          <h1 className="text-black-50 p-3 text-center rounded">Login</h1>
+          <Row style={{'display': 'flex', 'justify-content': 'center'}} className="m-2">
+            <div className="w-50">
+                <Form onSubmit={handleSubmit}>
+                  <Form.Group className="mb-2" controlId="formBasicEmail">
+                    <Form.Label>Email Address</Form.Label>
+                    <Form.Control
+                      type="email"
+                      placeholder="Enter email"
+                      pattern="^\S+@\S+\.\S+$"
+                      onChange={(e) => setEmail(e.target.value)}
+                    />
+                  </Form.Group>
 
-                <Form.Group className="mb-1" controlId="formBasicPassword">
-                  <Form.Label>Password</Form.Label>
-                  <Form.Control
-                    type="password"
-                    placeholder="Password"
-                    onChange={(e) => setPassword(e.target.value)}
+                  <Form.Group className="mb-1" controlId="formBasicPassword">
+                    <Form.Label>Password</Form.Label>
+                    <Form.Control
+                      required
+                      type="password"
+                      placeholder="Password"
+                      onChange={(e) => setPassword(e.target.value)}
+                    />
+                  </Form.Group>
+                  <Button
+                    className="mt-1"
+                    style={{
+                      color: "white",
+                      backgroundColor: "#21ad83",
+                      borderColor: "#21ad83",
+                      width: "100%",
+                    }}
+                    variant="success btn-block"
+                    type="submit"
+                  >
+                    Login
+                  </Button>
+                </Form>
+                <div>
+                  <Link to={`/signup`} style={{ fontSize: "13px" }}>
+                    Don't have an account? Create One!
+                  </Link>
+                </div>
+                <div>
+                  <ForgetPasswordModal
+                    isOpen={state.modalOpen}
+                    onClose={toggleModalOnClose}
                   />
-                </Form.Group>
-                <Button
-                  className="mt-1"
-                  style={{
-                    color: "white",
-                    backgroundColor: "#21ad83",
-                    borderColor: "#21ad83",
-                    width: "100%",
-                  }}
-                  variant="success btn-block"
-                  type="submit"
-                >
-                  Login
-                </Button>
-              </Form>
-              <div>
-                <Link to={`/signup`} style={{ fontSize: "13px" }}>
-                  Don't have an account? Create One!
-                </Link>
-              </div>
-              <div>
-                <ForgetPasswordModal
-                  isOpen={state.modalOpen}
-                  onClose={toggleModalOnClose}
-                />
-                <LinkToForgetPassword
-                  style={{ fontSize: "13px" }}
-                  onClick={toggleOpenModal}
-                >
-                  Forget Password?
-                </LinkToForgetPassword>
-                {/* <Link to={`/forget_password`} style={{ fontSize: '13px' }}>Forget Password?</Link> */}
-              </div>
-            </Col>
+                  <LinkToForgetPassword
+                    style={{ fontSize: "13px" }}
+                    onClick={toggleOpenModal}
+                  >
+                    Forget Password?
+                  </LinkToForgetPassword>
+                  {/* <Link to={`/forget_password`} style={{ fontSize: '13px' }}>Forget Password?</Link> */}
+                </div>
+            </div>
           </Row>
-          <h6 className="mt-5 p-5 text-center text-secondary ">
+          <h6 className="mt-5 p-2 text-center text-secondary ">
             Copyright © 2022 JARO. All Rights Reserved.
           </h6>
         </Container>
@@ -169,13 +160,14 @@ const LinkToForgetPassword = styled.a`
   }
 `;
 const Container = styled.div`
-  position: relative;
   align-self: center;
+  display: flex;
+  flex-direction: column;
   max-height: initial;
+  justify-content: center
   font-size: 1.6rem;
   box-sizing: inherit;
   font-weight: 300;
-  margin: 100px;
 `;
 
 export default Login;

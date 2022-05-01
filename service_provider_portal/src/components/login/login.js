@@ -78,26 +78,16 @@ const Login = () => {
   return (
     <>
       <Container>
-        <h1 className="text-black-50 p-3 text-center rounded mb-5">Login</h1>
+        <h1 className="text-black-50 p-3 text-center rounded">Login</h1>
         {error != null && (
             <div style={{color: '#D70040', textAlign: 'center', fontSize: 20}}>
               {error}
             </div>
           )}
-        <Row className="mt-5">
-          <Col
-            lg={4}
-            md={6}
-            sm={12}
-            style={{
-              borderStyle: "solid",
-              borderWidth: 2,
-              borderColor: "#21ad83",
-            }}
-            className="rounded p-5 m-auto shadow-sm rounded-lg"
-          >
+        <Row style={{'display': 'flex', 'justify-content': 'center'}} className="m-2">
+          <div className="w-50">
             <Form onSubmit={handleSubmit}>
-              <Form.Group className="mb-3" controlId="formBasicEmail">
+              <Form.Group className="mb-2" controlId="formBasicEmail">
                 <Form.Label>Email address</Form.Label>
                 <Form.Control
                   type="email"
@@ -134,6 +124,7 @@ const Login = () => {
                 </Link>
               </div>
             </Form>
+            
             <div>
               <ForgetPasswordModal
                 isOpen={state.modalOpen}
@@ -147,8 +138,10 @@ const Login = () => {
             >
               Forget Password?
             </LinkToForgetPassword>
-          </Col>
+          </div>
         </Row>
+        
+        
         <h6 className="mt-5 p-5 text-center text-secondary ">
           Copyright © 2022 JARO. All Rights Reserved.
         </h6>
@@ -164,13 +157,14 @@ const LinkToForgetPassword = styled.a`
 `;
 
 const Container = styled.div`
-  position: relative;
   align-self: center;
+  display: flex;
+  flex-direction: column;
   max-height: initial;
+  justify-content: center
   font-size: 1.6rem;
   box-sizing: inherit;
   font-weight: 300;
-  margin: 100px;
 `;
 
 export default Login;

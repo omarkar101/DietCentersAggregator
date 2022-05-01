@@ -29,10 +29,10 @@ const Collection = ({ list }) => {
 
         <div className="collection-subtitle-row">
           <div className="collection-subtitle-text">
-            Explore list of top packages in Beirut, based on trends
+            Explore list of top packages, based on trends
           </div>
           <div className="collection-location">
-            <div>All Packages in Beirut</div>
+            <div>All Packages</div>
             <i className="fi fi-rr-caret-right absolute-center"></i>
           </div>
         </div>
@@ -51,7 +51,7 @@ const Item = ({ item }) => {
   return (
     <div key={item.id}>
       <Link
-        to={`/package/${item.id}/${item.user_id}`}
+        to={`/serviceProvider/${item.user_id}`}
         style={{ color: "inherit", textDecoration: "inherit" }}
       >
         <div className="collection-cover">

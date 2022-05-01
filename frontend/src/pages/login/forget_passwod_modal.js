@@ -12,7 +12,6 @@ const ForgetPasswordModal = (props) => {
   const [disabled, setDisabled] = useState(true);
 
   const handleSubmit = (e) => {
-    e.preventDefault();
     if (password === confirmPassword) {
       updatePassword(email, password, pin)
         .then((response) => {
@@ -29,6 +28,7 @@ const ForgetPasswordModal = (props) => {
 
   const sendEmail = (e) => {
     e.preventDefault();
+    if (email == null || email === '') return;
     forgetPassword(email)
       .then((response) => {
         if (response.data.success) {
@@ -56,77 +56,78 @@ const ForgetPasswordModal = (props) => {
           <Modal.Title>Forget Password</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form onSubmit={handleSubmit}>
+          <Form onSubmit={sendEmail}>
             <Form.Label>Email Address</Form.Label>
             <Row>
-              <Form.Group className="mb-3" controlId="formBasicEmail">
+              <Form.Group className='mb-3' controlId='formBasicEmail'>
                 <Form.Control
                   required
-                  type="email"
-                  placeholder="Email Address"
-                  pattern="^\S+@\S+\.\S+$"
+                  type='email'
+                  placeholder='Email Address'
+                  pattern='^\S+@\S+\.\S+$'
                   onChange={(e) => setEmail(e.target.value)}
                 />
                 <Col>
                   <Button
-                    className="mt-1"
+                    className='mt-1'
                     style={{
                       color: "white",
                       backgroundColor: "#21ad83",
                       borderColor: "#21ad83",
                       width: "100%",
                     }}
-                    variant="success btn-block"
-                    onClick={sendEmail}
-                  >
+                    variant='success btn-block'
+                    type='submit'>
                     Send Pin!
                   </Button>
+                  {!disabled && <div class="alert alert-success mt-2" role="alert">Please check your email address for the pin!</div>}
                 </Col>
               </Form.Group>
             </Row>
+          </Form>
+          <Form onSubmit={handleSubmit}>
             <Row>
-              <Form.Group className="mb-1" controlId="formBasicPin">
+              <Form.Group className='mb-1' controlId='formBasicPin'>
                 <Form.Label>Pin</Form.Label>
                 <Form.Control
                   required
                   disabled={disabled}
-                  type="text"
-                  placeholder="Pin"
+                  type='text'
+                  placeholder='Pin'
                   onChange={(e) => setPin(e.target.value)}
                 />
               </Form.Group>
-              <Form.Group className="mb-1" controlId="formBasicPassword">
+              <Form.Group className='mb-1' controlId='formBasicPassword'>
                 <Form.Label>Password</Form.Label>
                 <Form.Control
                   required
                   disabled={disabled}
-                  type="password"
-                  placeholder="Password"
+                  type='password'
+                  placeholder='Password'
                   onChange={(e) => setPassword(e.target.value)}
                 />
               </Form.Group>
-              <Form.Group className="mb-1" controlId="formBasicConfirmPassword">
+              <Form.Group className='mb-1' controlId='formBasicConfirmPassword'>
                 <Form.Label>Confirm Password</Form.Label>
                 <Form.Control
                   required
                   disabled={disabled}
-                  type="password"
-                  placeholder="Confirm Password"
+                  type='password'
+                  placeholder='Confirm Password'
                   onChange={(e) => setConfirmPassword(e.target.value)}
                 />
               </Form.Group>
               <Button
-                className="mt-1"
+                className='mt-1'
                 style={{
                   color: "white",
                   backgroundColor: "#21ad83",
                   borderColor: "#21ad83",
                   width: "100%",
                 }}
-                variant="success btn-block"
+                variant='success btn-block'
                 disabled={disabled}
-                type="submit"
-              >
+                type='submit'>
                 Submit
               </Button>
             </Row>

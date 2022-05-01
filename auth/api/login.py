@@ -23,6 +23,8 @@ def user():
 def forget_password():
     email = str(request.form.get('email'))
     credentials = Credentials.query.filter(Credentials.email == email).first()
+    if(credentials is None):
+        return jsonify(success=False)
     with db_session.begin():
         pin = credentials.generate_forget_password_pin()
     print(email, pin)
