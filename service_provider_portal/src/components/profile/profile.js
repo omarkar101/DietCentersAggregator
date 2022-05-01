@@ -1,24 +1,26 @@
-import React, { useEffect, useReducer, useState } from "react";
-import { Form, Button, Col, Row } from "react-bootstrap";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { getServiceProviderProfile, updateServiceProviderProfile } from '../../api/requests';
+import { getServiceProviderProfile, updateServiceProviderImage, updateServiceProviderProfile } from "../../api/requests";
 
 const Profile = () => {
-
-  const [Name, setName] = useState('');
-  const [PhoneNumber, setPhoneNumber] = useState('');
-  const [Description, setDescription] = useState('');
-  const [emailAddress, setemailAddress] = useState('');
+  const [Name, setName] = useState("");
+  const [PhoneNumber, setPhoneNumber] = useState("");
+  const [Description, setDescription] = useState("");
+  const [address, setAddress] = useState('');
+  const [emailAddress, setemailAddress] = useState("");
+  const [image, setImage] = useState(null);
 
   useEffect(() => {
     getServiceProviderProfile()
       .then((response) => {
-        if(response.data.success) {
+        if (response.data.success) {
           const serviceProviderPersonalInfo = response.data.service_provider_personal_info;
           setName(serviceProviderPersonalInfo.name);
           setPhoneNumber(serviceProviderPersonalInfo.phone_number);
           setDescription(serviceProviderPersonalInfo.description);
           setemailAddress(serviceProviderPersonalInfo.email);
+          setImage(serviceProviderPersonalInfo.img_url);
+          setAddress(serviceProviderPersonalInfo.address)
         }
       })
       .catch((e) => {
@@ -28,95 +30,123 @@ const Profile = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    updateServiceProviderProfile(Name, PhoneNumber, emailAddress, Description)
+    updateServiceProviderProfile(Name, PhoneNumber, emailAddress, Description, address)
       .then((response) => {
-        if(response.data.success) {
-          // service_provider_personal_info
+        if (response.data.success) {
+          window.location.reload();
         }
       })
       .catch((e) => {
         console.log(e);
       });
   };
+
+  const choosePhoto = (e) => {
+    document.getElementById('fileInput').click();
+  }
+
+  const handleSubmitImg = (e) => {
+    updateServiceProviderImage(e.target.files[0])
+      .then((response) => {
+        if (response.data.success) {
+          window.location.reload();
+        }
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }
+
   return (
     <Container>
-      <h1 className="text-black-50 p-3 text-center rounded">My Account</h1>
-      <Form onSubmit={handleSubmit}>
-        <Row className="mt-5">
-          <Col
-            lg={6}
-            md={6}
-            sm={12}
-            style={{
-              borderRightStyle: "solid",
-              borderRightWidth: 2,
-              borderRightColor: "#21ad83",
-            }}
-            className="m-auto"
-          >
-            <div className="p-5 mb-5">
-              <h4 className="text-black-50 p-3 text-center">
-                User Information
-              </h4>
-              <Row className="mb-5">
-                <Form.Group controlId="formGridPhoneNumber">
-                  <Form.Label>Phone Number</Form.Label>
-                  <Form.Control value={PhoneNumber} required onChange={(e) => setPhoneNumber(e.target.value)} type="text" placeholder="+961 03/030303" />
-                </Form.Group>
-              </Row>
-
-              <Row className="mb-5">
-                <Form.Group controlId="formGridfirst">
-                  <Form.Label>Name</Form.Label>
-                  <Form.Control value={Name} required onChange={(e) => setName(e.target.value)} type="text" placeholder="Name" />
-                </Form.Group>
-              </Row>
+      <div className='row m-2'>
+        <div className='col-xl-4'>
+          <div className='card mb-4 mb-xl-0'>
+            <div className='card-header'>Profile Picture</div>
+            <div className='card-body text-center'>
+              <img
+                className='img-account-profile rounded-circle mb-2 w-50 h-50'
+                src={image}
+                alt='profile image'
+                onClick={() => console.log('clickedddd')}
+              />
+              <div className='small font-italic text-muted mb-4'>Photo uploaded will be automatically saved</div>
+              <div style={{height:0, overflow: "hidden"}}>
+                <input type="file" id="fileInput" onChange={handleSubmitImg} />
+              </div>
+              <button className='btn btn-primary' type='button' onClick={choosePhoto}>
+                Upload new image
+              </button>
             </div>
-            <div
-              className="p-5"
-              style={{
-                borderTopStyle: "solid",
-                borderTopWidth: 2,
-                borderTopColor: "#21ad83",
-              }}
-            >
-              <h4 className="text-black-50 p-3 mb-5 text-center">About Me</h4>
-
-              <Row className="mb-5">
-                <Form.Group as={Col} md="8" controlId="formGridDescription">
-                  <Form.Label>Description</Form.Label>
-                  <Form.Control value={Description} required onChange={(e) => setDescription(e.target.value)} as="textarea" rows={3} placeholder="Description" />
-                </Form.Group>
-              </Row>
+          </div>
+        </div>
+        <div className='col-xl-8'>
+          <div className='card mb-4'>
+            <div className='card-header'>Account Details</div>
+            <div className='card-body'>
+              <form onSubmit={handleSubmit}>
+                <div className='mb-3'>
+                  <label className='small mb-1'>
+                    Name
+                  </label>
+                  <input
+                    className='form-control'
+                    type='text'
+                    placeholder='Enter your Name'
+                    value={Name}
+                    onChange={(e) => setName(e.target.value)}
+                  />
+                </div>
+                <div className='mb-3'>
+                  <label className='small mb-1'>
+                    Address
+                  </label>
+                  <input
+                    className='form-control'
+                    type='text'
+                    placeholder='Enter your Location'
+                    value={address}
+                    onChange={(e) => setAddress(e.target.value)}
+                  />
+                </div>
+                <div className='mb-3'>
+                  <label className='small mb-1'>
+                    Email Address
+                  </label>
+                  <input
+                    className='form-control'
+                    type='email'
+                    placeholder='Enter your email address'
+                    value={emailAddress}
+                    onChange={(e) => setemailAddress(e.target.value)}
+                  />
+                </div>
+                <div className='mb-3'>
+                  <label className='small mb-1'>
+                    Phone Number
+                  </label>
+                  <input
+                    className='form-control'
+                    type='tel'
+                    placeholder='Enter your Phone Number'
+                    value={PhoneNumber}
+                    onChange={(e) => setPhoneNumber(e.target.value)}
+                  />
+                </div>
+                <div className='mb-3'>
+                  <label className='small mb-1'>
+                    Description
+                  </label>
+                  <textarea value={Description} className="form-control" onChange={(e) => setDescription(e.target.value)} />
+                </div>
+                <button className='btn btn-primary' type='submit'>
+                  Save changes
+                </button>
+              </form>
             </div>
-          </Col>
-          <Col lg={6} md={6} sm={12} className="rounded p-5 m-auto">
-            <h4 className="text-black-50 p-3 text-center">
-              Contact Information
-            </h4>
-
-            <Row className="mb-5">
-              <Form.Group className="mb-1" controlId="formGridEmailAddress">
-                <Form.Label>Email address</Form.Label>
-                <Form.Control value={emailAddress} required onChange={(e) => setemailAddress(e.target.value)} type="email" placeholder="xyz@example.com" />
-              </Form.Group>
-            </Row>
-          </Col>
-          <Button
-            className="mt-5"
-            style={{
-              margin: "auto",
-              color: "white",
-              backgroundColor: "#21ad83",
-              borderColor: "#21ad83",
-              width: "300px",
-            }}
-            type="submit"
-          >
-            Save Changes
-          </Button>
-        </Row>
-      </Form>
+          </div>
+        </div>
+      </div>
     </Container>
   );
 };
@@ -127,7 +157,6 @@ const Container = styled.div`
   max-height: initial;
   box-sizing: inherit;
   font-weight: 300;
-  margin: 100px;
 `;
 
 export default Profile;

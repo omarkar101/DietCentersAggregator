@@ -125,13 +125,21 @@ export const getServiceProviderProfile = () => {
   return Post('/user/get/service_provider_personal_info');
 }
 
-export const updateServiceProviderProfile = (name,  phoneNumber, emailAddress, description) => {
+export const updateServiceProviderProfile = (name,  phoneNumber, emailAddress, description, address) => {
   const data = new FormData();
   data.append('name', name);
   data.append('phone_number', phoneNumber);
   data.append('email_address', emailAddress);
   data.append('description', description);
+  data.append('address', address);
   return Post('/user/update/personal_info', data);
+}
+
+export const updateServiceProviderImage = (image) => {
+  const data = new FormData();
+  data.append('image', image);
+  console.log('IMAGGE FILE:', image);
+  return Post('/user/update/personal_info_image_set', data);
 }
 
 export const getAllServiceProviderSubscribedClients = () => {
