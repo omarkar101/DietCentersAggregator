@@ -12,7 +12,6 @@ const ForgetPasswordModal = (props) => {
   const [disabled, setDisabled] = useState(true);
 
   const handleSubmit = (e) => {
-    e.preventDefault();
     if (password === confirmPassword) {
       updatePassword(email, password, pin)
         .then((response) => {
@@ -29,6 +28,7 @@ const ForgetPasswordModal = (props) => {
 
   const sendEmail = (e) => {
     e.preventDefault();
+    if (email == null || email === '') return;
     forgetPassword(email)
       .then((response) => {
         if (response.data.success) {
@@ -80,6 +80,7 @@ const ForgetPasswordModal = (props) => {
                     type='submit'>
                     Send Pin!
                   </Button>
+                  {!disabled && <div class="alert alert-success mt-2" role="alert">Please check your email address for the pin!</div>}
                 </Col>
               </Form.Group>
             </Row>
