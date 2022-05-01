@@ -1,4 +1,4 @@
-from sqlalchemy import Column, BigInteger, Text, ForeignKey
+from sqlalchemy import Column, BigInteger, Text, ForeignKey, DateTime
 from sqlalchemy.orm import relationship
 from sqlalchemy.ext.hybrid import hybrid_property
 from database.orm import Base
@@ -12,7 +12,8 @@ class Client(Base):
     _last_name = Column('last_name', Text, nullable=False)
     _subscription_counter = Column('subscription_counter', BigInteger, nullable=True)
     _preferred_meal = Column('preferred_meal',BigInteger, nullable=True)
-    
+    _last_ordered_meal_date = Column('last_ordered_meal_date',DateTime, nullable=True)
+
     user_id = Column(ForeignKey('users.id', ondelete='CASCADE'), nullable=False, primary_key=True)
     
     _meal_plan_id = Column('meal_plan_id', ForeignKey('service_providers_meal_plans.id', ondelete='CASCADE'), nullable=True)
@@ -74,3 +75,10 @@ class Client(Base):
     @subscription_counter.setter
     def subscription_counter(self, subscription_counter):
         self._subscription_counter = subscription_counter
+
+    @hybrid_property
+    def last_ordered_meal_date(self):
+        return self._last_ordered_meal_date
+    @last_ordered_meal_date.setter
+    def last_ordered_meal_date(self, last_ordered_meal_date):
+        self._last_ordered_meal_date = last_ordered_meal_date
