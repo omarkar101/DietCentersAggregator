@@ -144,7 +144,6 @@ const Profile = () => {
             behavior: "smooth"
           });
           setTimeout(() => { window.location.reload();}, 1500);
-          
           }
       })
       .catch((e) => {

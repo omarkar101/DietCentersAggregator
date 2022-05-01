@@ -32,8 +32,26 @@ const Login = () => {
   const auth = Authentication.useContainer();
   const navigate = useNavigate();
 
+  
+  const loadError = (message) => {
+    setError(message);
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: "smooth"
+    });
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (!email) {
+      loadError('Please enter an email')
+      return;
+    }
+    if (!password) {
+      loadError('Please enter a password')
+      return;
+    }
     loginServiceProvider(email, password)
       .then((response) => {
         if (response.data.success) {
@@ -42,22 +60,12 @@ const Login = () => {
           navigate("/");
         } else {
           console.log(response.data.message);
-          setError('This email is already registered. Please login with your credentials.');
-          window.scrollTo({
-            top: 0,
-            left: 0,
-            behavior: "smooth"
-          });
+          setError('Incorrect email or password.');
         }
       })
       .catch((e) => {
         console.log(e);
-        setError('This email is already registered. Please login with your credentials.');
-        window.scrollTo({
-          top: 0,
-          left: 0,
-          behavior: "smooth"
-        });
+        setError('Incorrect email or password.');
       });
   };
   const toggleOpenModal = useCallback(() => {
@@ -69,13 +77,13 @@ const Login = () => {
   }, []);
   return (
     <>
-      {error != null && (
-        <div class="alert alert-danger" role="alert">
-          {error}
-        </div>
-      )}
       <Container>
-        <h1 className="text-black-50 p-3 text-center rounded">Login</h1>
+        <h1 className="text-black-50 p-3 text-center rounded mb-5">Login</h1>
+        {error != null && (
+            <div style={{color: '#D70040', textAlign: 'center', fontSize: 20}}>
+              {error}
+            </div>
+          )}
         <Row className="mt-5">
           <Col
             lg={4}
@@ -92,7 +100,6 @@ const Login = () => {
               <Form.Group className="mb-3" controlId="formBasicEmail">
                 <Form.Label>Email address</Form.Label>
                 <Form.Control
-                  required
                   type="email"
                   placeholder="Enter email"
                   pattern="^\S+@\S+\.\S+$"
@@ -103,7 +110,6 @@ const Login = () => {
               <Form.Group className="mb-1" controlId="formBasicPassword">
                 <Form.Label>Password</Form.Label>
                 <Form.Control
-                  required
                   type="password"
                   placeholder="Password"
                   onChange={(e) => setPassword(e.target.value)}

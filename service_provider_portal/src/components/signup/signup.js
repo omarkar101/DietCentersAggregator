@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Button, Col, Form, Row } from "react-bootstrap";
 import { signUpServiceProvider } from "../../api/requests";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import styled from "styled-components";
 
 const SignUp = (props) => {
@@ -9,11 +9,45 @@ const SignUp = (props) => {
   const [phoneNumber, setPhoneNumber] = useState(null);
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
+  const [confirmPassword, setConfirmPassword] = useState(null);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
+  const loadError = (message) => {
+    setError(message);
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: "smooth"
+    });
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (!name) {
+      loadError('Please enter a username')
+      return;
+    }
+    if (!phoneNumber) {
+      loadError('Please enter a phone number')
+      return;
+    }
+    if (!email) {
+      loadError('Please enter an email')
+      return;
+    }
+    if (!password) {
+      loadError('Please enter a password')
+      return;
+    }
+    if (!confirmPassword) {
+      loadError('Please confirm password')
+      return;
+    }
+    if (password != confirmPassword) {
+      loadError('Passwords do not match!')
+    }
+    else {
     signUpServiceProvider(email, password, name, phoneNumber)
       .then((response) => {
         if (response.data.success) {
@@ -21,35 +55,32 @@ const SignUp = (props) => {
           navigate("/login");
         } else {
           console.log(response.data.message);
-          setError('This email is already registered. Please login with your credentials.');
-          window.scrollTo({
-            top: 0,
-            left: 0,
-            behavior: "smooth"
-          });
+          loadError('This email is already registered. Please sign up with a different email.');
         }
       })
       .catch((e) => {
         console.log(e);
-        setError('This email is already registered. Please login with your credentials.');
-        window.scrollTo({
-          top: 0,
-          left: 0,
-          behavior: "smooth"
-        });
+        loadError('This email is already registered. Please sign up with a different email.');
       });
+    }
   };
 
   return (
     <>
-      {error != null && (
-        <div class="alert alert-danger" role="alert">
-          {error}
-        </div>
-      )}
       <Container>
-        <h1 className="text-black-50 p-3 text-center rounded">Sign-Up</h1>
+        <h1 className="text-black-50 p-3 text-center rounded mb-5">Sign-Up</h1>
 
+        <Col
+        lg={5}
+        md={6}
+        sm={12}
+        className="m-auto">
+          {error != null && (
+            <div style={{color: '#D70040', textAlign: 'center', fontSize: 20}}>
+              {error}
+            </div>
+          )}
+        </Col>
         <Row className="mt-5">
           <Col
             lg={5}
@@ -68,7 +99,7 @@ const SignUp = (props) => {
                 <Form.Control
                   type="text"
                   placeholder="Name"
-                  pattern="[a-zA-Z]+"
+                  pattern="[a-zA-Z ]+"
                   onChange={(e) => setName(e.target.value)}
                 />
               </Form.Group>
@@ -77,8 +108,8 @@ const SignUp = (props) => {
                 <Form.Label>Phone Number</Form.Label>
                 <Form.Control
                   type="text"
-                  placeholder="Phone Number"
-                  pattern="\+[0-9]+"
+                  placeholder=""
+                  pattern="\+?[0-9]+"
                   onChange={(e) => setPhoneNumber(e.target.value)}
                 />
               </Form.Group>
@@ -102,9 +133,18 @@ const SignUp = (props) => {
                   onChange={(e) => setPassword(e.target.value)}
                 />
                 <Form.Text className="text-muted" style={{ fontSize: 12 }}>
-                  Minimum eight characters, at least one uppercase letter, one
-                  lowercase letter and one number.
+                  Your password should have a minimum of eight characters, at least one uppercase letter, one
+                  lowercase letter, one number, and a symbol.
                 </Form.Text>
+              </Form.Group>
+              <Form.Group className="mb-2" controlId="formBasicConfirmPassword">
+                <Form.Label>Confirm Password</Form.Label>
+                <Form.Control
+                  type="password"
+                  pattern="^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$"
+                  placeholder="Confirm Password"
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                />
               </Form.Group>
               <Button
                 className="mt-5"
@@ -119,6 +159,11 @@ const SignUp = (props) => {
               >
                 Sign-up
               </Button>
+              <div>
+                <Link to={`/login`} style={{ fontSize: "13px" }}>
+                  Already have an account? Login!
+                </Link>
+              </div>
             </Form>
           </Col>
         </Row>

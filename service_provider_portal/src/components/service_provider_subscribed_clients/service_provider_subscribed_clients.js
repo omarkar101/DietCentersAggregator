@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useReducer, useState } from "react";
 import { Button, Table } from "react-bootstrap";
 import styled from "styled-components";
-import { getAllServiceProviderSubscribedClients, cancelSubscribedClient, getAllMealPlans, getClientPreferredMeal, sendMealToClient } from '../../api/requests';
+import { getAllServiceProviderSubscribedClients, cancelSubscribedClient, sendMealToClient } from '../../api/requests';
 import PreferredMealModal from './preferred_meal_modal';
 
 
@@ -49,9 +49,9 @@ const ServiceProviderSubscribedClients = (props) => {
   const isToday = (someDate) => {
     const today = new Date()
     let date = new Date(someDate);
-    return date.getDate() == today.getDate() &&
-      date.getMonth() == today.getMonth() &&
-      date.getFullYear() == today.getFullYear()
+    return date.getDate() === today.getDate() &&
+      date.getMonth() === today.getMonth() &&
+      date.getFullYear() === today.getFullYear()
   }
   useEffect(() => {
     getAllServiceProviderSubscribedClients()

@@ -1,8 +1,6 @@
-import React, { useReducer, useEffect, useCallback } from "react";
-import { Button, Form, Modal, Table, Col, Row } from "react-bootstrap";
-import styled from "styled-components";
-import { subscribeClientToMealPlan } from "../../api/requests";
-import { getItemsOfAMealPlan, getMealPlanById, getClientMealPlan, getMealPlanItems, getClientPreferredMeal } from "../../api/requests";
+import React, { useReducer, useEffect } from "react";
+import { Button, Modal } from "react-bootstrap";
+import { getMealPlanItems, getClientPreferredMeal } from "../../api/requests";
 // import ItemCard from "./itemCard";
 
 const reducer = (state, action) => {
