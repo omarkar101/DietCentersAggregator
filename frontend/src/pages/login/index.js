@@ -137,7 +137,6 @@ const Login = () => {
                   </LinkToForgetPassword>
                   {/* <Link to={`/forget_password`} style={{ fontSize: '13px' }}>Forget Password?</Link> */}
                 </div>
-
             </div>
           </Row>
           <h6 className="mt-5 p-2 text-center text-secondary ">
