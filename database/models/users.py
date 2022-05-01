@@ -81,5 +81,6 @@ class User(Base):
                 information['biometrics'] = self.client.biometrics.as_dict()
         if information['user_type'] == UserType.SERVICE_PROVIDER:
             information['name'] = self.service_provider.name
+            information['description'] = self.service_provider.description
         del information['user_type']
         return information

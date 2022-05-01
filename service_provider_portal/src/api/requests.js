@@ -125,11 +125,12 @@ export const getServiceProviderProfile = () => {
   return Post('/user/get/service_provider_personal_info');
 }
 
-export const updateServiceProviderProfile = (name,  phoneNumber, emailAddress) => {
+export const updateServiceProviderProfile = (name,  phoneNumber, emailAddress, description) => {
   const data = new FormData();
   data.append('name', name);
   data.append('phone_number', phoneNumber);
   data.append('email_address', emailAddress);
+  data.append('description', description);
   return Post('/user/update/personal_info', data);
 }
 

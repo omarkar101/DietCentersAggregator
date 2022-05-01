@@ -16,6 +16,7 @@ def update_user():
     user_name = request.form.get('name')
     user_phone_number = request.form.get('phone_number')
     user_email_address = request.form.get('email_address')
+    user_description = request.form.get('description')
     user = db_session.query(User).filter(User.id == user_id).first()
     if user is None:
         return jsonify(success=False, message='User does not exist')
@@ -23,5 +24,6 @@ def update_user():
         user.service_provider.name = user_name
         user.phone_number = user_phone_number
         user.credentials.email = user_email_address
+        user.service_provider.description = user_description
     return jsonify(success=True, service_provider_personal_info=user.as_dict())
 

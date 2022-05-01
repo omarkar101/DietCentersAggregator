@@ -16,7 +16,7 @@ const ImagesSection = (props) => {
               <ServiceProviderName>{service_provider?.name}</ServiceProviderName>
             </MainServiceProviderDetailsSubSection>
             <RestaurantTitleDescription>
-              <div>{description}</div>
+              <div>{service_provider?.description}</div>
             </RestaurantTitleDescription>
             <br />
             <RestaurantTitleDescription>
