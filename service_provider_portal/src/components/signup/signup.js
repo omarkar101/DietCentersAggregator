@@ -50,20 +50,9 @@ const SignUp = (props) => {
       <Container>
         <h1 className="text-black-50 p-3 text-center rounded">Sign-Up</h1>
 
-        <Row className="mt-5">
-          <Col
-            lg={5}
-            md={6}
-            sm={12}
-            style={{
-              borderStyle: "solid",
-              borderWidth: 2,
-              borderColor: "#21ad83",
-            }}
-            className="rounded p-5 m-auto shadow-sm rounded-lg"
-          >
-            <Form onSubmit={handleSubmit} className="align-items:center">
-              <Form.Group className="mb-3" controlId="formBasicName">
+        <Row style={{'display': 'flex', 'justify-content': 'center'}} className="m-2">
+            <Form onSubmit={handleSubmit} className="w-50">
+              <Form.Group className="mb-2" controlId="formBasicName">
                 <Form.Label>Name</Form.Label>
                 <Form.Control
                   type="text"
@@ -73,7 +62,7 @@ const SignUp = (props) => {
                 />
               </Form.Group>
 
-              <Form.Group className="mb-3" controlId="formBasicPhoneNumber">
+              <Form.Group className="mb-2" controlId="formBasicPhoneNumber">
                 <Form.Label>Phone Number</Form.Label>
                 <Form.Control
                   type="text"
@@ -83,7 +72,7 @@ const SignUp = (props) => {
                 />
               </Form.Group>
 
-              <Form.Group className="mb-3" controlId="formBasicEmail">
+              <Form.Group className="mb-2" controlId="formBasicEmail">
                 <Form.Label>Email address</Form.Label>
                 <Form.Control
                   type="email"
@@ -120,7 +109,6 @@ const SignUp = (props) => {
                 Sign-up
               </Button>
             </Form>
-          </Col>
         </Row>
         <h6 className="mt-5 p-5 text-center text-secondary ">
           Copyright © 2022 JARO. All Rights Reserved.
@@ -131,13 +119,14 @@ const SignUp = (props) => {
 };
 
 const Container = styled.div`
-  position: relative;
   align-self: center;
+  display: flex;
+  flex-direction: column;
   max-height: initial;
+  justify-content: center
   font-size: 1.6rem;
   box-sizing: inherit;
   font-weight: 300;
-  margin: 100px;
 `;
 
 export default SignUp;
