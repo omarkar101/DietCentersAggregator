@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { useCallback, useReducer, useEffect } from "react";
-import { Modal, Button, Col, Form, Row } from "react-bootstrap";
+import { useCallback, useReducer } from "react";
+import { Button, Form, Row } from "react-bootstrap";
 import HomePage from "../home";
 import styled from "styled-components";
 import { loginServiceProvider } from "../../api/requests";
@@ -83,12 +83,12 @@ const Login = () => {
       {redirectToHome && <HomePage />}
       {!redirectToHome && (
         <Container>
-    {error != null && (
+          <h1 className="text-black-50 p-3 text-center rounded mb-5">Login</h1>
+          {error != null && (
             <div style={{color: '#D70040', textAlign: 'center', fontSize: 20}}>
               {error}
             </div>
           )}
-          <h1 className="text-black-50 p-3 text-center rounded">Login</h1>
           <Row style={{'display': 'flex', 'justify-content': 'center'}} className="m-2">
             <div className="w-50">
                 <Form onSubmit={handleSubmit}>

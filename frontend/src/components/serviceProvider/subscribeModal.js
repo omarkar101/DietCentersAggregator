@@ -1,56 +1,41 @@
-import React, { useReducer, useEffect } from "react";
-import { Button, Form, Modal, Table, Col, Row } from "react-bootstrap";
-import styled from "styled-components";
-import { subscribeClientToMealPlan } from "../../api/requests";
-import { getItemsOfAMealPlan, getClientMealPlan } from "../../api/requests";
-import ItemCard from "./itemCard";
+import React from "react";
+import { Button, Modal, Card } from "react-bootstrap";
 
-const reducer = (state, action) => {
-  switch (action.type) {
-    case "get-meal-plan-by-id":
-      return { ...state, mealPlan: action.mealPlan };
-    case "get-items-of-meal-plan":
-      return { ...state, itemsOfMealPlan: action.itemsOfMealPlan };
-    default:
-      throw new Error();
-  }
-};
 
 const SubscribeModal = (props) => {
-  const { isOpen, onClose, onSubmit, mealPlan } = props;
-
-  const [state, dispatch] = useReducer(reducer, {
-    mealPlan: null,
-    itemsOfMealPlan: [],
-  });
+  const { isOpen, onClose, onSubmit, mealPlan, items } = props;
 
   const handleSubmit = (e) => {
     e.preventDefault();
     onSubmit(mealPlan);
   };
 
-  useEffect(() => {
-    if (mealPlan != null) {
-      getItemsOfAMealPlan(mealPlan.id)
-        .then((response) => {
-          if (response.data.success) {
-            dispatch({
-              type: "get-items-of-meal-plan",
-              itemsOfMealPlan: response.data.meal_plan_items,
-            });
-          } else {
-            console.log(response.data.message);
-          }
-        })
-        .catch((e) => {
-          console.log(e);
-        });
-    }
-  }, [mealPlan]);
-
   return (
     <Modal size="lg" show={isOpen} onHide={onClose} onClose={onClose}>
       <Modal.Header closeButton>
+        <Modal.Title>Package Summary</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        {items?.map((item) => (
+          <Card key={item.id} style={{ marginBottom: 20, padding: 15 }}>
+            <Card.Img
+              variant="top"
+              src={item.imagelink}
+              alt="image"
+              width={100}
+              height={100}
+            />
+            <Card.Body>
+              <Card.Title>{item.name}</Card.Title>
+              <Card.Text>{item.description}</Card.Text>
+              {/* <ListGroup className="flush">
+                <ListGroupItem>Price: {item.price}</ListGroupItem>
+              </ListGroup> */}
+            </Card.Body>
+          </Card>
+        ))}
+      </Modal.Body>
+      <Modal.Header>
         <Modal.Title>Do you want to subscribe to this meal plan?</Modal.Title>
       </Modal.Header>
       <Modal.Body>

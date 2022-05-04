@@ -27,10 +27,9 @@ const reducer = (state, action) => {
       return { ...state, modalOpen: false, items: action.items };
     case "get-all-meal-plans":
       return { ...state, modalOpen: false, mealPlans: action.mealPlans };
-    case "open-package-modal":
+    case "success-package-items":
       return {
         ...state,
-        modalOpen: true,
         selectedPackageItems: action.packageItems,
       };
     case "close-package-modal":
@@ -71,11 +70,29 @@ const ServiceProviderPage = () => {
 
   const toggleOpenSubscribeModal = useCallback((e) => {
     const plan = e
+    if (plan.id == null) {
+      return;
+    } else {
+      getItemsOfAMealPlanOfServiceProvider(id, plan.id)
+        .then((response) => {
+          if (response.data.success) {
+            dispatch({
+              type: "success-package-items",
+              packageItems: response.data.meal_plan_items,
+            });
+          } else {
+            console.log(response.data.message);
+          }
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    }
     dispatch({
       type: "open-subscribe-modal",
       mealPlan: plan
     });
-  }, []);
+  }, [id]);
 
   useEffect(() => {
     getServiceProviderById(id)
@@ -120,30 +137,6 @@ const ServiceProviderPage = () => {
         console.log(e);
       });
   }, [id]);
-
-  const toggleOpenModal = useCallback(
-    (meal_plan_id) => {
-      if (meal_plan_id == null) {
-        return;
-      } else {
-        getItemsOfAMealPlanOfServiceProvider(id, meal_plan_id)
-          .then((response) => {
-            if (response.data.success) {
-              dispatch({
-                type: "open-package-modal",
-                packageItems: response.data.meal_plan_items,
-              });
-            } else {
-              console.log(response.data.message);
-            }
-          })
-          .catch((e) => {
-            console.log(e);
-          });
-      }
-    },
-    [id]
-  );
 
   const toggleSubscribeModalOnSubmit = useCallback((e) => {
     getClientMealPlan()
@@ -191,6 +184,7 @@ const ServiceProviderPage = () => {
         onClose={toggleSubscribeModalOnClose}
         onSubmit={toggleSubscribeModalOnSubmit}
         mealPlan={state.selectedMealPlan}
+        items={state.selectedPackageItems}
       />
 
       <MenuItemsContainer className="mt-5">
@@ -208,7 +202,6 @@ const ServiceProviderPage = () => {
             <PackageCard
               key={plan.id}
               plan={plan}
-              openModal={toggleOpenModal}
             />
             <Button
               variant="success"
