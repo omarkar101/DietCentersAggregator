@@ -235,18 +235,9 @@ const MealPlans = (props) => {
                     data-mealplanprice={mealPlan.price}
                     data-mealplancounter={mealPlan.meal_plan_uses}
                     variant="primary"
-                    size="sm"
                     onClick={toggleOpenEditMealPlanModal}
                     >
                     Edit
-                  </Button>
-                  <Button
-                    id={mealPlan.id}
-                    variant="danger"
-                    size="sm"
-                    onClick={toggleDeleteMealPlan}
-                    >
-                    Delete
                   </Button>
                 </div>
               </td>
@@ -256,7 +247,6 @@ const MealPlans = (props) => {
               <Button
                     id={mealPlan.id}
                     variant={mealPlan.isavailable? "danger" : "success"}
-                    size="sm"
                     onClick={toggleMealPlanAvailability}
                     >
                       {mealPlan.isavailable? "Remove" : "Add"}

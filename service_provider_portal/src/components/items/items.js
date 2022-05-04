@@ -261,18 +261,9 @@ const Items = (props) => {
                       data-itemDescription={item.description}
                       data-itemCategory={item.category}
                       variant="primary"
-                      size="sm"
                       onClick={toggleOpenEditItemModal}
                     >
                       Edit
-                    </Button>
-                    <Button
-                      id={item.id}
-                      variant="danger"
-                      size="sm"
-                      onClick={toggleDeleteItem}
-                    >
-                      Delete
                     </Button>
                   </div>
                 </td>
@@ -283,7 +274,6 @@ const Items = (props) => {
                       id={item.id}
                       // variant="success"
                       variant = {item.isavailable? "danger" : "success"}
-                      size="sm"
                       onClick={toggleMealAvailability}
                     >
                       {item.isavailable? 'Remove' : 'Add'}

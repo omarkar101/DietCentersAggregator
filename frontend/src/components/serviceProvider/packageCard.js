@@ -12,6 +12,7 @@ const PackageCard = (props) => {
         <ItemCounterContainer>{plan.meal_plan_uses}</ItemCounterContainer>
         <ItemDescriptionParagraph>{plan.description}</ItemDescriptionParagraph>
       </ItemTextWrapper>
+      <PackageAvailabilityContainer>{plan.isavailable? "Available" : "Not Available"}</PackageAvailabilityContainer>
     </PackageCardWrapper>
   );
 };
@@ -24,6 +25,7 @@ const PackageCardWrapper = styled.div`
   cursor: pointer;
   width: 100%;
   justify-content: space-between;
+  position: relative;
 `;
 
 const ItemNameContanier = styled.div`
@@ -51,6 +53,15 @@ const ItemDescriptionParagraph = styled.p`
   color: rgb(79, 79, 79);
   max-width: 75%;
   overflow-wrap: break-word;
+`;
+
+const PackageAvailabilityContainer = styled.div`
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: rgb(28, 28, 28);
+  position: absolute;
+  bottom: 10px;
+  right: 20px;
 `;
 
 const ItemTextWrapper = styled.div`
