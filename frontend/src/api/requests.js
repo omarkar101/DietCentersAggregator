@@ -144,3 +144,7 @@ export const getClientPreferredMealPlan = () => {
 export const getClientOrderHistory = () => {
   return Get('/orders/get/get_orders');
 }
+
+export const cancelClientMealPlan = () => {
+  return Post('/user/update/cancel_plan');
+}

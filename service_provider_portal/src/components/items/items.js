@@ -2,7 +2,13 @@ import { useCallback, useReducer, useState, useEffect } from "react";
 import { Button, Table } from "react-bootstrap";
 import styled from "styled-components";
 import ItemModal from "./item_modal";
-import { addOneItem, deleteOneItem, editOneItem, getAllItems } from "../../api/requests";
+import {
+  addOneItem,
+  changeMealAvailability,
+  deleteOneItem,
+  editOneItem,
+  getAllItems,
+} from "../../api/requests";
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -29,8 +35,13 @@ const reducer = (state, action) => {
     case "delete-item":
       return {
         ...state,
-        items: action.items
+        items: action.items,
       };
+      case "change-item-availability":
+        return {
+          ...state,
+          items: action.items,
+        };
     case "open-edit-item-modal":
       return {
         ...state,
@@ -38,17 +49,17 @@ const reducer = (state, action) => {
         selectedItemId: action.itemId,
         selectedItemDescription: action.itemDescription,
         selectedItemName: action.itemName,
-        selectedItemCategory: action.itemCategory
+        selectedItemCategory: action.itemCategory,
       };
     case "submit-edit-item-modal":
       return {
         ...state,
         modalOpen: false,
         selectedItemId: null,
-        selectedItemDescription: '',
-        selectedItemName: '',
-        selectedItemCategory: '',
-        items: action.items
+        selectedItemDescription: "",
+        selectedItemName: "",
+        selectedItemCategory: "",
+        items: action.items,
       };
     case "close-item-modal":
       return {
@@ -89,12 +100,20 @@ const Items = (props) => {
       });
   }, []);
 
-  const toggleModalOnSubmit = (itemName, itemDescription, itemCategory, image) => {
+  const toggleModalOnSubmit = (
+    itemName,
+    itemDescription,
+    itemCategory,
+    image
+  ) => {
     if (state.selectedItemId == null) {
       addOneItem(itemName, itemDescription, itemCategory)
         .then((response) => {
           if (response.data.success) {
-            dispatch({ type: "submit-add-item-modal", items: response.data.items });
+            dispatch({
+              type: "submit-add-item-modal",
+              items: response.data.items,
+            });
           } else {
             console.log(response.data.message);
           }
@@ -103,10 +122,19 @@ const Items = (props) => {
           console.log(e);
         });
     } else {
-      editOneItem(state.selectedItemId, itemName, itemDescription, itemCategory, image)
+      editOneItem(
+        state.selectedItemId,
+        itemName,
+        itemDescription,
+        itemCategory,
+        image
+      )
         .then((response) => {
           if (response.data.success) {
-            dispatch({ type: "submit-edit-item-modal", items: response.data.items });
+            dispatch({
+              type: "submit-edit-item-modal",
+              items: response.data.items,
+            });
           } else {
             console.log(response.data.message);
           }
@@ -122,7 +150,22 @@ const Items = (props) => {
     deleteOneItem(itemId)
       .then((response) => {
         if (response.data.success) {
-          dispatch({ type: "delete-item", items: response.data.items })
+          dispatch({ type: "delete-item", items: response.data.items });
+        } else {
+          console.log(response.data.message);
+        }
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }, []);
+
+  const toggleMealAvailability = useCallback((e) => {
+    const itemId = e.target.id;
+    changeMealAvailability(itemId)
+      .then((response) => {
+        if (response.data.success) {
+          dispatch({ type: "change-item-availability", items: response.data.items });
         } else {
           console.log(response.data.message);
         }
@@ -176,11 +219,12 @@ const Items = (props) => {
           itemImgUrl={state.selectedItemImgUrl}
         />
         <Button
-          variant='success'
-          data-itemname=''
-          data-itemdescription=''
-          data-itemcategory=''
-          onClick={toggleOpenAddItemModal}>
+          variant="success"
+          data-itemname=""
+          data-itemdescription=""
+          data-itemcategory=""
+          onClick={toggleOpenAddItemModal}
+        >
           Add Item
         </Button>
         <Table striped bordered hover>
@@ -191,31 +235,48 @@ const Items = (props) => {
               <th>Category</th>
               <th>Description</th>
               <th>Actions</th>
+              <th>Availability</th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
             {state.items?.map((item) => (
               <tr>
                 <td>
-                  <img src={item.image_url} alt="item img" width={"100px"} height={"100px"} />
+                  <img
+                    src={item.image_url}
+                    alt="item img"
+                    width={"100px"}
+                    height={"100px"}
+                  />
                 </td>
                 <td>{item.name}</td>
                 <td>{item.category}</td>
                 <td>{item.description}</td>
                 <td>
-                  <div className='mb-2'>
+                  <div className="mb-2">
                     <Button
                       id={item.id}
                       data-itemName={item.name}
                       data-itemDescription={item.description}
                       data-itemCategory={item.category}
-                      variant='primary'
-                      size='sm'
-                      onClick={toggleOpenEditItemModal}>
+                      variant="primary"
+                      onClick={toggleOpenEditItemModal}
+                    >
                       Edit
                     </Button>
-                    <Button id={item.id} variant='danger' size='sm' onClick={toggleDeleteItem}>
-                      Delete
+                  </div>
+                </td>
+                <td>{item.isavailable? "Available" : "Not Available"}</td>
+                <td>
+                  <div className="mb-2">
+                  <Button
+                      id={item.id}
+                      // variant="success"
+                      variant = {item.isavailable? "danger" : "success"}
+                      onClick={toggleMealAvailability}
+                    >
+                      {item.isavailable? 'Remove' : 'Add'}
                     </Button>
                   </div>
                 </td>

@@ -5,6 +5,7 @@ from database.orm import db_session
 from user import UserType, get_user_id
 from database.models.users import User
 from database.models.clients_biometrics import ClientBiometrics
+from database.models.clients import Client
 from flask_cors import cross_origin
 
 private_update_api = Blueprint('private_update_api', __name__, url_prefix='/update')
@@ -41,4 +42,14 @@ def update_personal_info_image():
     service_provider = ServiceProvider.query.filter(ServiceProvider.user_id == user_id).first()
     with db_session.begin():
         service_provider.set_image(image)
+    return jsonify(success=True)
+
+@private_update_api.route('/cancel_plan', methods=['POST'])
+@require_user(UserType.CLIENT)
+@cross_origin(origins='*', supports_credentials=True)
+def cancel_subscribed_plan():
+    user_id = get_user_id()
+    client = db_session.query(Client).filter(Client.user_id == user_id).first()
+    with db_session.begin():
+        client.meal_plan = None
     return jsonify(success=True)

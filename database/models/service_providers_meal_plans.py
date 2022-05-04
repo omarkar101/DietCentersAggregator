@@ -1,5 +1,5 @@
 from flask import current_app
-from sqlalchemy import Column, BigInteger, Text, ForeignKey, and_, text
+from sqlalchemy import Column, BigInteger, Text, ForeignKey, and_, text, Boolean
 from sqlalchemy.orm import relationship
 from sqlalchemy.ext.hybrid import hybrid_property
 from database.models.items import Item
@@ -20,6 +20,7 @@ class ServiceProviderMealPlan(Base):
     _description = Column('description', Text, nullable=False)
     _meal_plan_uses = Column('meal_plan_uses', BigInteger, nullable = False)
     image = Column(Text, nullable=True, server_default=text("'https://299storage.blob.core.windows.net/container/meal-plan-default.jpeg'"))
+    _isavailable = Column('isavailable', Boolean, nullable=False)
 
     user_id = Column(ForeignKey('service_providers.user_id', ondelete='CASCADE'), nullable=False)
 
@@ -63,6 +64,12 @@ class ServiceProviderMealPlan(Base):
     @description.setter
     def description(self, description):
         self._description = description
+    @hybrid_property
+    def isavailable(self):
+        return self._isavailable
+    @isavailable.setter
+    def isavailable(self, isavailable):
+        self._isavailable = isavailable
 
 
     def get_items(self):
