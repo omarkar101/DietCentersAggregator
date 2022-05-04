@@ -40,7 +40,7 @@ def edit_meal_plan():
 @edit_api.route('/set_availability', methods=['POST'])
 @require_user(UserType.SERVICE_PROVIDER)
 @cross_origin(origins='*', supports_credentials=True)
-def edit_meal_plan():
+def set_availability():
   user_id = get_user_id()
   meal_plan_id = request.form.get('meal_plan_id')
   meal_plan = db_session.query(ServiceProviderMealPlan) \
