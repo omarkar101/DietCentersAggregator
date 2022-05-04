@@ -1,6 +1,6 @@
 import React, { useEffect, useReducer, useState, useCallback } from "react";
 import { Form, Button, Col, Row, Card, InputGroup } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate  } from "react-router-dom";
 import styled from "styled-components";
 import ItemCard from "../serviceProvider/itemCard";
 import { getClientProfile, getMealPlanById, getClientMealPlan, getItemsOfAMealPlan, setClientPreferredMeal, getClientPreferredMealPlan, getItemById } from "../../api/requests";
@@ -47,6 +47,10 @@ const Profile = () => {
   const [receiverLastName, setreceiverLastName] = useState('');
   const [instructions, setinstructions] = useState('');
   const [success, setSuccess] = useState(null);
+  const [error, setError] = useState(null);
+
+  const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     getClientProfile()
@@ -143,21 +147,55 @@ const Profile = () => {
             left: 0,
             behavior: "smooth"
           });
-          setTimeout(() => { window.location.reload();}, 1500);
-          }
+          setTimeout(() => { window.location.reload();}, 1500);}
       })
       .catch((e) => {
         console.log(e);
       });
   })
 
+  useEffect(() => {
+    if (location.state!=null){
+      if (location.state.message==null){
+        console.log('succes', success)
+        return;
+      }
+      else if (location.state.message=='success'){
+        setSuccess('Profile updated successfully!')
+        window.scrollTo({
+          top: 0,
+          left: 0,
+          behavior: "smooth"
+        });
+        setTimeout(() => { setSuccess(null); }, 3000); 
+        navigate('/profile', { state: { message: null }})
+      }
+      else if (location.state.message=='fail'){
+        setError('Profile update failed unexpectedly, please try again later.')
+        window.scrollTo({
+          top: 0,
+          left: 0,
+          behavior: "smooth"
+        });
+        setTimeout(() => { setError(null) }, 3000); 
+        navigate('/profile', { state: { message: null }})
+      }
+    }
+  }, [location]);
+
+
   return (
     <>
     {success != null && (
-        <div class="alert alert-success" role="alert">
-          {success}
-        </div>
-      )}
+      <div class="alert alert-success" role="alert">
+        {success}
+      </div>
+    )}
+    {error != null && (
+      <div class="alert alert-danger" role="alert">
+        {error}
+      </div>
+    )}
     <Container>
       <Row style={{borderStyle: "solid", borderWidth: 2, borderColor: "#21ad83"}} className="rounded p-5 m-auto shadow-sm rounded-lg mt-5">
         <h3 className="text-black-50 p-3 text-center mb-5">

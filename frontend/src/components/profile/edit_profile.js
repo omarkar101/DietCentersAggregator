@@ -65,11 +65,12 @@ const EditProfile = () => {
                         receiverFirstName, receiverLastName, instructions)
       .then((response) => {
         if(response.data.success) {
-          navigate("/profile");
+          navigate("/profile", {state:{message: 'success'}});
         }
       })
       .catch((e) => {
         console.log(e);
+        navigate("/profile", {state:{message: 'fail'}});
       });
   };
 
