@@ -1,5 +1,6 @@
 from flask import Blueprint, jsonify, request
 from flask_cors import cross_origin
+from sqlalchemy import true
 from auth.decorators import require_user
 from sqlalchemy.orm import joinedload
 from database.models.items import Item
@@ -26,7 +27,7 @@ def add_item():
   item_name = request.form.get('item_name')
   item_description = request.form.get('item_description')
   category = request.form.get('category')
-  item = Item(name=item_name, description=item_description, category=category)
+  item = Item(name=item_name, description=item_description, category=category, isavailable=True)
   with db_session.begin():
     # we should associate the items to the current user
     user.service_provider.items.append(item)

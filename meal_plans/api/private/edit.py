@@ -36,3 +36,19 @@ def edit_meal_plan():
         pricemodel.price = meal_plan_price
   meal_plans = db_session.query(ServiceProviderMealPlan).filter(ServiceProviderMealPlan.user_id == user_id).all()
   return jsonify(success=True, meal_plans=[meal_plan.as_dict() for meal_plan in meal_plans])
+
+@edit_api.route('/set_availability', methods=['POST'])
+@require_user(UserType.SERVICE_PROVIDER)
+@cross_origin(origins='*', supports_credentials=True)
+def edit_meal_plan():
+  user_id = get_user_id()
+  meal_plan_id = request.form.get('meal_plan_id')
+  meal_plan = db_session.query(ServiceProviderMealPlan) \
+    .filter(and_(ServiceProviderMealPlan.user_id == user_id, ServiceProviderMealPlan.id == meal_plan_id)) \
+    .first()
+  if meal_plan is None:
+    return jsonify(success=False, message='Meal plan does not exist')
+  with db_session.begin():
+    meal_plan.isavailable = not meal_plan.isavailable
+  meal_plans = db_session.query(ServiceProviderMealPlan).filter(ServiceProviderMealPlan.user_id == user_id).all()
+  return jsonify(success=True, meal_plans=[meal_plan.as_dict() for meal_plan in meal_plans])

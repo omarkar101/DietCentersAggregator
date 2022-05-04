@@ -1,5 +1,5 @@
 import uuid
-from sqlalchemy import Column, BigInteger, Text, ForeignKey, text
+from sqlalchemy import Column, BigInteger, Text, ForeignKey, text, Boolean
 from sqlalchemy.orm import relationship
 from sqlalchemy.ext.hybrid import hybrid_property
 from database.orm import Base
@@ -19,6 +19,7 @@ class Item(Base):
   _description = Column('description', Text, nullable=False)
   _name = Column('name', Text, nullable=False)
   image_url = Column(Text, nullable=True, server_default=text("'https://299storage.blob.core.windows.net/container/meals_default.svg'"))
+  _isavailable = Column('isavailable', Boolean, nullable=False)
 
   user_id = Column(ForeignKey('service_providers.user_id', ondelete='CASCADE'), nullable=False)
 
@@ -58,6 +59,12 @@ class Item(Base):
   @name.setter
   def name(self, name):
     self._name = name
+  @hybrid_property
+  def isavailable(self):
+    return self._isavailable
+  @isavailable.setter
+  def isavailable(self, isavailable):
+    self._isavailable = isavailable
 
   def set_image(self, image_file):
     uid = uuid.uuid4()
