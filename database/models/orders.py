@@ -33,5 +33,11 @@ class Order(Base):
 		information = {c.name: getattr(self, c.name) for c in self.__table__.columns}
 		name = self.item.name
 		information['name'] = name
+		description = self.item.description
+		information['description'] = description
+		item_service_provider = self.item.service_provider.name
+		information['service_provider_name'] = item_service_provider
+		img_url = self.item.image_url
+		information['imgURL'] = img_url
 		return information
     

@@ -52,4 +52,6 @@ class ServiceProvider(Base):
     def as_dict(self):
         information = {c.name: getattr(self, c.name) for c in self.__table__.columns}
         information['phone_number'] = self.user.phone_number
+        information['description'] = self.description
+        information['address'] = self.address
         return information
