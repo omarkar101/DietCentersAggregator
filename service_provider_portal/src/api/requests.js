@@ -158,3 +158,16 @@ export const sendMealToClient = (user_id, item_id) => {
   data.append('item_id', item_id);
   return Post('orders/add/send_meal', data);
 }
+
+export const changeMealPlanAvailability = (meal_plan_id) => {
+  const data = new FormData();
+  data.append('meal_plan_id', meal_plan_id);
+  return Post('meal_plans/edit/set_availability', data);
+}
+
+export const changeMealAvailability = (item_id) => {
+  const data = new FormData();
+  data.append('item_id', item_id);
+  return Post('items/edit/set_availability', data);
+}
+

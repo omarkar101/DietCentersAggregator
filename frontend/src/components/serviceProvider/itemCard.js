@@ -16,6 +16,7 @@ const ItemCard = (props) => {
                 {item.description}
               </ItemDescriptionParagraph>
             </ItemTextWrapper>
+            <ItemAvailabilityContainer>{item.isavailable? "Available" : "Not Available"}</ItemAvailabilityContainer>
           </ItemTextAndButtonWrapper>
         </ItemWrapper>
     );
@@ -55,6 +56,15 @@ const ImageStyle = styled.img`
   transition: opacity 0.25s ease 0s, transform 0.25s ease 0s;
 `;
 
+const ItemAvailabilityContainer = styled.div`
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: rgb(28, 28, 28);
+  position: absolute;
+  bottom: 10px;
+  right: 20px;
+`;
+
 const ItemNameContanier = styled.div`
   font-size: 1.8rem;
   font-weight: 500;
@@ -81,6 +91,7 @@ const ItemTextAndButtonWrapper = styled.div`
   width: 100%;
   display: flex;
   justify-content: space-between;
+  position: relative;
 `;
 
 const ItemTextWrapper = styled.div`

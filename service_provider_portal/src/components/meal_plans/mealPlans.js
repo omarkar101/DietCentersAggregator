@@ -7,6 +7,7 @@ import {
   deleteOneMealPlan,
   editOneMealPlan,
   getAllMealPlans,
+  changeMealPlanAvailability,
 } from "../../api/requests";
 
 const reducer = (state, action) => {
@@ -34,6 +35,8 @@ const reducer = (state, action) => {
         mealPlans: action.mealPlans,
       };
     case "delete-meal-plan":
+      return { ...state, mealPlans: action.mealPlans };
+    case "change-meal-plan-availability":
       return { ...state, mealPlans: action.mealPlans };
     case "open-edit-meal-plan-modal":
       return {
@@ -174,6 +177,21 @@ const MealPlans = (props) => {
     dispatch({ type: "close-meal-plan-modal" });
   }, []);
 
+  const toggleMealPlanAvailability = useCallback((e) => {
+    const mealPlanId = e.target.id;
+    changeMealPlanAvailability(mealPlanId)
+      .then((response) => {
+        if (response.data.success) {
+          dispatch({ type: "change-meal-plan-availability", mealPlans: response.data.meal_plans })
+        } else {
+          console.log(response.data.message);
+        }
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }, []);
+
   return (
     <>
       <Container>
@@ -199,6 +217,8 @@ const MealPlans = (props) => {
             <th>Description</th>
             <th>Price</th>
             <th>Actions</th>
+            <th>Availability</th>
+            <th></th>
           </tr>
           {state.mealPlans?.map((mealPlan) => (
             <tr>
@@ -217,7 +237,7 @@ const MealPlans = (props) => {
                     variant="primary"
                     size="sm"
                     onClick={toggleOpenEditMealPlanModal}
-                  >
+                    >
                     Edit
                   </Button>
                   <Button
@@ -225,11 +245,24 @@ const MealPlans = (props) => {
                     variant="danger"
                     size="sm"
                     onClick={toggleDeleteMealPlan}
-                  >
+                    >
                     Delete
                   </Button>
                 </div>
               </td>
+              <td>{mealPlan.isavailable? "Available" : "Not Available"}</td>
+              <td>
+              <div className="mb-4">
+              <Button
+                    id={mealPlan.id}
+                    variant={mealPlan.isavailable? "danger" : "success"}
+                    size="sm"
+                    onClick={toggleMealPlanAvailability}
+                    >
+                      {mealPlan.isavailable? "Remove" : "Add"}
+                  </Button>
+              </div>
+                </td>
             </tr>
           ))}
         </Table>
