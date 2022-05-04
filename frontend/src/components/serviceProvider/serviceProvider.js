@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "react-bootstrap";
 import styled from "styled-components";
 import ImagesSection from "./ImagesSection";
@@ -67,6 +67,9 @@ const ServiceProviderPage = () => {
     serviceProvider: null,
     selectedMealPlan: null
   });
+
+  const [success, setSuccess] = useState(null);
+  const [error, setError] = useState(null);
 
   const toggleOpenSubscribeModal = useCallback((e) => {
     const plan = e
@@ -142,12 +145,19 @@ const ServiceProviderPage = () => {
     getClientMealPlan()
       .then((response) => {
         if (response.data.success) {
-          if (response.data.meal_plan_id == null) {
+          // if (response.data.meal_plan_id == null) {
             if (e !=null){
             subscribeClientToMealPlan(e.id, e.meal_plan_uses)
               .then((response) => {
                 if (response.data.success) {
                   dispatch({ type: "submit-subscribe-modal" });
+                  setSuccess( `You are now subscribed to the meal plan ${e.name}`);
+                  window.scrollTo({
+                    top: 0,
+                    left: 0,
+                    behavior: "smooth"
+                  });
+                  setTimeout(() => { setSuccess(null)}, 3000);
                 } else {
                   console.log(response.data.message);
                 }
@@ -156,9 +166,16 @@ const ServiceProviderPage = () => {
                 console.log(e);
               });
             }
-          } else {
-            alert("you are already subscribed in a meal plan");  
-          }
+          // } else {
+          //   dispatch({ type: "close-subscribe-modal" })
+          //   setError( "You are already subcribed to another meal plan, you can cancel your subscription and then choose a different package.");
+          //   window.scrollTo({
+          //     top: 0,
+          //     left: 0,
+          //     behavior: "smooth"
+          //   });
+          //   setTimeout(() => { setError(null)}, 5000); 
+          // }
         } else {
           console.log(response.data.message);
         }
@@ -178,6 +195,16 @@ const ServiceProviderPage = () => {
 
   return (
     <PageBase>
+      {success != null && (
+        <div class="alert alert-success" role="alert">
+          {success}
+        </div>
+      )}
+       {error != null && (
+        <div class="alert alert-danger" role="alert">
+          {error}
+        </div>
+      )}
       <ImagesSection service_provider={state.serviceProvider} />
       <SubscribeModal
         isOpen={state.subscribeModalOpen}
