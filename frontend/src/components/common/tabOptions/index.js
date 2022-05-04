@@ -6,23 +6,16 @@ const tabs = [
   {
     id: 1,
     name: "Explore",
-    inactive_img: <MdOutlineExplore size="24"/>,
+    inactive_img: <MdOutlineExplore size="48"/>,
     backdrop: "FCEEC0",
-    active_img: <MdExplore size="24"/>,
+    active_img: <MdExplore size="48"/>,
   },
   {
     id: 2,
-    name: "Service Providers Meal Plans",
-    inactive_img: <MdOutlineFoodBank size="24"/>,
-    backdrop: "E5F3F3",
-    active_img:  <MdFoodBank size="24"/>,
-  },
-  {
-    id: 3,
     name: "Our Meal Plans",
-    inactive_img: <MdMenuBook size="24"/>,   
+    inactive_img: <MdMenuBook size="48"/>,   
     backdrop: "EDF4FF",
-    active_img:  <MdMenuBook size="24"/>,
+    active_img:  <MdMenuBook size="48"/>,
   },
 ];
 

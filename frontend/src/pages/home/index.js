@@ -22,8 +22,6 @@ const getCorrectScreen = (tab) => {
   switch (tab) {
     case "Explore":
       return <Explore />;
-    case "Service Providers Meal Plans":
-      return <DiningOut />;
     case "Our Meal Plans":
       return <Nightlife />;
     default:
