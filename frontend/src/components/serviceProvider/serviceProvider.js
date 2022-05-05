@@ -57,6 +57,10 @@ const reducer = (state, action) => {
 
 const ServiceProviderPage = () => {
   const { id } = useParams();
+  const [showPackages, setShowPackages] = useState(null);
+  const [packageSymbol, setPackageSymbol] = useState('+');
+  const [itemsSymbol, setItemsSymbol] = useState('+');
+  const [showItems, setShowItems] = useState(null);
 
   const [state, dispatch] = useReducer(reducer, {
     modalOpen: false,
@@ -198,14 +202,12 @@ const ServiceProviderPage = () => {
       {success != null && (
         <div class="alert alert-success" role="alert">
           {success}
-        </div>
-      )}
-       {error != null && (
+        </div>)}
+      {error != null && (
         <div class="alert alert-danger" role="alert">
           {error}
-        </div>
-      )}
-      <ImagesSection service_provider={state.serviceProvider} />
+        </div>)}
+
       <SubscribeModal
         isOpen={state.subscribeModalOpen}
         onClose={toggleSubscribeModalOnClose}
@@ -213,23 +215,37 @@ const ServiceProviderPage = () => {
         mealPlan={state.selectedMealPlan}
         items={state.selectedPackageItems}
       />
+      <PackageModal
+        isOpen={state.modalOpen}
+        onClose={toggleModalOnClose}
+        packageItems={state.selectedPackageItems}
+      />
+      <div style={{width: '35%', float:'left', position: 'fixed'}}>
+        <ImagesSection service_provider={state.serviceProvider} />
+      </div>
 
-      <MenuItemsContainer className="mt-5">
+      <div style={{width: '60%', float:'right'}}>
+        
         <StyledSection>
-          <MenuSectionTitle>Our Package Deals</MenuSectionTitle>
+
+          <MenuSectionTitle onClick={() => { setShowPackages(!showPackages); setPackageSymbol(packageSymbol=='-'?'+':'-')}}>
+            {packageSymbol} Our Package Deals
+          </MenuSectionTitle>
         </StyledSection>
-        <PackageModal
-          isOpen={state.modalOpen}
-          onClose={toggleModalOnClose}
-          packageItems={state.selectedPackageItems}
-        />
-        {state.mealPlans?.map((plan) => (
-          <ItemTextAndButtonWrapper>
-            <img src={plan.image} alt="image" width="300px" height="100%" />
+
+
+
+        {showPackages ? (
+
+        state.mealPlans?.map((plan) => (
+          <>
+          {/* // <ItemTextAndButtonWrapper> */}
+          <div style={{width: '90%', margin: 'auto', position: 'relative'}}>
             <PackageCard
               key={plan.id}
               plan={plan}
             />
+            {/* <img src={plan.image} alt="image" width="300px" height="100%" /> */}
             <Button
               variant="success"
               onClick={() => toggleOpenSubscribeModal(plan)}
@@ -238,7 +254,12 @@ const ServiceProviderPage = () => {
                 border: "solid 1px #114f3cd9",
                 height: "3.2rem",
                 width: "3.2rem",
+                position: 'absolute',
+                top: '50%',
+                right: '2rem',
+                transform: 'translateY(-50%)',
               }}
+              disabled= {!plan.isavailable}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -252,39 +273,43 @@ const ServiceProviderPage = () => {
                 <path d="M15.5 9.42h-4.5v-4.5c0-0.56-0.44-1-1-1s-1 0.44-1 1v4.5h-4.5c-0.56 0-1 0.44-1 1s0.44 1 1 1h4.5v4.5c0 0.54 0.44 1 1 1s1-0.46 1-1v-4.5h4.5c0.56 0 1-0.46 1-1s-0.44-1-1-1z"></path>
               </svg>
             </Button>
-          </ItemTextAndButtonWrapper>
-        ))}
+            </div>
+            </>
+          // {/* </ItemTextAndButtonWrapper> */}
+        ))
+      ) : 
+      (
+        <></>
+      )}
 
         <StyledSection>
-          <MenuSectionTitle>Menu Items</MenuSectionTitle>
+          <MenuSectionTitle onClick={() => {  setShowItems(!showItems); setItemsSymbol(itemsSymbol=='-'?'+':'-') }}>
+            {itemsSymbol} Menu Items
+          </MenuSectionTitle>
         </StyledSection>
-        {state.items?.map((item) => (
-          <ItemCard key={item.id} item={item} />
-        ))}
-      </MenuItemsContainer>
+
+        <div style={{width: '90%', margin: 'auto', position: 'relative'}}>
+        
+        {showItems ? (
+          state.items?.map((item) => (
+            <ItemCard key={item.id} item={item} />
+          ))
+          ) : 
+          (
+            <></>
+          )}
+          </div>
+          
+      </div>
+          
     </PageBase>
   );
 };
-
-const ItemTextAndButtonWrapper = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  padding: 20px 10px 20px 10px;
-  border-bottom: 1px solid rgb(232, 232, 232);
-`;
 
 const StyledSection = styled.section`
   position: relative;
   margin-bottom: 2rem;
   width: 100%;
-`;
-
-const MenuItemsContainer = styled.section`
-  width: 100%;
-  padding-left: 1rem;
-  min-width: 50%;
-  padding-right: 1rem;
 `;
 
 const MenuSectionTitle = styled.h4`
@@ -296,21 +321,15 @@ const MenuSectionTitle = styled.h4`
   top: 149px;
   padding: 1.4rem 0px;
   font-weight: 500;
-  z-index: 1;
   display: flex;
-  -webkit-box-pack: justify;
-  justify-content: space-between;
-  -webkit-box-align: center;
   align-items: center;
   padding: 1rem;
   color: #114f3cd9;
-  border-left: 3px solid #114f3cd9;
-  background: linear-gradient(to left, #d9fff326, #84e9cb);
+  cursor: pointer
 `;
 
 const PageBase = styled.div`
   position: relative;
-  max-width: 110rem;
   align-self: center;
   max-height: initial;
   margin: 0 auto;
