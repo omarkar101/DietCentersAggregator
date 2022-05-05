@@ -249,7 +249,7 @@ const MealPlans = (props) => {
                     variant={mealPlan.isavailable? "danger" : "success"}
                     onClick={toggleMealPlanAvailability}
                     >
-                      {mealPlan.isavailable? "Remove" : "Add"}
+                      {mealPlan.isavailable? "Make Unavailable" : "Make Available"}
                   </Button>
               </div>
                 </td>

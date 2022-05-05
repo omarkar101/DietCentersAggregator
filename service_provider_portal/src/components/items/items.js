@@ -276,7 +276,7 @@ const Items = (props) => {
                       variant = {item.isavailable? "danger" : "success"}
                       onClick={toggleMealAvailability}
                     >
-                      {item.isavailable? 'Remove' : 'Add'}
+                      {item.isavailable? "Make Unavailable" : "Make Available"}
                     </Button>
                   </div>
                 </td>

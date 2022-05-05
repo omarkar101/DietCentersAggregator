@@ -16,7 +16,7 @@ const ItemCard = (props) => {
                 {item.description}
               </ItemDescriptionParagraph>
             </ItemTextWrapper>
-            <ItemAvailabilityContainer>{item.isavailable? "Available" : "Not Available"}</ItemAvailabilityContainer>
+            <ItemAvailabilityContainer>{item.isavailable? '' : "Not Available"}</ItemAvailabilityContainer>
           </ItemTextAndButtonWrapper>
         </ItemWrapper>
     );
@@ -24,45 +24,32 @@ const ItemCard = (props) => {
 
 const ItemWrapper = styled.div`
   font-size: 1.6rem;
-  padding: 20px 10px 20px 10px;
-  margin-bottom: 3.5rem;
+  padding: 10px;
+  margin-bottom: 1.5rem;
   display: flex;
   flex-direction: row;
-  padding-bottom: 3.5rem;
-  border-bottom: 1px solid rgb(232, 232, 232);
+  border: 2px solid #1f9370;
+  border-radius: 12px;
+  background-color: rgba(31, 147, 112, 0.04);
 `;
 
 const ImageWrapper = styled.div`
-  height: 9rem;
-  width: 9rem;
+  height: 8rem;
+  width: 10rem;
   position: relative;
   margin-right: 2rem;
-  margin-bottom: 0px;
-  flex-shrink: 0px;
-  border-radius: 0.8rem;
   visibility: visible;
-  transition: all 0.12s ease 0s;
 `;
 
 const ImageStyle = styled.img`
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  transform: none;
-  opacity: 1;
-  will-change: transform, opacity;
-  border-radius: inherit;
-  filter: unset;
-  transition: opacity 0.25s ease 0s, transform 0.25s ease 0s;
 `;
 
 const ItemAvailabilityContainer = styled.div`
   font-size: 1.5rem;
   font-weight: 500;
-  color: rgb(28, 28, 28);
-  position: absolute;
-  bottom: 10px;
-  right: 20px;
+  color: #d10000;
 `;
 
 const ItemNameContanier = styled.div`
@@ -74,17 +61,15 @@ const ItemNameContanier = styled.div`
 `;
 
 const ItemPriceContainer = styled.div`
-  margin: 0.7rem 0px;
-  font-size: 1.4rem;
+  margin-top: 0.7rem;
+  font-size: 1rem;
   color: rgb(28, 28, 28);
 `;
 
 const ItemDescriptionParagraph = styled.p`
-  margin: 0.5rem 0px;
-  font-size: 1.4rem;
+  font-size: 1rem;
   color: rgb(79, 79, 79);
   max-width: 75%;
-  overflow-wrap: break-word;
 `;
 
 const ItemTextAndButtonWrapper = styled.div`
