@@ -52,4 +52,5 @@ def cancel_subscribed_plan():
     client = db_session.query(Client).filter(Client.user_id == user_id).first()
     with db_session.begin():
         client.meal_plan = None
+        client.preferred_meal = None
     return jsonify(success=True)

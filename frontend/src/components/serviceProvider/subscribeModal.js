@@ -20,10 +20,14 @@ const SubscribeModal = (props) => {
           <Card key={item.id} style={{ marginBottom: 20, padding: 15 }}>
             <Card.Img
               variant="top"
-              src={item.imagelink}
+              src={item.image_url}
               alt="image"
-              width={100}
-              height={100}
+              style={{
+                objectFit: "cover",
+                width: "100%",
+                height: "250px",
+                width: "100%"
+              }}
             />
             <Card.Body>
               <Card.Title>{item.name}</Card.Title>

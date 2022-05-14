@@ -69,7 +69,8 @@ const ItemPriceContainer = styled.div`
 const ItemDescriptionParagraph = styled.p`
   font-size: 1rem;
   color: rgb(79, 79, 79);
-  max-width: 75%;
+  max-width: 100%;
+  word-break : break-word;
 `;
 
 const ItemTextAndButtonWrapper = styled.div`
@@ -82,7 +83,7 @@ const ItemTextAndButtonWrapper = styled.div`
 const ItemTextWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  max-width: 95%;
+  max-width: 100%;
 `;
 
 

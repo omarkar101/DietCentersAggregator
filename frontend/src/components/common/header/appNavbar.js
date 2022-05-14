@@ -26,12 +26,10 @@ const AppNavbar = ({ user }) => {
                 Orders history
               </Nav.Link>
             )}
-            {/* <Nav.Link as={Link} to='/checkout'>
-              Checkout
-            </Nav.Link> */}
           </Nav>
-          {/* <PlaceDropDown /> */}
-          <Form className='d-flex' onSubmit={handleSubmit}>
+          
+          {user != null && (
+            <Form className='d-flex' onSubmit={handleSubmit}>
             <Form.Group>
               <Form.Control
                 onChange={(e) => setSearchName(e.target.value)}
@@ -44,17 +42,18 @@ const AppNavbar = ({ user }) => {
               Search
             </Button>
           </Form>
-          <Nav>
-            {user != null && (
+          )}
+          {user != null && (
               <Nav.Link as={Link} to='/profile'>
                 <span class='material-symbols-outlined'>account_circle_full</span>
               </Nav.Link>
             )}
-            {user == null && (
+          <Nav>
+            {/* {user == null && (
               <Nav.Link as={Link} to='/signup'>
                 Signup
               </Nav.Link>
-            )}
+            )} */}
           </Nav>
         </Navbar.Collapse>
       </Container>

@@ -149,7 +149,7 @@ const ServiceProviderPage = () => {
     getClientMealPlan()
       .then((response) => {
         if (response.data.success) {
-          // if (response.data.meal_plan_id == null) {
+          if (response.data.meal_plan_id == null) {
             if (e !=null){
             subscribeClientToMealPlan(e.id, e.meal_plan_uses)
               .then((response) => {
@@ -170,16 +170,16 @@ const ServiceProviderPage = () => {
                 console.log(e);
               });
             }
-          // } else {
-          //   dispatch({ type: "close-subscribe-modal" })
-          //   setError( "You are already subcribed to another meal plan, you can cancel your subscription and then choose a different package.");
-          //   window.scrollTo({
-          //     top: 0,
-          //     left: 0,
-          //     behavior: "smooth"
-          //   });
-          //   setTimeout(() => { setError(null)}, 5000); 
-          // }
+          } else {
+            dispatch({ type: "close-subscribe-modal" })
+            setError( "You are already subcribed to another meal plan, you can cancel your subscription and then choose a different package.");
+            window.scrollTo({
+              top: 0,
+              left: 0,
+              behavior: "smooth"
+            });
+            setTimeout(() => { setError(null)}, 5000); 
+          }
         } else {
           console.log(response.data.message);
         }

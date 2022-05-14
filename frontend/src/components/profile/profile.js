@@ -230,6 +230,12 @@ const Profile = () => {
       });
   });
 
+  const logoutClient = useCallback((e) => {
+      localStorage.clear();
+      navigate('/login');
+      window.location.reload();
+  });
+
   const cancelSubscribedClient = useCallback((e) => {
     cancelClientMealPlan()
       .then((response) => {
@@ -423,6 +429,7 @@ const Profile = () => {
                 <Button
                   style={{
                     margin: "auto",
+                    marginLeft: '2%', 
                     color: "white",
                     backgroundColor: "#21ad83",
                     borderColor: "#21ad83",
@@ -436,6 +443,14 @@ const Profile = () => {
             ))}
           </>
         )}
+        <Button
+         variant="danger"
+          size="md"
+          onClick={logoutClient}
+          style={{
+          display: "block",
+          margin: "auto",
+        }}>Logout</Button>
       </Container>
     </>
   );

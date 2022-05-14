@@ -21,6 +21,7 @@ def cancel_subscribed_client():
       .filter(and_(Client.user_id == subscribed_client_id)) \
       .first()
     client.meal_plan = None
+    client.preferred_meal = None
   meal_plans = ServiceProviderMealPlan.query \
     .filter(and_(ServiceProviderMealPlan.user_id == user_id)) \
     .options(joinedload(ServiceProviderMealPlan.clients)) \
