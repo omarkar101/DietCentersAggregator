@@ -23,9 +23,10 @@ const ExploreCard = ({ restaurant }) => {
           borderWidth: 2,
           borderColor: "#21ad83",
           margin: "auto",
+          width: "88%"
         }}
       >
-        <div className="explore-card-cover">
+        <div className="explore-card-cover" style={{width: "100%"}}>
           <img src={coverImg} alt={name} className="explore-card-image" />
         </div>
         <div className="res-row">

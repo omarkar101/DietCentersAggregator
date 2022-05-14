@@ -2,22 +2,7 @@ import React from "react";
 import "./tabOptions.css";
 import { MdOutlineExplore, MdExplore, MdOutlineFoodBank, MdFoodBank, MdMenuBook } from 'react-icons/md';
 
-const tabs = [
-  {
-    id: 1,
-    name: "Explore",
-    inactive_img: <MdOutlineExplore size="48"/>,
-    backdrop: "FCEEC0",
-    active_img: <MdExplore size="48"/>,
-  },
-  {
-    id: 2,
-    name: "Our Meal Plans",
-    inactive_img: <MdMenuBook size="48"/>,   
-    backdrop: "EDF4FF",
-    active_img:  <MdMenuBook size="48"/>,
-  },
-];
+const tabs = [];
 
 const TabOptions = ({ activeTab, setActiveTab }) => {
   return (
