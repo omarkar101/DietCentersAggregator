@@ -58,6 +58,7 @@ const Login = () => {
           setError(null);
           auth.setToken(response.data.token);
           navigate("/");
+          window.location.reload();
         } else {
           console.log(response.data.message);
           setError('Incorrect email or password.');
