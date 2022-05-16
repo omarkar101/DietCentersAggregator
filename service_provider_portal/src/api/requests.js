@@ -138,8 +138,11 @@ export const updateServiceProviderProfile = (name,  phoneNumber, emailAddress, d
 export const updateServiceProviderImage = (image) => {
   const data = new FormData();
   data.append('image', image);
-  console.log('IMAGGE FILE:', image);
   return Post('/user/update/personal_info_image_set', data);
+}
+
+export const getClientOrderHistory = () => {
+  return Post('/orders/get/get_service_provider_orders');
 }
 
 export const getAllServiceProviderSubscribedClients = () => {

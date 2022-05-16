@@ -11,6 +11,7 @@ import User from "./containers/user_container";
 import API from "./api/api";
 import ServiceProviderSubscribedClients from "./components/service_provider_subscribed_clients/service_provider_subscribed_clients";
 import { getServiceProviderProfile } from "./api/requests";
+import OrderHistory from "./components/orders/orderHistory";
 
 const App = () => {
   API.interceptors.response.use((response) => {
@@ -44,6 +45,7 @@ const App = () => {
               <Route path='/signup' element={<SignUp />} />
               <Route path='/login' element={<Login setUser={setUser} />} />
               <Route path='/items' element={<Items />} />
+              <Route path='/order_history' element={<OrderHistory />} />
               <Route path='/meal_plans' element={<MealPlans />} />
               <Route path='/profile' element={<Profile />} />
               <Route path='/subscribed_clients' element={<ServiceProviderSubscribedClients />} />
