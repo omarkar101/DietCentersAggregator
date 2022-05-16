@@ -18,4 +18,14 @@ def get_orders():
         .all()
     orders = [order.as_dict() for order in orders]
     return jsonify(success=True, orders=orders)
-        
+
+@get_api.route('get_service_provider_orders', methods=['POST'])
+@require_user(UserType.SERVICE_PROVIDER)
+def get_service_provider_orders():
+    user_id = get_user_id()
+    with db_session.begin():
+        orders = db_session.query(Order) \
+            .order_by(desc(Order.date_sent)) \
+            .all()
+    orders = [order.as_dict() for order in orders if order.item.service_provider.user_id == user_id]
+    return jsonify(success=True, orders=orders)

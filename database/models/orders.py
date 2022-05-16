@@ -38,6 +38,7 @@ class Order(Base):
 		item_service_provider = self.item.service_provider.name
 		information['service_provider_name'] = item_service_provider
 		img_url = self.item.image_url
+		information['client_name'] = self.user.client.first_name
+		information['client_location'] = self.user.client.as_dict()['location']
 		information['imgURL'] = img_url
 		return information
-    
