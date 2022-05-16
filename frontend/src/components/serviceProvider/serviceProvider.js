@@ -220,7 +220,7 @@ const ServiceProviderPage = () => {
         onClose={toggleModalOnClose}
         packageItems={state.selectedPackageItems}
       />
-      <div style={{width: '35%', float:'left', position: 'fixed'}}>
+      <div style={{width: '35%', float:'left'}}>
         <ImagesSection service_provider={state.serviceProvider} />
       </div>
 

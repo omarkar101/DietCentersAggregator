@@ -9,6 +9,7 @@ const SubscribeModal = (props) => {
     e.preventDefault();
     onSubmit(mealPlan);
   };
+  console.log('mealPlan:', mealPlan);
 
   return (
     <Modal size="lg" show={isOpen} onHide={onClose} onClose={onClose}>
@@ -43,13 +44,17 @@ const SubscribeModal = (props) => {
         <Modal.Title>Do you want to subscribe to this meal plan?</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <div className="d-flex flex-column">
-          details about subscription and so...
-        </div>
-        {/* <Form onSubmit={handleSubmit}>
-        </Form> */}
+      {mealPlan && mealPlan.meal_plan_uses && 
         <div>
-          {/* price: {state.mealPlan.price} */}
+          Meals Per Month: {mealPlan.meal_plan_uses}
+        </div>}
+      {mealPlan && 
+          <div>
+            Price Per Month: ${mealPlan.price}
+          </div>
+      }
+        <div>
+          Payment will be cash on the first delivery.
         </div>
       </Modal.Body>
       <Modal.Footer>

@@ -14,7 +14,7 @@ def get_all_service_providers():
 def get_service_providers_by_name():
   serviceProviderName = request.form.get('service_provider_name')
   service_providers = ServiceProvider.query.all()
-  return jsonify(success=True, service_providers=[sp.as_dict() for sp in service_providers if sp.name.startswith(serviceProviderName)])
+  return jsonify(success=True, service_providers=[sp.as_dict() for sp in service_providers if sp.name.lower().startswith(serviceProviderName.lower())])
 
 @public_get_api.route('/by_id', methods=['POST'])
 def get_service_provider_by_id():

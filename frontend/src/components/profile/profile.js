@@ -301,8 +301,8 @@ const Profile = () => {
       </div>
     )}
     <Container>
-      <Row style={{borderStyle: "solid", borderWidth: 2, borderColor: "#21ad83"}} className="rounded p-5 m-auto shadow-sm rounded-lg mt-5">
-        <h3 className="text-black-50 p-3 text-center mb-5">
+      <Row style={{borderStyle: "solid", borderWidth: 2, borderColor: "#21ad83"}} className="rounded p-2 m-1 shadow-sm rounded-lg">
+        <h3 className="text-black-50 p-3 text-center">
           Personal Information
         </h3>
         <Col lg={6} md={6} sm={12} className="m-auto" >
