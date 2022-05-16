@@ -21,6 +21,7 @@ def send_meal_to_client():
         .filter(Client.user_id == user_id) \
         .first()
         client.last_ordered_meal_date = order.date_sent
+        client.subscription_counter = client.subscription_counter - 1
     return jsonify(success=True)
         
 

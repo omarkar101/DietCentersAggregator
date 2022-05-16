@@ -56,6 +56,7 @@ const Profile = () => {
   const [instructions, setinstructions] = useState("");
   const [success, setSuccess] = useState(null);
   const [error, setError] = useState(null);
+  const [SubCounter, setSubCounter] = useState("");
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -70,6 +71,7 @@ const Profile = () => {
           setLastName(clientPersonalInfo.last_name);
           setPhoneNumber(clientPersonalInfo.phone_number);
           setaddressEmail(clientPersonalInfo.email);
+          setSubCounter(clientPersonalInfo.subscription_counter != null ? clientPersonalInfo.subscription_counter : "");
           setWeight(
             clientPersonalInfo.biometrics != null
               ? clientPersonalInfo.biometrics.weight
@@ -390,6 +392,7 @@ const Profile = () => {
                 <Card.Body>
                   <Card.Title>You are subscribed to:</Card.Title>
                   <Card.Text>{state.subscribedMealPlan.name}</Card.Text>
+                  <Card.Text>Orders Left: {SubCounter} </Card.Text>
                   <Button
                     variant="danger"
                     size="sm"
