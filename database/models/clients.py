@@ -65,10 +65,11 @@ class Client(Base):
         information = {c.name: getattr(self, c.name) for c in self.__table__.columns}
         information['email'] = self.user.credentials.email
         information['phone_number'] = self.user.phone_number
+        information['location'] = ''
         if len(self.user.addresses) > 0:
             information['location'] = 'Country: ' + self.user.addresses[0].country + '\nCity: ' + self.user.addresses[0].city + '\nStreet: ' + self.user.addresses[0].street + '\nBuilding: ' + self.user.addresses[0].building + '\nFloor: ' + self.user.addresses[0].floor
         return information
-    
+
     @hybrid_property
     def subscription_counter(self):
         return self._subscription_counter
