@@ -77,6 +77,7 @@ class User(Base):
             information['address'] = self.addresses[0].as_dict() if len(self.addresses) > 0 else None
             information['first_name'] = self.client.first_name
             information['last_name'] = self.client.last_name
+            information['subscription_counter'] = self.client.subscription_counter
             if self.client.biometrics is not None:
                 information['biometrics'] = self.client.biometrics.as_dict()
         if information['user_type'] == UserType.SERVICE_PROVIDER:
