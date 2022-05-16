@@ -70,9 +70,9 @@ const PreferredMealModal = (props) => {
   return (
     <Modal size="lg" show={isOpen} onHide={onClose} onClose={onClose}>
       <Modal.Header closeButton> 
-        <Modal.Title>prefered</Modal.Title>
+        <Modal.Title>Select a meal to send for the client</Modal.Title>
       </Modal.Header>
-      <div>
+      <div className="p-2">
         this user prefers the meal: 
         {(state.preferredMeal==null)
           ? `This user has no preferred meal yet`
@@ -89,15 +89,17 @@ const PreferredMealModal = (props) => {
       other items in this meal plan:
       
       <Modal.Body>
-        {state.mealPlanItems?.map((item) => (
-          <div>
-            <div>item name: {item.name}</div>
-            <div>description: {item.description}</div>
-              <Button onClick={handleSubmit} id={item.id} class="btn btn-success">send</Button>
-            <hr/>
-          </div>
-          
-        ))}
+        <div className='p-2'>
+          {state.mealPlanItems?.map((item) => (
+            <div>
+              <div>item name: {item.name}</div>
+              <div>description: {item.description}</div>
+                <Button onClick={handleSubmit} id={item.id} class="btn btn-success">send</Button>
+              <hr/>
+            </div>
+            
+          ))}
+        </div>
         
       </Modal.Body>
       <Modal.Footer>
